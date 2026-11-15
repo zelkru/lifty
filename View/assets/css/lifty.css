@@ -1,0 +1,192 @@
+/* Lifty: estilos propios sobre la plantilla (main.css). Usa las variables de Bootstrap. */
+
+:root {
+  --lifty-ink: #1f2430;
+  --lifty-muted: #6b7280;
+  --lifty-line: #ececf0;
+  --lifty-soft: #fdf1ec;
+  --lifty-radius: 14px;
+}
+
+body { background: #f7f7f9; color: var(--lifty-ink); }
+
+/* ---------- Marca ---------- */
+.lifty-brand { color: var(--lifty-ink); }
+.lifty-brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--bs-primary); color: #fff; font-size: 1.15rem;
+}
+
+/* ---------- Menu lateral ---------- */
+.sidebar .nav-link { border-radius: 10px; margin: 2px 12px; transition: background .15s, color .15s; }
+.sidebar .nav-link:hover { background: var(--lifty-soft); color: var(--bs-primary); }
+.sidebar .nav-link.active { background: var(--lifty-soft); color: var(--bs-primary); font-weight: 600; }
+
+/* ---------- Acceso (login, registro, recuperar) ---------- */
+.auth-wrap {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;
+  background:
+    radial-gradient(900px 400px at 85% -10%, rgba(230, 98, 57, .18), transparent 60%),
+    radial-gradient(700px 380px at -10% 110%, rgba(230, 98, 57, .12), transparent 60%),
+    #f7f7f9;
+}
+.auth-card {
+  width: 100%; border: 1px solid var(--lifty-line); border-radius: 18px; background: #fff;
+  box-shadow: 0 18px 50px rgba(31, 36, 48, .08);
+}
+.auth-card .form-control { padding: .65rem .85rem; border-radius: 10px; }
+.auth-card .btn-primary { padding: .7rem; border-radius: 10px; font-weight: 600; }
+
+/* ---------- Encabezado de pagina ---------- */
+.page-head { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.page-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
+.page-head p { margin: .15rem 0 0; color: var(--lifty-muted); }
+
+/* ---------- Tarjetas ---------- */
+.l-card { background: #fff; border: 1px solid var(--lifty-line); border-radius: var(--lifty-radius); }
+.l-card-body { padding: 1.25rem; }
+.l-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+
+.stat-card { padding: 1.1rem 1.25rem; display: flex; gap: 1rem; align-items: center; }
+.stat-icon {
+  width: 46px; height: 46px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; background: var(--lifty-soft); color: var(--bs-primary); flex-shrink: 0;
+}
+.stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
+.stat-label { color: var(--lifty-muted); font-size: .85rem; }
+
+/* ---------- Catalogo ---------- */
+.hero {
+  border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; color: #fff;
+  background: linear-gradient(120deg, #1f2430 0%, #3a2d2a 55%, var(--bs-primary) 140%);
+}
+.hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: .35rem; }
+.hero p { color: rgba(255, 255, 255, .8); margin: 0; max-width: 520px; }
+
+.product-card { transition: transform .15s, box-shadow .15s; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.product-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(31, 36, 48, .1); }
+.product-thumb {
+  aspect-ratio: 4 / 3; background: linear-gradient(135deg, #fdf1ec, #f3f3f6);
+  display: flex; align-items: center; justify-content: center; color: var(--bs-primary); font-size: 3rem; overflow: hidden;
+}
+.product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.product-meta { font-size: .78rem; color: var(--lifty-muted); text-transform: uppercase; letter-spacing: .04em; }
+.price { font-weight: 700; font-size: 1.1rem; }
+
+.variant-option { cursor: pointer; border: 1.5px solid var(--lifty-line); border-radius: 12px; padding: .75rem 1rem; transition: border-color .15s, background .15s; }
+.variant-option:hover { border-color: var(--bs-primary); }
+.variant-option.disabled { opacity: .5; cursor: not-allowed; }
+.form-check-input:checked + .variant-option, .variant-radio:checked + .variant-option { border-color: var(--bs-primary); background: var(--lifty-soft); }
+
+/* ---------- Tablas ---------- */
+.l-table { margin: 0; }
+.l-table th { font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; color: var(--lifty-muted); font-weight: 600; background: #fafafc; white-space: nowrap; }
+.l-table td { vertical-align: middle; }
+.cart-thumb { width: 56px; height: 56px; border-radius: 10px; background: var(--lifty-soft); color: var(--bs-primary); display: inline-flex; align-items: center; justify-content: center; font-size: 1.4rem; overflow: hidden; flex-shrink: 0; }
+.cart-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.qty-input { width: 76px; }
+
+/* ---------- Varios ---------- */
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--lifty-muted); }
+.empty-state i { font-size: 2.6rem; color: #c9ccd3; display: block; margin-bottom: .5rem; }
+.bar-track { background: #f0f0f4; border-radius: 99px; height: 10px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; background: var(--bs-primary); }
+.order-steps { display: flex; gap: .5rem; flex-wrap: wrap; }
+.order-step { flex: 1 1 110px; text-align: center; padding: .6rem .4rem; border-radius: 10px; background: #f3f3f6; color: var(--lifty-muted); font-size: .82rem; font-weight: 600; }
+.order-step.done { background: var(--lifty-soft); color: var(--bs-primary); }
+.order-step.current { background: var(--bs-primary); color: #fff; }
+
+.invalid-feedback.d-block { font-size: .82rem; }
+.pay-box { display: none; }
+.pay-box.active { display: block; }
+
+@media (max-width: 575.98px) {
+  .hero { padding: 1.4rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .page-head h1 { font-size: 1.35rem; }
+}
+
+/* ---------- Acceso: escenario oscuro con brillo ember ---------- */
+body { font-family: 'Manrope', system-ui, sans-serif; }
+.display { font-family: 'Big Shoulders Display', 'Impact', sans-serif; text-transform: uppercase; font-weight: 900; line-height: .9; }
+.page-head h1 { font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase; font-weight: 800; letter-spacing: 0; }
+.auth-wrap {
+  background:
+    radial-gradient(640px 520px at 82% 8%, rgba(255, 90, 44, .55), transparent 65%),
+    radial-gradient(520px 420px at 0% 100%, rgba(255, 90, 44, .2), transparent 70%),
+    #08080a;
+}
+.auth-card { border: 1px solid rgba(255, 255, 255, .12); border-radius: 30px; box-shadow: 0 40px 90px rgba(0, 0, 0, .5); }
+.auth-card .btn-primary { background: #ff5a2c; border-color: #ff5a2c; border-radius: 999px; padding: .85rem; }
+.auth-card .btn-primary:hover { background: #ff8a5c; border-color: #ff8a5c; }
+.auth-card .form-control { border-radius: 14px; background: #f6f3ee; border-color: transparent; padding: .8rem 1rem; }
+.auth-card .form-control:focus { background: #fff; border-color: #ff5a2c; box-shadow: 0 0 0 .2rem rgba(255, 90, 44, .15); }
+.auth-card .input-group .btn { border-radius: 0 14px 14px 0; background: #f6f3ee; border-color: transparent; }
+.auth-card .input-group .form-control { border-radius: 14px 0 0 14px; }
+.auth-card .link-primary { color: #e04a1f !important; }
+
+/* =====================================================================
+ * Acceso (ingreso, registro, recuperar): pantalla dividida.
+ * Izquierda: formulario sobre blanco. Derecha: palabras fitness en diagonal.
+ * ===================================================================== */
+.auth-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; background: #fff; }
+.auth-form { position: relative; display: flex; align-items: center; justify-content: center; padding: 5rem clamp(1.5rem, 5vw, 5rem) 3rem; }
+.auth-form-in { width: 100%; max-width: 440px; }
+.auth-form-in.ancho { max-width: 560px; }
+.auth-volver { position: absolute; top: 1.6rem; left: clamp(1.5rem, 5vw, 3rem); color: #5d554b; text-decoration: none; font-weight: 700; font-size: .85rem; }
+.auth-volver:hover { color: #ff5a2c; }
+.auth-logo { display: inline-block; font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 2.4rem; letter-spacing: .02em; color: #0b0b0e; text-decoration: none; line-height: 1; margin-bottom: 2rem; }
+.auth-logo span { color: #ff5a2c; }
+.auth-titulo { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; text-transform: uppercase; font-size: clamp(3rem, 5.5vw, 4.6rem); line-height: .9; margin: 0 0 .8rem; color: #0b0b0e; }
+.auth-sub { color: #6b6256; margin-bottom: 1.8rem; }
+.auth-form .form-label { font-weight: 700; font-size: .85rem; }
+.auth-form .form-control { border-radius: 14px; background: #f6f3ee; border-color: transparent; padding: .85rem 1rem; }
+.auth-form .form-control:focus { background: #fff; border-color: #ff5a2c; box-shadow: 0 0 0 .2rem rgba(255, 90, 44, .15); }
+.auth-form .input-group .form-control { border-radius: 14px 0 0 14px; }
+.auth-form .input-group .btn { border-radius: 0 14px 14px 0; background: #f6f3ee; border-color: transparent; color: #0b0b0e; }
+.auth-form .btn-primary { background: #ff5a2c; border-color: #ff5a2c; color: #fff; border-radius: 999px; padding: .9rem; font-weight: 800; transition: transform .15s, box-shadow .15s; }
+.auth-form .btn-primary:hover { background: #ff8a5c; border-color: #ff8a5c; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(255, 90, 44, .35); }
+.auth-enlace { color: #e04a1f; text-decoration: none; }
+.auth-enlace:hover { text-decoration: underline; }
+.auth-pie { margin: 1.6rem 0 0; text-align: center; color: #6b6256; font-size: .92rem; }
+
+.auth-art { position: relative; overflow: hidden; background: #0b0b0e; }
+.auth-filas { position: absolute; inset: -35% -30%; display: flex; flex-direction: column; justify-content: center; gap: .5rem; transform: rotate(-14deg); }
+.auth-fila { overflow: hidden; white-space: nowrap; }
+.auth-fila .pista { display: inline-flex; animation: auth-izq var(--v, 40s) linear infinite; will-change: transform; }
+.auth-fila.inv .pista { animation-direction: reverse; }
+.auth-fila span { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; text-transform: uppercase; font-size: clamp(4rem, 8vw, 8rem); line-height: .95; padding-right: 1.6rem; }
+.auth-fila b { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: clamp(4rem, 8vw, 8rem); line-height: .95; padding-right: 1.6rem; color: #ff5a2c; }
+.auth-fila.solido span { color: #f6f2ec; }
+.auth-fila.ember span { color: #ff5a2c; }
+.auth-fila.contorno span { color: transparent; -webkit-text-stroke: 2px rgba(246, 242, 236, .55); }
+@keyframes auth-izq { to { transform: translateX(-50%); } }
+
+@media (max-width: 991.98px) {
+  .auth-split { grid-template-columns: 1fr; }
+  .auth-art { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .auth-fila .pista { animation: none; } }
+
+
+/* =====================================================================
+ * Badges suaves: fondo tenue y texto sobrio. Sin verdes ni rojos fuertes,
+ * para que el naranja de la marca siga siendo el unico color protagonista.
+ * ===================================================================== */
+.badge { font-weight: 700; font-size: .74rem; letter-spacing: 0; padding: .38em .8em; border-radius: 999px; }
+.badge.text-bg-success { background-color: #e5f2e9 !important; color: #2f6b45 !important; }
+.badge.text-bg-secondary { background-color: #ecebe8 !important; color: #6b6558 !important; }
+.badge.text-bg-warning { background-color: #fdf1d6 !important; color: #86620a !important; }
+.badge.text-bg-danger { background-color: #fbe4df !important; color: #a1432f !important; }
+.badge.text-bg-info { background-color: #e1eef9 !important; color: #2f5f86 !important; }
+.badge.text-bg-primary { background-color: #ffe9e1 !important; color: #b8431d !important; }
+.badge.text-bg-dark { background-color: #e6e1d8 !important; color: #3b342a !important; }
+.badge.text-bg-light { background-color: #f3f0ea !important; color: #4a443a !important; border-color: transparent !important; }
+.badge.text-bg-light.border { border: 0 !important; }
+
+/* El registro lleva el formulario a la derecha y el panel visual a la izquierda */
+.auth-split.invertido .auth-form { order: 2; }
+.auth-split.invertido .auth-art { order: 1; }
+.auth-split.invertido .auth-volver { left: clamp(1.5rem, 5vw, 3rem); }
+@media (max-width: 991.98px) { .auth-split.invertido .auth-form, .auth-split.invertido .auth-art { order: 0; } }

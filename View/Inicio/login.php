@@ -1,5 +1,6 @@
-<?php include_once '../layoutExterno.php'; ?>
-
+<?php include_once '../layoutExterno.php'; 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/lifty/Controller/InicioController.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,11 +17,11 @@
                     <h1 class="card-title mb-5 h5">Ingrese sus credenciales</h1>
                 </div>
 
-                <form action="home.php" method="GET" class="needs-validation mt-3" novalidate>
+                <form action="" method="POST" id="loginForm" class="needs-validation mt-3" novalidate>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Dirección de correo electrónico</label>
-                        <input id="email" type="email" class="form-control" required autofocus>
-                        <div class="invalid-feedback">Ingrese un correo electrónico válido.</div>
+                        <label for="txtIdentificacion" class="form-label">Identificacion</label>
+                        <input id="txtIdentificacion" name="txtIdentificacion" type="text" class="form-control" required autofocus>
+                        <div class="invalid-feedback">Ingrese su número de identificación.</div>
                     </div>
 
                     <div class="mb-3">
@@ -28,18 +29,18 @@
                             <span>Contraseña</span>
                             <a href="forgot-password.php" class="small link-primary">¿Olvidó su contraseña?</a>
                         </label>
-                        <input id="password" type="password" class="form-control" required minlength="6">
+                        <input id="txtContrasenna" name="txtContrasenna" type="password" class="form-control" required minlength="6">
                         <div class="invalid-feedback">Ingrese su contraseña (mínimo 6 caracteres).</div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-check">
-                            <input id="remember" class="form-check-input" type="checkbox">
+                            <input id="txtRecordarContrasenna" name="txtRecordarContrasenna" class="form-check-input" type="checkbox">
                             <label class="form-check-label small" for="remember">Conservar usuario</label>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Ingresar</button>
+                    <button class="btn btn-primary w-100" type="submit" id="btnInicioSesion" name="btnInicioSesion">Ingresar</button>
                 </form>
 
                 <div class="text-center mt-3 small text-muted">

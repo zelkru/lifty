@@ -1,4 +1,6 @@
-<?php include_once '../layoutExterno.php'; ?>
+<?php include_once '../layoutExterno.php'; 
+include_once $_SERVER['DOCUMENT_ROOT'] . '/lifty/Controller/InicioController.php';
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -16,38 +18,48 @@
                     <h1 class="card-title mb-5 h5">Crea tu cuenta</h1>
                 </div>
 
-                <form class="needs-validation mt-3" novalidate>
+                <form action="" method="POST" id="registerForm" class="needs-validation" novalidate>
+
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Nombre completo</label>
-                        <input id="fullName" type="text" class="form-control" required>
+                        <label for="txtIdentificacion" class="form-label">Identificación</label>
+                        <input id="txtIdentificacion" name="txtIdentificacion" type="text" class="form-control" inputmode="numeric" autocomplete="off"
+                         onkeyup="ConsultarNombre()" required>
+                        <div class="invalid-feedback">Por favor ingrese su identificacion.</div>
+                        <div id="nombreConsultaEstado" class="form-text" aria-live="polite"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtNombre" class="form-label">Nombre completo</label>
+                        <input id="txtNombre" name="txtNombre" type="text" class="form-control" readonly required>
                         <div class="invalid-feedback">Por favor ingrese su nombre.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo electrónico</label>
-                        <input id="email" type="email" class="form-control" required>
+                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" class="form-control" required>
                         <div class="invalid-feedback">Por favor ingrese un correo electrónico válido.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input id="password" type="password" class="form-control" required minlength="6">
+                        <input id="txtContrasenna" name="txtContrasenna" type="password" class="form-control" required minlength="6">
                         <div class="invalid-feedback">Por favor, proporcione una contraseña (mínimo 6 caracteres).</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
-                        <input id="confirmPassword" type="password" class="form-control" required>
+                        <label for="txtconfirmarContrasenna" class="form-label">Confirmar contraseña</label>
+                        <input id="txtconfirmarContrasenna" name="txtconfirmarContrasenna" type="password" class="form-control" required>
                         <div class="invalid-feedback">Las contraseñas deben coincidir.</div>
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input id="terms" class="form-check-input" type="checkbox" required>
+                        <input id="terms" name ="terms" class="form-check-input" type="checkbox" required>
                         <label class="form-check-label small" for="terms">Acepto los <a href="#" class="text-decoration-none">términos y privacidad</a></label>
                         <div class="invalid-feedback">Debe aceptar antes de continuar.</div>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Registrarse</button>
+                    <button class="btn btn-primary w-100" type="submit" id="btnRegistro" name="btnRegistro">Registrarse</button>
+
                 </form>
 
                 <div class="text-center mt-3 small text-muted">
@@ -59,6 +71,9 @@
     </div>
 
     <?php IncludeJS(); ?>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js"></script>
+    <script src="../assets/js/register.js?v=2"></script>
 
 </body>
 

@@ -1,160 +1,85 @@
-<?php include_once '../layoutInterno.php'; ?>
+<?php
+include_once __DIR__ . '/../layoutInterno.php';
+include_once __DIR__ . '/../../Controller/ReportesController.php';
+include_once __DIR__ . '/../../Controller/PedidosController.php';
+
+ValidarAdmin();
+
+$porEstado = ReportePedidosPorEstado();
+$stockBajo = ReporteStockBajo();
+$totalPedidos = array_sum(array_column($porEstado, 'Cantidad'));
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 
-<?php IncludeCSS(); ?>
+<?php IncludeCSS('Reportes - Lifty'); ?>
 
 <body>
 
-    <div id="overlay" class="overlay"></div>
-
     <?php MostrarHeader(); ?>
-
     <?php MostrarSidebar(); ?>
 
     <main id="content" class="content py-10">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-              <h1 class="fs-3 mb-1">Reportes</h1>
-              <p class="mb-0">Analítica e informes del inventario</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div class="container-fluid">
 
-      <div class="row g-3 mb-3">
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="card h-100">
-            <div class="card-body p-4">
-              <h6 class="mb-4">Ingresos totales</h6>
-              <h3 class="mb-1 fw-bold">$45,231</h3>
-              <p class="mb-0 text-success small"><i class="ti ti-arrow-up"></i> 12% respecto al mes anterior</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="card h-100">
-            <div class="card-body p-4">
-              <h6 class="mb-4">Productos vendidos</h6>
-              <h3 class="mb-1 fw-bold">1,234</h3>
-              <p class="mb-0 text-success small"><i class="ti ti-arrow-up"></i> 8% respecto al mes anterior</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="card h-100">
-            <div class="card-body p-4">
-              <h6 class="mb-4">Productos con bajo stock</h6>
-              <h3 class="mb-1 fw-bold">23</h3>
-              <p class="mb-0 text-danger small"><i class="ti ti-arrow-down"></i> 3% respecto al mes anterior</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="card h-100">
-            <div class="card-body p-4">
-              <h6 class="mb-4">Productos agotados</h6>
-              <h3 class="mb-1 fw-bold">5</h3>
-              <p class="mb-0 text-danger small"><i class="ti ti-arrow-down"></i> 2% respecto al mes anterior</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-3">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body p-4">
-              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-3 gap-2">
+            <div class="page-head">
                 <div>
-                  <h2 class="mb-0 fs-5">Resumen de ventas</h2>
+                    <h1>Reportes</h1>
+                    <p>Indicadores básicos de pedidos e inventario</p>
                 </div>
-                <div class="controls">
-                  <button id="btn-random" class="btn btn-light btn-sm">Generar datos</button>
-                  <button id="btn-update" class="btn btn-primary btn-sm">Ver solo este año</button>
-                </div>
-              </div>
-
-              <div id="salesChart"></div>
-
-              <div class="d-flex justify-content-end">
-                <a href="#" class="small">Ver reporte detallado</a>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                  <h2 class="mb-0 fs-5">Productos más vendidos</h2>
-                </div>
-              </div>
-
-              <div class="list-group list-group-flush">
-                <div class="list-group-item p-3 d-flex align-items-center">
-                  <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6 class="mb-0">Whey Protein Isolate 2kg</h6>
-                        <small class="text-secondary">156 unidades vendidas</small>
-                      </div>
-                      <div class="text-end">
-                        <strong>$14,038</strong>
-                      </div>
+            <div class="row g-4">
+                <div class="col-12 col-xl-6">
+                    <div class="l-card l-card-body">
+                        <h2 class="l-card-title">Pedidos por estado</h2>
+                        <?php if ($totalPedidos == 0) { ?>
+                            <div class="empty-state py-4"><i class="ti ti-receipt-off"></i><p class="mb-0">Todavía no hay pedidos.</p></div>
+                        <?php } ?>
+                        <?php foreach ($porEstado as $e) { $porcentaje = $totalPedidos > 0 ? round($e['Cantidad'] * 100 / $totalPedidos) : 0; ?>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between small mb-1">
+                                    <span><span class="badge text-bg-<?php echo ClaseEstadoPedido($e['EstadoPedido']); ?>"><?php echo $e['EstadoPedido']; ?></span> <?php echo $e['Cantidad']; ?> pedido<?php echo $e['Cantidad'] == 1 ? '' : 's'; ?></span>
+                                    <span class="text-secondary"><?php echo Dinero($e['Monto']); ?></span>
+                                </div>
+                                <div class="bar-track"><div class="bar-fill" style="width: <?php echo $porcentaje; ?>%"></div></div>
+                            </div>
+                        <?php } ?>
                     </div>
-                  </div>
                 </div>
 
-                <div class="list-group-item p-3 d-flex align-items-center">
-                  <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6 class="mb-0">Creatina Monohidratada 300g</h6>
-                        <small class="text-secondary">134 unidades vendidas</small>
-                      </div>
-                      <div class="text-end">
-                        <strong>$4,688</strong>
-                      </div>
+                <div class="col-12 col-xl-6">
+                    <div class="l-card">
+                        <div class="l-card-body pb-2">
+                            <h2 class="l-card-title mb-0">Productos con stock bajo</h2>
+                            <p class="small text-secondary mb-0">Presentaciones activas con <?php echo UMBRAL_STOCK_BAJO; ?> unidades o menos</p>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table l-table tabla-apilada tabla-datos" id="tablaStockBajo" data-pagina="8">
+                                <thead><tr><th data-orden="texto">Producto</th><th data-orden="texto">SKU</th><th data-orden="numero" class="text-end">Stock</th></tr></thead>
+                                <tbody>
+                                <?php foreach ($stockBajo as $s) { ?>
+                                    <tr>
+                                        <td><?php echo Texto($s['NombreProducto']); ?> <span class="text-secondary small">&middot; <?php echo Texto($s['Presentacion']); ?></span></td>
+                                        <td><code><?php echo Texto($s['Sku']); ?></code></td>
+                                        <td class="text-end" data-valor="<?php echo (int) $s['Stock']; ?>"><span class="badge text-bg-<?php echo $s['Stock'] == 0 ? 'danger' : 'warning'; ?>"><?php echo $s['Stock']; ?></span></td>
+                                    </tr>
+                                <?php } ?>
+                                <?php if (count($stockBajo) == 0) { ?>
+                                    <tr><td colspan="3" class="text-center text-secondary py-4">No hay productos con stock bajo.</td></tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                  </div>
                 </div>
-
-                <div class="list-group-item p-3 d-flex align-items-center">
-                  <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6 class="mb-0">Pre-Entreno C4 Original</h6>
-                        <small class="text-secondary">98 unidades vendidas</small>
-                      </div>
-                      <div class="text-end">
-                        <strong>$3,822</strong>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
-          </div>
+
+            <?php MostrarFooter(); ?>
+
         </div>
-      </div>
-
-      <?php MostrarFooter(); ?>
-
-    </div>
-  </main>
+    </main>
 
     <?php IncludeJS(); ?>
 

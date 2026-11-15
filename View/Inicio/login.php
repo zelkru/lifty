@@ -1,53 +1,62 @@
-<?php include_once '../layoutExterno.php'; ?>
+<?php
+include_once __DIR__ . '/../layoutExterno.php';
+include_once __DIR__ . '/../../Controller/InicioController.php';
+
+if (EstaAutenticado()) {
+    Redirigir(PaginaInicioRol());
+}
+
+if (isset($_POST['mensaje'])) {
+    AsignarMensaje($_POST['mensaje'], 'danger');
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 
-<?php IncludeCSS(); ?>
+<?php IncludeCSS('Iniciar sesión - Lifty'); ?>
 
 <body>
 
-    <div class="container d-flex align-items-center justify-content-center min-vh-100">
-        <div class="card" style="max-width:420px; width:100%;">
-            <div class="card-body p-5">
+    <div class="auth-split">
+        <section class="auth-form">
+            <a href="../Catalogo/catalog.php" class="auth-volver"><i class="ti ti-arrow-left"></i> Volver a la tienda</a>
 
-                <div class="text-center mb-3">
-                    <?php MostrarLogo(); ?>
-                    <h1 class="card-title mb-5 h5">Ingrese sus credenciales</h1>
-                </div>
+            <div class="auth-form-in">
+                <?php MostrarLogo(); ?>
+                <h1 class="auth-titulo">Bienvenido<br>de nuevo</h1>
+                <p class="auth-sub">Ingresa tus credenciales para continuar con tu compra.</p>
 
-                <form action="home.php" method="GET" class="needs-validation mt-3" novalidate>
+                <?php MostrarMensaje(); ?>
+
+                <form action="" method="POST" class="validar" novalidate>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Dirección de correo electrónico</label>
-                        <input id="email" type="email" class="form-control" required autofocus>
-                        <div class="invalid-feedback">Ingrese un correo electrónico válido.</div>
+                        <label for="txtCorreoElectronico" class="form-label">Correo electrónico</label>
+                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" class="form-control"
+                               value="<?php echo Texto($_POST['txtCorreoElectronico'] ?? ''); ?>" autocomplete="email" required autofocus>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="password" class="form-label d-flex justify-content-between">
+                    <div class="mb-2">
+                        <label for="txtContrasenna" class="form-label d-flex justify-content-between">
                             <span>Contraseña</span>
-                            <a href="forgot-password.php" class="small link-primary">¿Olvidó su contraseña?</a>
+                            <a href="forgot-password.php" class="small auth-enlace">¿Olvidaste tu contraseña?</a>
                         </label>
-                        <input id="password" type="password" class="form-control" required minlength="6">
-                        <div class="invalid-feedback">Ingrese su contraseña (mínimo 6 caracteres).</div>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="form-check">
-                            <input id="remember" class="form-check-input" type="checkbox">
-                            <label class="form-check-label small" for="remember">Conservar usuario</label>
+                        <div class="input-group">
+                            <input id="txtContrasenna" name="txtContrasenna" type="password" class="form-control" autocomplete="current-password" required>
+                            <button type="button" class="btn btn-outline-secondary toggle-password" data-target="#txtContrasenna" aria-label="Mostrar contraseña">
+                                <i class="ti ti-eye"></i>
+                            </button>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Ingresar</button>
+                    <button class="btn btn-primary w-100 mt-4" type="submit" name="btnInicioSesion">Ingresar</button>
                 </form>
 
-                <div class="text-center mt-3 small text-muted">
-                    ¿No tiene una cuenta? <a href="register.php" class="link-primary">Regístrese</a>
-                </div>
-
+                <p class="auth-pie">¿No tienes una cuenta? <a href="register.php" class="auth-enlace fw-bold">Regístrate</a></p>
             </div>
-        </div>
+        </section>
+
+        <aside class="auth-art"><?php MostrarArteAuth(); ?></aside>
     </div>
 
     <?php IncludeJS(); ?>

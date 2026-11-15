@@ -1,37 +1,44 @@
-<?php include_once '../layoutExterno.php'; ?>
+<?php
+include_once __DIR__ . '/../layoutExterno.php';
+include_once __DIR__ . '/../../Controller/InicioController.php';
+
+if (EstaAutenticado()) {
+    Redirigir(PaginaInicioRol());
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
 
-<?php IncludeCSS(); ?>
+<?php IncludeCSS('Recuperar contraseña - Lifty'); ?>
 
 <body>
 
-    <div class="container d-flex align-items-center justify-content-center min-vh-100">
-        <div class="card" style="max-width:420px; width:100%;">
-            <div class="card-body p-5">
+    <div class="auth-split">
+        <section class="auth-form">
+            <a href="login.php" class="auth-volver"><i class="ti ti-arrow-left"></i> Volver a iniciar sesión</a>
 
-                <div class="text-center mb-3">
-                    <?php MostrarLogo(); ?>
-                    <h1 class="card-title mb-5 h5">Recuperar contraseña</h1>
-                </div>
+            <div class="auth-form-in">
+                <?php MostrarLogo(); ?>
+                <h1 class="auth-titulo">Recupera<br>tu acceso</h1>
+                <p class="auth-sub">Escribe tu correo y te enviamos una contraseña temporal.</p>
 
-                <form class="needs-validation mt-3" novalidate>
+                <?php MostrarMensaje(); ?>
+
+                <form action="" method="POST" class="validar" novalidate>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <input id="email" type="email" class="form-control" required autofocus>
-                        <div class="invalid-feedback">Porfavor ingrese un correo electrónico válido.</div>
+                        <label for="txtCorreoElectronico" class="form-label">Correo electrónico</label>
+                        <input id="txtCorreoElectronico" name="txtCorreoElectronico" type="email" class="form-control" autocomplete="email" required autofocus>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Procesar</button>
+                    <button class="btn btn-primary w-100 mt-3" type="submit" name="btnRecuperarContrasenna">Enviar contraseña temporal</button>
                 </form>
 
-                <div class="text-center mt-3 small text-muted">
-                    ¿No tienes una cuenta? <a href="register.php" class="link-primary">Registrarse</a>
-                </div>
-
+                <p class="auth-pie">¿Ya la recordaste? <a href="login.php" class="auth-enlace fw-bold">Inicia sesión</a></p>
             </div>
-        </div>
+        </section>
+
+        <aside class="auth-art"><?php MostrarArteAuth(); ?></aside>
     </div>
 
     <?php IncludeJS(); ?>

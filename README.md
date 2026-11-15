@@ -87,19 +87,6 @@ lifty/
 - Administrador: productos, presentaciones y stock, categorías, marcas, métodos de pago,
   pedidos con cambio de estado, usuarios y reportes básicos.
 
-## Con Docker (solo para quien lo use)
-
-El profesor y el resto del equipo usan XAMPP. Quien desarrolla con Docker usa la carpeta `docker/`,
-que se conecta a un contenedor MySQL que ya exista en la máquina (red `mysql_default`):
-
-```bash
-cd docker
-cp .env.example .env     # ajustar DB_PASS (el archivo .env no se sube al repositorio)
-docker compose up -d
-```
-
-La aplicación queda en <http://localhost:8080/lifty>.
-
 ## Flujo de trabajo
 
 El repositorio trabaja con **feature branches**; nunca se hace commit directo a `main`.

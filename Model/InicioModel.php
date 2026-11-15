@@ -1,48 +1,87 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/lifty/Model/ConfigModel.php';
+include_once __DIR__ . '/ConfigModel.php';
 
-function ConsultarIdentificacionModel($identificacion)
+/* Devuelve el consecutivo del usuario nuevo, 0 si falla o -1 si el correo ya existe. */
+function RegistroModel($nombre, $apellido1, $apellido2, $correoElectronico, $telefono, $contrasennaHash)
 {
     try {
-        $context = OpenConnection();
+        $context = Conectar();
 
-        $sentencia = "CALL ConsultarIdentificacion('$identificacion')";
-        $resultado = $context->query($sentencia);
+        $fila = ProcedimientoFila($context, 'spRegistrarUsuario',
+            [$nombre, $apellido1, $apellido2, $correoElectronico, $telefono, $contrasennaHash]);
 
-        $datos = null;
-        while ($row = $resultado->fetch_assoc()) {
-            $datos = $row;
-        }
-
-        $resultado->free_result();
-        CloseConnection($context);
-
-        return $datos;
+        Cerrar($context);
+        return $fila ? (int) $fila['Consecutivo'] : 0;
     }
-    catch (Exception $error) {
+    catch (Exception $exc) {
+        if ($exc -> getCode() == 1062) {
+            return -1;
+        }
+        RegistrarError($exc, 'RegistroModel');
+        return 0;
+    }
+}
+
+function InicioSesionModel($correoElectronico)
+{
+    try {
+        $context = Conectar();
+
+        $data = ProcedimientoFila($context, 'spIniciarSesionUsuario', [$correoElectronico]);
+
+        Cerrar($context);
+        return $data;
+    }
+    catch (Exception $exc) {
+        RegistrarError($exc, 'InicioSesionModel');
         return null;
     }
 }
 
-function ActualizarContrasennaModel($consecutivo, $contrasennaNueva, $contrasennaActual)
+function ConsultarCorreoModel($correoElectronico)
 {
     try {
-        $context = OpenConnection();
+        $context = Conectar();
 
-        $sentencia = "CALL ActualizarContrasenna('$consecutivo', '$contrasennaNueva', '$contrasennaActual')";
-        $resultado = $context->query($sentencia);
+        $data = ProcedimientoFila($context, 'spConsultarCorreo', [$correoElectronico]);
 
-        $actualizado = false;
-        while ($row = $resultado->fetch_assoc()) {
-            $actualizado = (bool) $row['Actualizado'];
-        }
+        Cerrar($context);
+        return $data;
+    }
+    catch (Exception $exc) {
+        RegistrarError($exc, 'ConsultarCorreoModel');
+        return null;
+    }
+}
 
-        $resultado->free_result();
-        CloseConnection($context);
+function ConsultarContrasennaModel($consecutivo)
+{
+    try {
+        $context = Conectar();
 
+        $fila = ProcedimientoFila($context, 'spConsultarContrasenna', [(int) $consecutivo]);
+
+        Cerrar($context);
+        return $fila ? $fila['Contrasenna'] : null;
+    }
+    catch (Exception $exc) {
+        RegistrarError($exc, 'ConsultarContrasennaModel');
+        return null;
+    }
+}
+
+function ActualizarContrasennaModel($consecutivo, $contrasennaHash)
+{
+    try {
+        $context = Conectar();
+
+        $actualizado = ProcedimientoBooleano($context, 'spActualizarContrasenna', [(int) $consecutivo, $contrasennaHash]);
+
+        Cerrar($context);
         return $actualizado;
     }
-    catch (Exception $error) {
+    catch (Exception $exc) {
+        RegistrarError($exc, 'ActualizarContrasennaModel');
         return false;
     }
 }

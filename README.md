@@ -1,10 +1,10 @@
 # Lifty
 
 Lifty es un ecommerce de productos para entrenar: suplementos, bebidas, ropa y
-accesorios. El sistema permite administrar el catálogo de productos, el inventario,
-los pedidos y los usuarios de la tienda.
+accesorios. El sistema permite administrar el catálogo, el inventario, los pedidos y los
+usuarios de la tienda.
 
-Proyecto del curso **Ambiente Web Cliente Servidor**.
+Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Entrega 2 (S02).
 
 ## Integrantes
 
@@ -15,113 +15,98 @@ Proyecto del curso **Ambiente Web Cliente Servidor**.
 
 ## Stack
 
-- PHP (última versión) sobre Apache
-- HTML5, CSS3, JavaScript y jQuery
-- Bootstrap 5.3
-- Tabler Icons
+- PHP sobre Apache, arquitectura MVC
+- MySQL / MariaDB con procedimientos almacenados
+- HTML5, CSS3, JavaScript y jQuery (jQuery Validate)
+- Bootstrap 5.3 y Tabler Icons
+- PHPMailer para el correo
 
-## Estructura del proyecto
+## Cómo correrlo en XAMPP
 
-El proyecto sigue el patrón **MVC**:
+1. Copiar la carpeta `lifty` dentro de `htdocs`.
+2. Iniciar Apache y MySQL desde el panel de XAMPP.
+3. Importar `lifty_bd.sql` en phpMyAdmin (crea la base `lifty_bd`, las tablas, los
+   procedimientos y los datos de ejemplo).
+4. Abrir <http://localhost/lifty>.
+
+La conexión (`Model/ConfigModel.php`) usa por defecto `127.0.0.1:3307`, usuario `root` y sin
+contraseña. Si su MySQL de XAMPP usa el puerto 3306, cambie `3307` por `3306` en ese archivo.
+
+## Usuarios de ejemplo
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Administrador | admin@lifty.com | Admin123* |
+| Cliente | cliente@lifty.com | Cliente123* |
+
+## Correo
+
+Sin configurar, los correos se simulan (quedan en el log de errores de PHP). Para enviarlos
+de verdad defina las variables de entorno `MAIL_USER` y `MAIL_PASS` (cuenta de Gmail con
+contraseña de aplicación).
+
+## Estructura
 
 ```
 lifty/
-├── index.php        Punto de entrada
-├── Controller/      Controladores
-├── Model/           Modelos y acceso a datos
-└── View/            Vistas
-    ├── layoutExterno.php    Layout de las vistas públicas
-    ├── layoutInterno.php    Layout de las vistas privadas
-    ├── Inicio/              Una carpeta por módulo
-    └── assets/              css, js y fonts
+├── index.php          Punto de entrada (lleva al catálogo)
+├── lifty_bd.sql       Base de datos completa
+├── Controller/        Controladores (reciben formularios, validan, llaman al Model)
+├── Model/             Acceso a datos: solo llamadas a procedimientos almacenados
+└── View/
+    ├── layoutExterno.php   Layout de las vistas de acceso
+    ├── layoutInterno.php   Layout con menú lateral (según el rol)
+    ├── Inicio/ Personal/ Catalogo/ Inventario/ Pedidos/ Reportes/
+    ├── Template/           Plantillas de correo
+    └── assets/             css, js y fonts
 ```
 
-Cada módulo nuevo agrega su controlador en `Controller/`, su modelo en `Model/` y su
-carpeta de vistas dentro de `View/`.
+## Estándar de programación
 
-Como todas las carpetas de módulo quedan al mismo nivel dentro de `View/`, los
-enlaces entre vistas de módulos distintos se escriben `../Modulo/archivo.php`, y los
-assets siempre `../assets/...`.
+- Carpetas: un módulo por carpeta en `View/`, con su `Controller/XController.php` y
+  `Model/XModel.php`.
+- Funciones en PascalCase: `ConsultarUsuarioModel`, `RegistrarProductoModel`. Las del Model
+  terminan en `Model`.
+- Procedimientos almacenados con prefijo `sp`, tablas con prefijo `t`, llave primaria
+  `Consecutivo`, borrado lógico con la columna `Estado`.
+- Botones de formulario con prefijo `btn` (`btnRegistro`), campos con prefijo `txt`.
+- Todo acceso a la base de datos pasa por `Procedimiento()` de `ConfigModel.php`, que escapa
+  los parámetros. Las contraseñas se guardan con `password_hash`.
+- Todo formulario privado lleva `<?php CampoCsrf(); ?>`.
+- Comentarios en español, explicando el porqué y no el qué.
 
-### Layouts
+## Funcionalidades de esta entrega
 
-Las partes comunes de la interfaz viven en los layouts y se insertan en las vistas
-con `include_once`:
+- Registro, inicio y cierre de sesión, recuperación (contraseña temporal por correo) y cambio
+  de contraseña; correo de bienvenida y de pago confirmado.
+- Roles Cliente y Administrador con control de acceso por vista.
+- Cuenta del usuario y direcciones de entrega.
+- Catálogo público con filtros, detalle con presentaciones (variantes) y carrito.
+- Compra con IVA de 13 %, envío fijo de ₡2.500 y pago simulado (tarjeta o SINPE Móvil);
+  el stock se descuenta al pagar.
+- Administrador: productos, presentaciones y stock, categorías, marcas, métodos de pago,
+  pedidos con cambio de estado, usuarios y reportes básicos.
 
-- `layoutExterno.php`: `IncludeCSS()`, `MostrarLogo()`, `IncludeJS()`
-- `layoutInterno.php`: `IncludeCSS()`, `MostrarHeader()`, `MostrarSidebar()`, `MostrarFooter()`, `IncludeJS()`
+## Con Docker (solo para quien lo use)
 
-## Cómo levantar el proyecto
-
-### Con XAMPP
-
-1. Copiar la carpeta `lifty` dentro de `htdocs`.
-2. Iniciar Apache desde el panel de XAMPP.
-3. Abrir <http://localhost/lifty>.
-
-### Con Docker
-
-Desde la carpeta que contiene este repositorio:
+El profesor y el resto del equipo usan XAMPP. Quien desarrolla con Docker usa la carpeta `docker/`,
+que se conecta a un contenedor MySQL que ya exista en la máquina (red `mysql_default`):
 
 ```bash
+cd docker
+cp .env.example .env     # ajustar DB_PASS (el archivo .env no se sube al repositorio)
 docker compose up -d
 ```
 
-La aplicación queda disponible en <http://localhost:8080>. Para detenerla:
-
-```bash
-docker compose down
-```
+La aplicación queda en <http://localhost:8080/lifty>.
 
 ## Flujo de trabajo
 
-El repositorio trabaja con **feature branches**. Nunca se hace commit directo a `main`.
-
-1. Actualizar `main`:
-
-   ```bash
-   git checkout main
-   git pull origin main
-   ```
-
-2. Crear la rama de la tarea:
-
-   ```bash
-   git checkout -b feat/nombre-de-la-tarea
-   ```
-
-3. Hacer commits con el formato `keyword(scope): mensaje` en inglés:
-
-   ```
-   feat(login): add sign in form validation
-   fix(register): correct password confirmation check
-   docs(readme): update project structure
-   style(home): adjust dashboard card spacing
-   ```
-
-   Keywords: `feat`, `fix`, `docs`, `style`, `refactor`, `chore`.
-
-4. Subir la rama y abrir un **Pull Request hacia `main`**:
-
-   ```bash
-   git push -u origin feat/nombre-de-la-tarea
-   ```
-
-5. El PR debe ser revisado por al menos un compañero antes del merge.
-
-Reglas:
-
-- Toda rama sale de `main` y regresa a `main` por PR.
-- Prohibido hacer push directo a `main`.
-- Una rama por funcionalidad o vista.
+El repositorio trabaja con **feature branches**; nunca se hace commit directo a `main`.
+Commits con el formato `tipo(alcance): mensaje` en inglés (`feat`, `fix`, `docs`, `style`,
+`refactor`, `chore`) y Pull Request hacia `main` revisado por al menos un compañero.
 
 ## Créditos
 
-La interfaz parte de la plantilla **InApp Inventory Dashboard**, distribuida por
-ThemeWagon y desarrollada por CodesCandy bajo licencia MIT.
-
-- Plantilla: <https://themewagon.com/themes/inapp/>
-
-La plantilla fue adaptada al tema del proyecto: se reorganizó bajo el patrón MVC, se
-tradujo al español, se reemplazó la marca y los datos de ejemplo por los de Lifty, y
-se eliminaron las secciones e imágenes que no forman parte del alcance.
+La interfaz parte de la plantilla **InApp Inventory Dashboard** (ThemeWagon, CodesCandy,
+licencia MIT), adaptada al tema del proyecto: <https://themewagon.com/themes/inapp/>

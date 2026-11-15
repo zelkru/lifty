@@ -1,3 +1,3 @@
 <?php
-    header("Location: View/Inicio/login.php");
+    header("Location: View/Catalogo/home.php");
     exit();

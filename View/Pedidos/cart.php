@@ -5,8 +5,8 @@ include_once __DIR__ . '/../../Controller/PedidosController.php';
 ValidarCliente();
 
 $carrito = ConsultarCarrito();
-$direcciones = ConsultarDireccionesModel($_SESSION['ConsecutivoUsuario']);
-$metodos = ConsultarMetodosPagoModel(1);
+$direcciones = ConsultarDireccionesCliente();
+$metodos = ConsultarMetodosPagoActivos();
 $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
 ?>
 
@@ -104,7 +104,7 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
                     <div class="l-card l-card-body mb-3">
                         <h2 class="l-card-title"><i class="ti ti-credit-card"></i> Pago <span class="badge text-bg-light border fw-normal">Simulado</span></h2>
                         <div class="pago-tabs">
-                            <?php foreach ($metodos as $i => $m) { $esSinpe = stripos($m['Nombre'], 'SINPE') !== false; ?>
+                            <?php foreach ($metodos as $i => $m) { $esSinpe = EsMetodoSinpe($m['Nombre']); ?>
                                 <div>
                                     <input class="btn-check metodo-pago" type="radio" name="txtMetodoPago" id="metodo<?php echo $m['Consecutivo']; ?>"
                                            value="<?php echo $m['Consecutivo']; ?>" data-tipo="<?php echo $esSinpe ? 'sinpe' : 'tarjeta'; ?>" <?php echo $i == 0 ? 'checked' : ''; ?> required>
@@ -141,24 +141,7 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
     </main>
 
     <?php IncludeJS(); ?>
-    <script>
-        $(function () {
-            function mostrarPago() {
-                var tipo = $('.metodo-pago:checked').data('tipo');
-                $('.pay-box').removeClass('active').filter('[data-tipo="' + tipo + '"]').addClass('active');
-            }
-            $('.metodo-pago').on('change', mostrarPago);
-            mostrarPago();
-
-            $('.form-cantidad').each(function () {
-                var $f = $(this), $c = $f.find('input[type=number]');
-                var max = parseInt($c.attr('max'), 10);
-                $f.find('.mas').on('click', function () { if (parseInt($c.val(), 10) < max) { $c.val(parseInt($c.val(), 10) + 1); $f[0].submit(); } });
-                $f.find('.menos').on('click', function () { var v = parseInt($c.val(), 10) - 1; $c.val(v < 1 ? 0 : v); $f[0].submit(); });
-                $c.on('change', function () { $f[0].submit(); });
-            });
-        });
-    </script>
+    <script src="../assets/js/carrito.js"></script>
 
 </body>
 

@@ -2,38 +2,7 @@
 include_once __DIR__ . '/../layoutInterno.php';
 include_once __DIR__ . '/../../Controller/CatalogoController.php';
 
-const PRODUCTOS_POR_CATEGORIA = 4;
-
-$categorias = ConsultarFiltrosCategorias();
-$marcas = ConsultarFiltrosMarcas();
-
-$destacado = null;
-foreach (ConsultarCatalogo(0, 0, '', 6, 0) as $p) {
-    if ($p['StockTotal'] > 0) {
-        $destacado = $p;
-        break;
-    }
-}
-
-$secciones = [];
-foreach ($categorias as $c) {
-    $secciones[] = [
-        'Categoria' => $c,
-        'Total' => ContarCatalogo($c['Consecutivo'], 0, ''),
-        'Productos' => ConsultarCatalogo($c['Consecutivo'], 0, '', PRODUCTOS_POR_CATEGORIA, 0),
-    ];
-}
-
-function Palabras($texto, $claseUltima = '', $clasePrimera = '')
-{
-    $palabras = preg_split('/\s+/', trim($texto));
-    $html = '';
-    foreach ($palabras as $i => $palabra) {
-        $clase = ($i == count($palabras) - 1 ? $claseUltima : '') . ($i == 0 ? ' ' . $clasePrimera : '');
-        $html .= '<span class="pal ' . $clase . '"><span style="--d:' . (150 + $i * 110) . 'ms">' . Texto($palabra) . '</span></span> ';
-    }
-    return $html;
-}
+$secciones = ConsultarSeccionesInicio();
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +41,7 @@ function Palabras($texto, $claseUltima = '', $clasePrimera = '')
         <div class="cinta-caja" aria-hidden="true">
             <div class="cinta">
                 <div class="cinta-pista" id="cintaPista">
-                    <?php for ($r = 0; $r < 6; $r++) { foreach ($categorias as $c) { ?>
+                    <?php for ($r = 0; $r < 6; $r++) { foreach ($secciones as $s) { $c = $s['Categoria']; ?>
                         <span><?php echo Texto($c['Nombre']); ?></span><span><i class="ti <?php echo IconoCategoria($c['Nombre']); ?>"></i></span>
                     <?php } } ?>
                 </div>

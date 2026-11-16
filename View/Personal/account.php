@@ -181,11 +181,7 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
     <?php } ?>
 
     <?php IncludeJS(); ?>
-    <script>
-        $('#modalDireccion form').on('submit', function () {
-            $('#btnGuardarDireccion').attr('name', $(this).find('[name="txtConsecutivo"]').val() ? 'btnActualizarDireccion' : 'btnRegistrarDireccion');
-        });
-    </script>
+    <script src="../assets/js/cuenta.js"></script>
 
 </body>
 

@@ -14,7 +14,7 @@ if (!$pedido) {
 $detalle = ConsultarDetallePedido($pedido['Consecutivo']);
 $esAdmin = EsAdministrador();
 $siguientes = TransicionesPedido($pedido['EstadoPedido']);
-$esSinpe = stripos($pedido['NombreMetodoPago'], 'SINPE') !== false;
+$esSinpe = EsMetodoSinpe($pedido['NombreMetodoPago']);
 
 $pasos = ['Pendiente', 'Pagado', 'Enviado', 'Entregado'];
 $indice = array_search($pedido['EstadoPedido'], $pasos);

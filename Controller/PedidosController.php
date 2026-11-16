@@ -4,6 +4,8 @@ include_once __DIR__ . '/../Model/InventarioModel.php';
 include_once __DIR__ . '/../Model/PersonalModel.php';
 include_once __DIR__ . '/ConfigController.php';
 
+const ESTADOS_PEDIDO = ['Pendiente', 'Pagado', 'Enviado', 'Entregado', 'Cancelado'];
+
 function TransicionesPedido($estadoActual)
 {
     $transiciones = [
@@ -110,7 +112,7 @@ if (isset($_POST['btnQuitarCarrito'])) {
 
 function ValidarPagoSimulado($nombreMetodo)
 {
-    if (stripos($nombreMetodo, 'SINPE') !== false) {
+    if (EsMetodoSinpe($nombreMetodo)) {
         return preg_match('/^[0-9]{8}$/', LeerTexto('txtTelefonoSinpe')) ? '' : 'Ingrese el número de teléfono SINPE Móvil (8 dígitos).';
     }
 
@@ -132,9 +134,24 @@ function ValidarPagoSimulado($nombreMetodo)
     return '';
 }
 
+function ConsultarMetodosPagoActivos()
+{
+    return ConsultarMetodosPagoModel(1);
+}
+
+function ConsultarDireccionesCliente()
+{
+    return ConsultarDireccionesModel($_SESSION['ConsecutivoUsuario']);
+}
+
+function EsMetodoSinpe($nombreMetodo)
+{
+    return stripos($nombreMetodo, 'SINPE') !== false;
+}
+
 function ConsultarMetodoPagoActivo($consecutivo)
 {
-    foreach (ConsultarMetodosPagoModel(1) as $metodo) {
+    foreach (ConsultarMetodosPagoActivos() as $metodo) {
         if ($metodo['Consecutivo'] == $consecutivo) {
             return $metodo;
         }
@@ -165,7 +182,7 @@ if (isset($_POST['btnConfirmarCompra'])) {
     $metodo = ConsultarMetodoPagoActivo(LeerEntero('txtMetodoPago'));
     $direccionValida = false;
 
-    foreach (ConsultarDireccionesModel($_SESSION['ConsecutivoUsuario']) as $d) {
+    foreach (ConsultarDireccionesCliente() as $d) {
         if ($d['Consecutivo'] == $direccion) {
             $direccionValida = true;
         }
@@ -247,6 +264,15 @@ if (isset($_POST['btnPagarPedido'])) {
 function ConsultarPedidos()
 {
     return ConsultarPedidosModel(EsAdministrador() ? 0 : $_SESSION['ConsecutivoUsuario']);
+}
+
+function ConsultarPedidosPorEstado($estado)
+{
+    $pedidos = ConsultarPedidos();
+    if (EsAdministrador() || $estado == '') {
+        return $pedidos;
+    }
+    return array_filter($pedidos, function ($p) use ($estado) { return $p['EstadoPedido'] == $estado; });
 }
 
 function ConsultarPedido($consecutivo)

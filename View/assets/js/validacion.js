@@ -88,3 +88,7 @@ $(function () {
         }
     });
 });
+
+$(document).on('change', 'select[data-autoenvio]', function () {
+    this.form.submit();
+});

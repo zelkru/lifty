@@ -6,12 +6,8 @@ ValidarSesion();
 
 $esAdmin = EsAdministrador();
 $estadoFiltro = $_GET['estado'] ?? '';
-$pedidos = ConsultarPedidos();
-
-if (!$esAdmin && $estadoFiltro != '') {
-    $pedidos = array_filter($pedidos, function ($p) use ($estadoFiltro) { return $p['EstadoPedido'] == $estadoFiltro; });
-}
-$estados = ['Pendiente', 'Pagado', 'Enviado', 'Entregado', 'Cancelado'];
+$pedidos = ConsultarPedidosPorEstado($estadoFiltro);
+$estados = ESTADOS_PEDIDO;
 $iconoEstado = ['Pendiente' => 'ti-clock', 'Pagado' => 'ti-circle-check', 'Enviado' => 'ti-truck-delivery', 'Entregado' => 'ti-package', 'Cancelado' => 'ti-circle-x'];
 $metodos = array_values(array_unique(array_column($pedidos, 'NombreMetodoPago')));
 ?>
@@ -36,7 +32,7 @@ $metodos = array_values(array_unique(array_column($pedidos, 'NombreMetodoPago'))
                 </div>
                 <?php if (!$esAdmin) { ?>
                     <form method="GET" class="d-flex gap-2">
-                        <select name="estado" class="form-select" aria-label="Filtrar por estado" onchange="this.form.submit()">
+                        <select name="estado" class="form-select" aria-label="Filtrar por estado" data-autoenvio>
                             <option value="">Todos los estados</option>
                             <?php foreach ($estados as $e) { ?>
                                 <option value="<?php echo $e; ?>" <?php echo $estadoFiltro == $e ? 'selected' : ''; ?>><?php echo $e; ?></option>
@@ -112,7 +108,7 @@ $metodos = array_values(array_unique(array_column($pedidos, 'NombreMetodoPago'))
                                             <form action="" method="POST" class="d-inline-flex gap-1 m-0 align-middle">
                                                 <?php CampoCsrf(); ?>
                                                 <input type="hidden" name="txtConsecutivo" value="<?php echo $p['Consecutivo']; ?>">
-                                                <select name="txtEstadoPedido" class="form-select form-select-sm" style="width: auto;" aria-label="Nuevo estado">
+                                                <select name="txtEstadoPedido" class="form-select form-select-sm select-auto" aria-label="Nuevo estado">
                                                     <?php foreach ($siguientes as $s) { ?><option value="<?php echo $s; ?>"><?php echo $s; ?></option><?php } ?>
                                                 </select>
                                                 <button type="submit" name="btnCambiarEstadoPedido" class="btn btn-primary btn-sm"><i class="ti ti-refresh"></i> Cambiar</button>

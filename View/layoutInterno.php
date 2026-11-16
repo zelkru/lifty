@@ -246,10 +246,14 @@ function MostrarHeader()
     ';
 }
 
-function EnlaceMenu($destino, $icono, $texto)
+function EnlaceMenu($destino, $icono, $texto, $nuevaPestana = false)
 {
-    $activo = basename($_SERVER['SCRIPT_NAME']) == basename($destino) ? ' active' : '';
-    return '<li><a class="nav-link' . $activo . '" href="' . $destino . '"><i class="ti ' . $icono . '"></i><span class="nav-text">' . $texto . '</span></a></li>';
+    /* Se compara carpeta y archivo: Inicio/home.php y Catalogo/home.php no son la misma pagina. */
+    $actual = basename(dirname($_SERVER['SCRIPT_NAME'])) . '/' . basename($_SERVER['SCRIPT_NAME']);
+    $enlace = basename(dirname($destino)) . '/' . basename($destino);
+    $activo = (!$nuevaPestana && $actual == $enlace) ? ' active' : '';
+    $extra = $nuevaPestana ? ' target="_blank" rel="noopener"><i class="ti ' . $icono . '"></i><span class="nav-text">' . $texto . '</span><i class="ti ti-external-link ms-auto small opacity-50"></i></a></li>' : '><i class="ti ' . $icono . '"></i><span class="nav-text">' . $texto . '</span></a></li>';
+    return '<li><a class="nav-link' . $activo . '" href="' . $destino . '"' . $extra;
 }
 
 function MostrarSidebar()
@@ -273,7 +277,7 @@ function MostrarSidebar()
         echo EnlaceMenu('../Pedidos/orders.php', 'ti-shopping-cart', 'Pedidos');
         echo EnlaceMenu('../Personal/users.php', 'ti-users', 'Usuarios');
         echo EnlaceMenu('../Reportes/reports.php', 'ti-chart-bar', 'Reportes');
-        echo EnlaceMenu('../Catalogo/home.php', 'ti-building-store', 'Ver tienda');
+        echo EnlaceMenu('../Catalogo/home.php', 'ti-building-store', 'Ver tienda', true);
     }
     else {
         echo EnlaceMenu('../Catalogo/catalog.php', 'ti-building-store', 'Catálogo');

@@ -111,3 +111,30 @@ tr.fila-oculta { display: none !important; }
   .barra-filtros label.fecha { flex: 1 1 45%; }
   .tabla-pie { justify-content: center; }
 }
+
+/* Animaciones de aparicion del panel (mismo lenguaje que la tienda). */
+@keyframes panel-subir { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes panel-fila { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+.content .container-fluid > .page-head,
+.content .container-fluid > .l-card,
+.content .container-fluid > .row > [class*="col"],
+.content .container-fluid > form { animation: panel-subir .65s cubic-bezier(.2, .7, .2, 1) both; }
+.content .container-fluid > .page-head { animation-delay: .02s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(1) { animation-delay: .10s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(2) { animation-delay: .17s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(3) { animation-delay: .24s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(4) { animation-delay: .31s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(5) { animation-delay: .38s; }
+.content .container-fluid > .row > [class*="col"]:nth-child(n+6) { animation-delay: .45s; }
+.content .container-fluid > .l-card { animation-delay: .12s; }
+.l-table tbody tr { animation: panel-fila .5s cubic-bezier(.2, .7, .2, 1) both; }
+.l-table tbody tr:nth-child(1) { animation-delay: .25s; } .l-table tbody tr:nth-child(2) { animation-delay: .30s; }
+.l-table tbody tr:nth-child(3) { animation-delay: .35s; } .l-table tbody tr:nth-child(4) { animation-delay: .40s; }
+.l-table tbody tr:nth-child(5) { animation-delay: .45s; } .l-table tbody tr:nth-child(n+6) { animation-delay: .5s; }
+.sidebar .nav > li { animation: panel-fila .5s cubic-bezier(.2, .7, .2, 1) both; }
+.sidebar .nav > li:nth-child(2) { animation-delay: .05s; } .sidebar .nav > li:nth-child(3) { animation-delay: .1s; }
+.sidebar .nav > li:nth-child(4) { animation-delay: .15s; } .sidebar .nav > li:nth-child(5) { animation-delay: .2s; }
+.sidebar .nav > li:nth-child(6) { animation-delay: .25s; } .sidebar .nav > li:nth-child(n+7) { animation-delay: .3s; }
+@media (prefers-reduced-motion: reduce) {
+  .content .container-fluid > *, .content .container-fluid > .row > [class*="col"], .l-table tbody tr, .sidebar .nav > li { animation: none !important; }
+}

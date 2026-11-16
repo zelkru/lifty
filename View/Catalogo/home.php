@@ -2,13 +2,11 @@
 include_once __DIR__ . '/../layoutInterno.php';
 include_once __DIR__ . '/../../Controller/CatalogoController.php';
 
-/* Inicio de la tienda: vista general. Pocos productos por categoria y enlace al catalogo completo. */
 const PRODUCTOS_POR_CATEGORIA = 4;
 
 $categorias = ConsultarFiltrosCategorias();
 $marcas = ConsultarFiltrosMarcas();
 
-/* Producto destacado de la portada: el marcado como destacado (la consulta lo trae primero) o el primero con existencias. */
 $destacado = null;
 foreach (ConsultarCatalogo(0, 0, '', 6, 0) as $p) {
     if ($p['StockTotal'] > 0) {
@@ -17,7 +15,6 @@ foreach (ConsultarCatalogo(0, 0, '', 6, 0) as $p) {
     }
 }
 
-/* Vista previa de cada categoria */
 $secciones = [];
 foreach ($categorias as $c) {
     $secciones[] = [
@@ -27,7 +24,6 @@ foreach ($categorias as $c) {
     ];
 }
 
-/* Cada palabra del titular entra por separado (la animacion esta en el CSS). */
 function Palabras($texto, $claseUltima = '', $clasePrimera = '')
 {
     $palabras = preg_split('/\s+/', trim($texto));

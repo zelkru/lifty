@@ -2,7 +2,6 @@
 include_once __DIR__ . '/../Model/InicioModel.php';
 include_once __DIR__ . '/ConfigController.php';
 
-/* Longitud minima de contrasena y formato de telefono (8 digitos, Costa Rica). */
 const LARGO_MINIMO_CONTRASENNA = 8;
 
 function ValidarContrasenna($contrasenna)
@@ -89,7 +88,6 @@ if (isset($_POST['btnRecuperarContrasenna'])) {
         }
     }
 
-    // La respuesta es la misma exista o no el correo, para no revelar qué cuentas están registradas.
     AsignarMensaje('Si el correo está registrado, le enviamos una contraseña temporal. Revise su bandeja de entrada.', 'info');
     Redirigir('login.php');
 }

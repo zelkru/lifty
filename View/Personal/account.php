@@ -182,7 +182,6 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
 
     <?php IncludeJS(); ?>
     <script>
-        /* Un solo modal sirve para crear y editar: el botón cambia según haya consecutivo. */
         $('#modalDireccion form').on('submit', function () {
             $('#btnGuardarDireccion').attr('name', $(this).find('[name="txtConsecutivo"]').val() ? 'btnActualizarDireccion' : 'btnRegistrarDireccion');
         });

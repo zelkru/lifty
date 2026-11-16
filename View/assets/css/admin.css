@@ -1,14 +1,8 @@
-/*
- * Panel de administracion de Lifty.
- * Misma marca que la tienda: tipografia condensada en titulares, naranja ember, fondo calido.
- * Se carga solo en las vistas con menu lateral.
- */
 :root { --ember: #ff5a2c; --ink: #0b0b0e; --paper: #f5f2ed; }
 
 body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; color: var(--ink); }
 .content { background: transparent; }
 
-/* ---------- Titulares y textos ---------- */
 .page-head h1 { font-family: 'Big Shoulders Display', 'Impact', sans-serif; font-weight: 900; text-transform: uppercase; font-size: clamp(2.4rem, 4.5vw, 3.6rem); line-height: .9; letter-spacing: 0; }
 .page-head p { font-size: 1rem; color: #6b6256; max-width: 620px; }
 .l-card-title, .modal-title { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 0; }
@@ -16,7 +10,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .modal-title { font-size: 1.7rem; }
 .form-label { font-weight: 700; font-size: .85rem; }
 
-/* ---------- Barra lateral ---------- */
 .sidebar { background: var(--ink); border-right: 0; }
 .sidebar .logo-area { border-bottom: 1px solid rgba(255, 255, 255, .08); }
 .admin-logo { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 2rem; letter-spacing: .02em; color: #fff; line-height: 1; }
@@ -29,7 +22,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .sidebar .nav-link.active { background: var(--ember); color: #fff; }
 .sidebar .nav-link.active .ti { color: #fff; }
 
-/* ---------- Barra superior ---------- */
 .topbar { background: #fff !important; border-bottom: 1px solid rgba(11, 11, 14, .08) !important; }
 .admin-usuario { display: inline-flex; align-items: center; gap: .6rem; padding: .3rem .7rem .3rem .35rem; border-radius: 999px; color: var(--ink); transition: background .15s; }
 .admin-usuario:hover { background: var(--paper); color: var(--ink); }
@@ -39,7 +31,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .admin-usuario-texto small { color: #8a7f70; font-weight: 700; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
 .dropdown-menu { border: 0; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, .18); }
 
-/* ---------- Tarjetas, botones y formularios ---------- */
 .l-card { background: #fff; border: 1px solid rgba(11, 11, 14, .08); border-radius: 22px; box-shadow: none; }
 .stat-card { padding: 1.3rem 1.4rem; align-items: flex-end; gap: 1rem; }
 .stat-icon { background: none; color: var(--ember); font-size: 1.9rem; width: auto; height: auto; align-self: flex-start; }
@@ -58,7 +49,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .modal-content { border: 0; border-radius: 24px; }
 .badge { font-weight: 800; letter-spacing: .04em; }
 
-/* ---------- Tablas ---------- */
 .l-table th { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #8a7f70; background: #fbf9f6; padding: .9rem 1rem; }
 .l-table td { padding: .9rem 1rem; vertical-align: middle; }
 .l-table tbody tr { transition: background .15s; }
@@ -66,7 +56,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .cart-thumb { background: #ece7df; color: var(--ink); font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 1.5rem; }
 tr.fila-oculta { display: none !important; }
 
-/* ---------- Responsive: encabezado y tablas apiladas ---------- */
 .page-head { gap: 1rem; }
 .page-head > div:last-child { max-width: 100%; }
 @media (max-width: 767.98px) {
@@ -88,8 +77,6 @@ tr.fila-oculta { display: none !important; }
 .sidebar .logo-area { background: var(--ink); }
 .admin-logo, .admin-logo .logo-text { color: #fff; }
 
-
-/* ---------- Filtros, orden y paginacion de las tablas ---------- */
 .barra-filtros { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-bottom: 1.1rem; }
 .barra-filtros .form-control, .barra-filtros .form-select { width: auto; min-width: 170px; flex: 0 1 auto; }
 .barra-filtros .ft-buscar { min-width: 240px; flex: 1 1 240px; max-width: 360px; }
@@ -104,7 +91,6 @@ tr.fila-oculta { display: none !important; }
 .tabla-paginas { display: flex; gap: .3rem; align-items: center; }
 .tabla-paginas .btn { min-width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
 
-/* Selectores: la flecha ya no tapa el texto */
 .form-select { padding-right: 2.6rem; background-position: right 1rem center; background-size: 14px 10px; }
 @media (max-width: 767.98px) {
   .barra-filtros .form-control, .barra-filtros .form-select, .barra-filtros .ft-buscar { width: 100%; max-width: none; flex: 1 1 100%; }
@@ -112,7 +98,6 @@ tr.fila-oculta { display: none !important; }
   .tabla-pie { justify-content: center; }
 }
 
-/* Animaciones de aparicion del panel (mismo lenguaje que la tienda). */
 @keyframes panel-subir { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @keyframes panel-fila { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
 .content .container-fluid > .page-head,

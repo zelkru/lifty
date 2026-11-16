@@ -1,13 +1,7 @@
 <?php
-/* Layout de las vistas con barra lateral: catalogo publico y modulos privados. */
 include_once __DIR__ . '/../Controller/ConfigController.php';
 include_once __DIR__ . '/../Model/InventarioModel.php';
 
-/*
- * La tienda (visitantes, clientes y el catalogo visto por el administrador) usa una barra
- * superior. El menu lateral es solo del panel de administracion.
- */
-/* Agrega la fecha del archivo a su direccion para que el navegador no use una copia vieja. */
 function Version($ruta)
 {
     $archivo = __DIR__ . '/' . $ruta;
@@ -19,10 +13,6 @@ function UsaTienda()
     return !EsAdministrador() || basename(dirname($_SERVER['SCRIPT_NAME'])) == 'Catalogo';
 }
 
-/*
- * Direccion de la imagen del producto. Acepta una URL completa o el nombre de un archivo
- * guardado en View/assets/img/productos/ (por ejemplo "whey-chocolate.png").
- */
 function ImagenUrl($imagen)
 {
     if ($imagen == '') {
@@ -34,11 +24,6 @@ function ImagenUrl($imagen)
     return '../assets/img/productos/' . rawurlencode($imagen);
 }
 
-/*
- * Imagen del producto: la foto si tiene una. Sin foto se muestra un bloque tipografico
- * con el nombre (nunca un icono), para que el catalogo se vea bien mientras se cargan fotos.
- */
-/* Tarjeta de producto del inicio y del catalogo. */
 function TarjetaProducto($p)
 {
     $agotado = $p['StockTotal'] <= 0 ? '<span class="agotado">Agotado</span>' : '';
@@ -90,7 +75,6 @@ function IncludeCSS($titulo = 'Lifty - Suplementos deportivos')
     ';
 }
 
-/* Icono de Tabler segun el nombre de la categoria (si no hay coincidencia, una etiqueta). */
 function IconoCategoria($nombre)
 {
     $iconos = ['suplement' => 'ti-pill', 'ropa' => 'ti-shirt', 'snack' => 'ti-cookie', 'bebida' => 'ti-bottle', 'accesorio' => 'ti-barbell'];
@@ -102,10 +86,6 @@ function IconoCategoria($nombre)
     return 'ti-tag';
 }
 
-/*
- * Barra superior de la tienda: ancho completo y fija, sin menu lateral.
- * Las secciones del menu son las categorias activas de la base de datos (maximo 5).
- */
 function MostrarHeaderTienda()
 {
     $cantidad = EsCliente() ? count($_SESSION['Carrito'] ?? []) : 0;
@@ -248,7 +228,6 @@ function MostrarHeader()
 
 function EnlaceMenu($destino, $icono, $texto, $nuevaPestana = false)
 {
-    /* Se compara carpeta y archivo: Inicio/home.php y Catalogo/home.php no son la misma pagina. */
     $actual = basename(dirname($_SERVER['SCRIPT_NAME'])) . '/' . basename($_SERVER['SCRIPT_NAME']);
     $enlace = basename(dirname($destino)) . '/' . basename($destino);
     $activo = (!$nuevaPestana && $actual == $enlace) ? ' active' : '';

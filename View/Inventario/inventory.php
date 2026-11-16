@@ -172,7 +172,6 @@ $todasMarcas = ConsultarMarcas();
 
     <?php IncludeJS(); ?>
     <script>
-        /* Un solo modal sirve para crear y editar. */
         $('#modalProducto form').on('submit', function () {
             var editando = $(this).find('[name="txtConsecutivo"]').val() !== '';
             $('#btnGuardarProducto').attr('name', editando ? 'btnActualizarProducto' : 'btnRegistrarProducto');

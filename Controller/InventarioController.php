@@ -2,7 +2,6 @@
 include_once __DIR__ . '/../Model/InventarioModel.php';
 include_once __DIR__ . '/ConfigController.php';
 
-/* Estas acciones solo las puede ejecutar el administrador. */
 function ValidarAccionAdmin()
 {
     if (!EsAdministrador()) {
@@ -10,8 +9,6 @@ function ValidarAccionAdmin()
         Redirigir('../Inicio/login.php');
     }
 }
-
-/* ---------- Consultas para las vistas ---------- */
 
 function ConsultarProductosAdmin()
 {
@@ -42,8 +39,6 @@ function ConsultarMetodosPago($soloActivos = false)
 {
     return ConsultarMetodosPagoModel($soloActivos ? 1 : 0);
 }
-
-/* ---------- Productos ---------- */
 
 function LeerProducto()
 {
@@ -99,8 +94,6 @@ if (isset($_POST['btnActualizarProducto'])) {
 
     Redirigir($retorno);
 }
-
-/* ---------- Variantes ---------- */
 
 function LeerVariante()
 {
@@ -164,8 +157,6 @@ if (isset($_POST['btnActualizarVariante'])) {
 
     Redirigir('variants.php?id=' . $producto);
 }
-
-/* ---------- Categorias, marcas y metodos de pago ---------- */
 
 function GuardarMaestro($tipo, $registrar, $actualizar)
 {

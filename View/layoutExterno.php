@@ -1,5 +1,4 @@
 <?php
-/* Layout de las vistas publicas de acceso (login, registro, recuperar contrasena). */
 
 function IncludeCSS($titulo = 'Lifty - Suplementos deportivos')
 {
@@ -24,10 +23,6 @@ function MostrarLogo()
     echo '<a href="../Catalogo/catalog.php" class="auth-logo">LIFTY<span>.</span></a>';
 }
 
-/*
- * Panel visual de las pantallas de acceso: filas de palabras fitness en diagonal que se
- * desplazan en sentidos alternos. Solo texto y CSS.
- */
 function MostrarArteAuth()
 {
     $filas = [

@@ -4,10 +4,7 @@ include_once __DIR__ . '/../Model/PersonalModel.php';
 include_once __DIR__ . '/ConfigController.php';
 include_once __DIR__ . '/InicioController.php';
 
-/* Todo lo de este controlador requiere una sesion iniciada. */
 ValidarSesion();
-
-/* ---------- Cuenta del usuario ---------- */
 
 function ConsultarUsuario()
 {
@@ -75,8 +72,6 @@ if (isset($_POST['btnCambiarDatosCuenta'])) {
     Redirigir('account.php');
 }
 
-/* ---------- Direcciones de entrega (solo clientes) ---------- */
-
 function LeerDireccion()
 {
     return [LeerTexto('txtProvincia'), LeerTexto('txtCanton'), LeerTexto('txtDistrito'), LeerTexto('txtDetalle'), LeerTexto('txtCodigoPostal')];
@@ -130,8 +125,6 @@ if (isset($_POST['btnInactivarDireccion'])) {
     Redirigir('account.php');
 }
 
-/* ---------- Gestion de usuarios (administrador) ---------- */
-
 function ConsultarUsuarios()
 {
     return ConsultarUsuariosModel();
@@ -162,7 +155,6 @@ function ConsultarRoles()
     return ConsultarRolesModel();
 }
 
-/* Crea (sin consecutivo) o edita (con consecutivo) un usuario. Solo el administrador. */
 if (isset($_POST['btnGuardarUsuario'])) {
     $consecutivo = LeerEntero('txtConsecutivo');
     $nombre = LeerTexto('txtNombre');
@@ -176,7 +168,6 @@ if (isset($_POST['btnGuardarUsuario'])) {
     $esUnoMismo = $consecutivo > 0 && $consecutivo == $_SESSION['ConsecutivoUsuario'];
 
     if ($esUnoMismo) {
-        /* Para no perder el acceso, el administrador no cambia su propio rol ni su estado. */
         $rol = $_SESSION['ConsecutivoRol'];
         $estado = 1;
     }

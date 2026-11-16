@@ -53,7 +53,7 @@ function Palabras($texto, $claseUltima = '', $clasePrimera = '')
     <main id="content" class="content con-hero">
 
         <section class="hero-x" id="hero">
-            <div class="hero-grid <?php echo ($destacado && $destacado['Imagen'] != '') ? '' : 'solo'; ?>">
+            <div class="hero-grid">
                 <div>
                     <p class="hero-meta">Envío fijo ₡2.500 &middot; Pago simulado</p>
                     <h1 class="display">
@@ -67,11 +67,9 @@ function Palabras($texto, $claseUltima = '', $clasePrimera = '')
                     </div>
                 </div>
 
-                <?php if ($destacado && $destacado['Imagen'] != '') { ?>
-                    <a href="product.php?id=<?php echo $destacado['Consecutivo']; ?>" class="hero-foto" aria-label="<?php echo Texto($destacado['Nombre']); ?>">
-                        <img src="<?php echo Texto(ImagenUrl($destacado['Imagen'])); ?>" alt="<?php echo Texto($destacado['Nombre']); ?>">
-                    </a>
-                <?php } ?>
+                <a href="catalog.php" class="hero-foto" aria-label="Ver el catálogo de Lifty">
+                    <img src="../assets/img/hero-set.png" alt="Set de productos Lifty: proteína, creatina, shaker, camiseta y guantes">
+                </a>
             </div>
         </section>
 

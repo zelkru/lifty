@@ -413,3 +413,7 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 /* Las fotos de producto traen su propio fondo de estudio: llenan todo el marco, sin caja visible. */
 .pcard .escena, .escenario-producto, .item-carrito .foto, .ficha-hero .escena { background: #e9e9ea; }
 .pcard .escena img, .escenario-producto img, .item-carrito .foto img, .ficha-hero .escena img { object-fit: cover; padding: 0; }
+
+/* Hero: la imagen se funde con el fondo oscuro (sin caja) y sus bordes se desvanecen. */
+.hero-foto { width: min(100%, 640px); }
+.hero-foto img { mix-blend-mode: lighten; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }

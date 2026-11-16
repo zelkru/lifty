@@ -42,8 +42,17 @@ contraseña. Si su MySQL de XAMPP usa el puerto 3306, cambie `3307` por `3306` e
 ## Correo
 
 Sin configurar, los correos se simulan (quedan en el log de errores de PHP). Para enviarlos
-de verdad defina las variables de entorno `MAIL_USER` y `MAIL_PASS` (cuenta de Gmail con
-contraseña de aplicación).
+de verdad defina estas variables de entorno con los datos de su servidor SMTP:
+
+| Variable | Descripción | Ejemplo |
+|---|---|---|
+| `MAIL_HOST` | Servidor SMTP (si falta, el envío se simula) | `mail.midominio.com` |
+| `MAIL_PORT` | Puerto (587 por defecto) | `587` |
+| `MAIL_SECURE` | `tls` (por defecto), `ssl` o `none` | `tls` |
+| `MAIL_USER` | Usuario SMTP | `no-reply@midominio.com` |
+| `MAIL_PASS` | Contraseña SMTP | |
+| `MAIL_FROM` | Remitente (por defecto `MAIL_USER`) | `no-reply@midominio.com` |
+| `MAIL_FROM_NAME` | Nombre del remitente (por defecto `Lifty`) | `Lifty` |
 
 ## Estructura
 
@@ -86,6 +95,19 @@ lifty/
   el stock se descuenta al pagar.
 - Administrador: productos, presentaciones y stock, categorías, marcas, métodos de pago,
   pedidos con cambio de estado, usuarios y reportes básicos.
+
+## Con Docker (solo para quien lo use)
+
+El profesor y el resto del equipo usan XAMPP. Quien desarrolla con Docker usa los archivos
+`docker-compose.yml` y `.env.example` que están una carpeta arriba de `lifty`:
+
+```bash
+cp .env.example .env     # ajustar DB_PASS
+docker compose up -d
+```
+
+La aplicación queda en <http://localhost:8080/lifty> y se conecta al contenedor MySQL
+existente por la red `mysql_default`.
 
 ## Flujo de trabajo
 

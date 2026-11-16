@@ -1,16 +1,6 @@
--- ============================================================================
--- Lifty - Base de datos lifty_bd (Submission 02)
--- Compatible con MariaDB 10.4 (XAMPP) y MySQL 8+.
--- Importar completo desde phpMyAdmin o con: mysql -u root < lifty_bd.sql
--- Convenciones (las del curso): tablas tNombre, llave primaria Consecutivo,
--- procedimientos spNombre, Estado 1 = activo / 0 = inactivo (borrado logico).
--- Usuarios de ejemplo: admin@lifty.com / Admin123*  y  cliente@lifty.com / Cliente123*
--- ============================================================================
-
 CREATE DATABASE IF NOT EXISTS `lifty_bd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `lifty_bd`;
 
--- Los procedimientos toman la collation de la conexion con la que se crean.
 SET NAMES utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -18,9 +8,7 @@ DROP TABLE IF EXISTS `tdetallepedido`, `tpedido`, `tmetodopago`, `tvariante`, `t
                      `tmarca`, `tcategoria`, `tdireccion`, `tusuario`, `trol`, `terror`;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- ----------------------------------------------------------------------------
 -- Tablas
--- ----------------------------------------------------------------------------
 
 CREATE TABLE `terror` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
@@ -125,7 +113,6 @@ CREATE TABLE `tmetodopago` (
   PRIMARY KEY (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- EstadoPedido: Pendiente, Pagado, Enviado, Entregado, Cancelado
 CREATE TABLE `tpedido` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
   `ConsecutivoUsuario` int NOT NULL,
@@ -160,9 +147,7 @@ CREATE TABLE `tdetallepedido` (
   CONSTRAINT `FK_tdetallepedido_ConsecutivoVariante` FOREIGN KEY (`ConsecutivoVariante`) REFERENCES `tvariante` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- ----------------------------------------------------------------------------
 -- Datos de ejemplo
--- ----------------------------------------------------------------------------
 
 INSERT INTO trol (Consecutivo, NombreRol) VALUES (1,'Cliente'),(2,'Administrador');
 
@@ -260,9 +245,6 @@ INSERT INTO tmetodopago (Consecutivo,Nombre,Descripcion,Estado) VALUES
 (1,'Tarjeta','Pago simulado con tarjeta de crédito o débito',1),
 (2,'SINPE Móvil','Pago simulado por SINPE Móvil',1);
 
--- Datos de demostracion adicionales (clientes, usuarios, direcciones y pedidos para probar el flujo completo)
--- Todos los clientes usan la contrasena Cliente123*; soporte@lifty.com es administrador (Admin123*).
-
 INSERT INTO tusuario (Consecutivo,Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,Estado,ConsecutivoRol,FechaRegistro) VALUES
 (3,'Mariana','Rojas','Vargas','mariana.rojas@correo.com','88110001','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 40 DAY)),
 (4,'Carlos','Jiménez','Mora','carlos.jimenez@correo.com','88110002','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 35 DAY)),
@@ -328,7 +310,6 @@ INSERT INTO tdetallepedido (ConsecutivoPedido,ConsecutivoVariante,Cantidad,Preci
 (15,26,1,24900.00,24900.00),
 (15,38,1,8900.00,8900.00);
 
--- El stock baja por los pedidos ya pagados (Pagado, Enviado y Entregado). Pendiente y Cancelado no descuentan.
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 1;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 2;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 4;
@@ -350,9 +331,7 @@ UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 39;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 40;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 42;
 
--- ----------------------------------------------------------------------------
 -- Procedimientos almacenados
--- ----------------------------------------------------------------------------
 
 DELIMITER ;;
 
@@ -363,7 +342,7 @@ BEGIN
 	VALUES (pMensajeError,pAccion,pConsecutivoUsuario,NOW());
 END;;
 
--- ---------- Usuarios y seguridad ----------
+-- Usuarios y seguridad
 
 DROP PROCEDURE IF EXISTS spRegistrarUsuario;;
 CREATE PROCEDURE spRegistrarUsuario(pNombre varchar(50), pApellido1 varchar(50), pApellido2 varchar(50),
@@ -374,7 +353,6 @@ BEGIN
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
 
--- Devuelve la fila (con el hash) solo si el usuario esta activo; PHP verifica la contrasena.
 DROP PROCEDURE IF EXISTS spIniciarSesionUsuario;;
 CREATE PROCEDURE spIniciarSesionUsuario(pCorreoElectronico varchar(100))
 BEGIN
@@ -445,8 +423,6 @@ BEGIN
 	SELECT ROW_COUNT() > 0 AS Actualizado;
 END;;
 
--- Gestion de usuarios por el administrador (crear y editar con rol y estado)
-
 DROP PROCEDURE IF EXISTS spConsultarRoles;;
 CREATE PROCEDURE spConsultarRoles()
 BEGIN
@@ -474,7 +450,7 @@ BEGIN
 	SELECT 1 AS Actualizado;
 END;;
 
--- ---------- Direcciones ----------
+-- Direcciones
 
 DROP PROCEDURE IF EXISTS spConsultarDirecciones;;
 CREATE PROCEDURE spConsultarDirecciones(pConsecutivoUsuario int)
@@ -513,7 +489,7 @@ BEGIN
 	SELECT ROW_COUNT() > 0 AS Actualizado;
 END;;
 
--- ---------- Categorias y marcas ----------
+-- Categorias y marcas
 
 DROP PROCEDURE IF EXISTS spConsultarCategorias;;
 CREATE PROCEDURE spConsultarCategorias(pSoloActivas tinyint)
@@ -563,9 +539,8 @@ BEGIN
 	SELECT 1 AS Actualizado;
 END;;
 
--- ---------- Productos y variantes ----------
+-- Productos y variantes
 
--- Vista del administrador: todos los productos con resumen de variantes.
 DROP PROCEDURE IF EXISTS spConsultarProductosAdmin;;
 CREATE PROCEDURE spConsultarProductosAdmin()
 BEGIN
@@ -581,7 +556,6 @@ BEGIN
 	ORDER BY P.Consecutivo DESC;
 END;;
 
--- Catalogo publico (paginado): solo productos activos, con categoria y marca activas y al menos una variante activa.
 DROP PROCEDURE IF EXISTS spConsultarCatalogo;;
 CREATE PROCEDURE spConsultarCatalogo(pConsecutivoCategoria int, pConsecutivoMarca int, pBusqueda varchar(100),
 	pLimite int, pDesplazamiento int)
@@ -602,7 +576,6 @@ BEGIN
 	LIMIT pLimite OFFSET pDesplazamiento;
 END;;
 
--- Cantidad total de productos del catalogo con los mismos filtros (para calcular las paginas).
 DROP PROCEDURE IF EXISTS spContarCatalogo;;
 CREATE PROCEDURE spContarCatalogo(pConsecutivoCategoria int, pConsecutivoMarca int, pBusqueda varchar(100))
 BEGIN
@@ -642,7 +615,6 @@ DROP PROCEDURE IF EXISTS spActualizarProducto;;
 CREATE PROCEDURE spActualizarProducto(pConsecutivo int, pConsecutivoCategoria int, pConsecutivoMarca int,
 	pNombre varchar(100), pDescripcion text, pImagen varchar(255), pEstado tinyint, pDestacado tinyint)
 BEGIN
-	-- Solo un producto puede estar destacado en la portada.
 	IF pDestacado = 1 THEN
 		UPDATE tproducto SET Destacado = 0 WHERE Consecutivo <> pConsecutivo;
 	END IF;
@@ -663,7 +635,6 @@ BEGIN
 	ORDER BY Consecutivo;
 END;;
 
--- Variante con datos del producto, para el carrito y el detalle del pedido.
 DROP PROCEDURE IF EXISTS spConsultarVariante;;
 CREATE PROCEDURE spConsultarVariante(pConsecutivo int)
 BEGIN
@@ -693,7 +664,7 @@ BEGIN
 	SELECT 1 AS Actualizado;
 END;;
 
--- ---------- Metodos de pago ----------
+-- Metodos de pago
 
 DROP PROCEDURE IF EXISTS spConsultarMetodosPago;;
 CREATE PROCEDURE spConsultarMetodosPago(pSoloActivos tinyint)
@@ -711,7 +682,7 @@ BEGIN
 	SELECT 1 AS Actualizado;
 END;;
 
--- ---------- Pedidos ----------
+-- Pedidos
 
 DROP PROCEDURE IF EXISTS spRegistrarPedido;;
 CREATE PROCEDURE spRegistrarPedido(pConsecutivoUsuario int, pConsecutivoDireccion int, pConsecutivoMetodoPago int,
@@ -730,8 +701,6 @@ BEGIN
 	SELECT 1 AS Registrado;
 END;;
 
--- Pago simulado: valida existencias, descuenta stock y pasa el pedido a Pagado (una sola transaccion).
--- Devuelve Pagado = 1 si se pudo, 0 si el pedido no estaba pendiente o no hay stock suficiente.
 DROP PROCEDURE IF EXISTS spPagarPedido;;
 CREATE PROCEDURE spPagarPedido(pConsecutivo int, pConsecutivoUsuario int)
 BEGIN
@@ -801,7 +770,6 @@ BEGIN
 	WHERE  D.ConsecutivoPedido = pConsecutivoPedido;
 END;;
 
--- Cambio de estado por el administrador. Si se cancela un pedido ya pagado, se devuelve el stock.
 DROP PROCEDURE IF EXISTS spActualizarEstadoPedido;;
 CREATE PROCEDURE spActualizarEstadoPedido(pConsecutivo int, pEstadoPedido varchar(20))
 BEGIN
@@ -823,7 +791,7 @@ BEGIN
 	END IF;
 END;;
 
--- ---------- Reportes ----------
+-- Reportes
 
 DROP PROCEDURE IF EXISTS spReportePedidosPorEstado;;
 CREATE PROCEDURE spReportePedidosPorEstado()

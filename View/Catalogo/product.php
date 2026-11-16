@@ -3,19 +3,11 @@ include_once __DIR__ . '/../layoutInterno.php';
 include_once __DIR__ . '/../../Controller/CatalogoController.php';
 include_once __DIR__ . '/../../Controller/PedidosController.php';
 
-$producto = ConsultarProductoPublico((int) ($_GET['id'] ?? 0));
+$producto = ConsultarDetalleProducto((int) ($_GET['id'] ?? 0));
 
 if (!$producto) {
     AsignarMensaje('El producto no existe o ya no está disponible.', 'warning');
     Redirigir('catalog.php');
-}
-
-$variantes = ConsultarVariantesPublicas($producto['Consecutivo']);
-$hayStock = false;
-foreach ($variantes as $v) {
-    if ($v['Stock'] > 0) {
-        $hayStock = true;
-    }
 }
 ?>
 
@@ -55,7 +47,7 @@ foreach ($variantes as $v) {
                         <h1 class="h3 mt-1 mb-3"><?php echo Texto($producto['Nombre']); ?></h1>
                         <p class="text-secondary"><?php echo nl2br(Texto($producto['Descripcion'])); ?></p>
 
-                        <?php if (count($variantes) == 0 || !$hayStock) { ?>
+                        <?php if (count($producto['Variantes']) == 0 || !$producto['HayStock']) { ?>
                             <div class="alert alert-secondary mb-0"><i class="ti ti-info-circle"></i> Este producto está agotado por el momento.</div>
                         <?php } else { ?>
                             <form action="" method="POST" class="validar" novalidate>
@@ -64,7 +56,7 @@ foreach ($variantes as $v) {
 
                                 <h2 class="h6 mt-4 mb-2">Presentación</h2>
                                 <div class="row g-2 mb-3">
-                                    <?php foreach ($variantes as $i => $v) { ?>
+                                    <?php foreach ($producto['Variantes'] as $i => $v) { ?>
                                         <div class="col-12 col-sm-6">
                                             <input class="visually-hidden variant-radio" type="radio" name="txtVariante" id="variante<?php echo $v['Consecutivo']; ?>"
                                                    value="<?php echo $v['Consecutivo']; ?>" data-stock="<?php echo (int) $v['Stock']; ?>" <?php echo $v['Stock'] < 1 ? 'disabled' : ''; ?> required>
@@ -104,25 +96,7 @@ foreach ($variantes as $v) {
     </main>
 
     <?php IncludeJS(); ?>
-    <script>
-        $(function () {
-            $('input[name="txtVariante"]').on('change', function () {
-                var stock = parseInt($(this).data('stock'), 10);
-                var $cantidad = $('#txtCantidad');
-                $cantidad.attr('max', stock);
-                if (parseInt($cantidad.val(), 10) > stock) { $cantidad.val(stock); }
-            });
-
-            $('input[name="txtVariante"]').rules('add', { messages: { required: 'Seleccione una presentación.' } });
-            var validator = $('form.validar').data('validator');
-            if (validator) {
-                validator.settings.errorPlacement = function (error, element) {
-                    if (element.attr('name') === 'txtVariante') { error.appendTo('#errorVariante'); }
-                    else { error.insertAfter(element); }
-                };
-            }
-        });
-    </script>
+    <script src="../assets/js/producto.js"></script>
 
 </body>
 

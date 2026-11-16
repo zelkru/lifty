@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__ . '/../Controller/ConfigController.php';
-include_once __DIR__ . '/../Model/InventarioModel.php';
+include_once __DIR__ . '/../Controller/CatalogoController.php';
 
 function Version($ruta)
 {
@@ -75,6 +75,17 @@ function IncludeCSS($titulo = 'Lifty - Suplementos deportivos')
     ';
 }
 
+function Palabras($texto, $claseUltima = '', $clasePrimera = '')
+{
+    $palabras = preg_split('/\s+/', trim($texto));
+    $html = '';
+    foreach ($palabras as $i => $palabra) {
+        $clase = ($i == count($palabras) - 1 ? $claseUltima : '') . ($i == 0 ? ' ' . $clasePrimera : '');
+        $html .= '<span class="pal ' . $clase . '"><span style="--d:' . (150 + $i * 110) . 'ms">' . Texto($palabra) . '</span></span> ';
+    }
+    return $html;
+}
+
 function IconoCategoria($nombre)
 {
     $iconos = ['suplement' => 'ti-pill', 'ropa' => 'ti-shirt', 'snack' => 'ti-cookie', 'bebida' => 'ti-bottle', 'accesorio' => 'ti-barbell'];
@@ -93,7 +104,7 @@ function MostrarHeaderTienda()
     $categoriaActual = (int) ($_GET['categoria'] ?? 0);
 
     $enlaces = '';
-    foreach (array_slice(ConsultarCategoriasModel(1), 0, 5) as $c) {
+    foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $c) {
         $icono = IconoCategoria($c['Nombre']);
         $activo = ($enCatalogo && $categoriaActual == $c['Consecutivo']) ? ' active' : '';
         $enlaces .= '<li class="nav-item"><a class="nav-link' . $activo . '" href="../Catalogo/catalog.php?categoria=' . $c['Consecutivo'] . '"><i class="ti ' . $icono . '"></i>' . Texto($c['Nombre']) . '</a></li>';
@@ -192,7 +203,7 @@ function MostrarHeader()
                     <span class="admin-usuario-texto d-none d-sm-flex"><strong>' . Texto($_SESSION['NombreUsuario']) . '</strong><small>' . Texto($_SESSION['NombreRol']) . '</small></span>
                     <i class="ti ti-chevron-down d-none d-sm-inline"></i>
                   </a>
-                  <div class="dropdown-menu dropdown-menu-end p-0" style="min-width: 240px;">
+                  <div class="dropdown-menu dropdown-menu-end p-0 menu-usuario">
                     <div class="d-flex gap-3 align-items-center border-bottom px-3 py-3">
                       <div class="avatar avatar-md rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center flex-shrink-0"><i class="ti ti-user"></i></div>
                       <div class="text-truncate">
@@ -286,7 +297,7 @@ function MostrarFooter()
 {
     if (UsaTienda()) {
         $categorias = '';
-        foreach (array_slice(ConsultarCategoriasModel(1), 0, 5) as $c) {
+        foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $c) {
             $categorias .= '<a href="../Catalogo/catalog.php?categoria=' . $c['Consecutivo'] . '">' . Texto($c['Nombre']) . '</a>';
         }
 

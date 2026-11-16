@@ -1,8 +1,6 @@
 <?php
 include_once __DIR__ . '/ConfigModel.php';
 
-/* ---------- Categorias y marcas ---------- */
-
 function ConsultarCategoriasModel($soloActivas)
 {
     try {
@@ -17,7 +15,6 @@ function ConsultarCategoriasModel($soloActivas)
     }
 }
 
-/* Devuelve true, o -1 si el nombre ya existe. */
 function RegistrarCategoriaModel($nombre, $descripcion)
 {
     try {
@@ -100,8 +97,6 @@ function ActualizarMarcaModel($consecutivo, $nombre, $descripcion, $estado)
     }
 }
 
-/* ---------- Metodos de pago ---------- */
-
 function ConsultarMetodosPagoModel($soloActivos)
 {
     try {
@@ -129,8 +124,6 @@ function ActualizarEstadoMetodoPagoModel($consecutivo, $estado)
         return false;
     }
 }
-
-/* ---------- Productos ---------- */
 
 function ConsultarProductosAdminModel()
 {
@@ -189,8 +182,6 @@ function ActualizarProductoModel($consecutivo, $categoria, $marca, $nombre, $des
     }
 }
 
-/* ---------- Variantes (presentaciones con precio y stock) ---------- */
-
 function ConsultarVariantesModel($consecutivoProducto, $soloActivas)
 {
     try {
@@ -219,7 +210,6 @@ function ConsultarVarianteModel($consecutivo)
     }
 }
 
-/* Devuelve true, o -1 si el SKU ya existe. */
 function RegistrarVarianteModel($consecutivoProducto, $sku, $presentacion, $precio, $stock)
 {
     try {
@@ -255,8 +245,6 @@ function ActualizarVarianteModel($consecutivo, $sku, $presentacion, $precio, $st
         return false;
     }
 }
-
-/* ---------- Catalogo publico ---------- */
 
 function ConsultarCatalogoModel($categoria, $marca, $busqueda, $limite = 12, $desplazamiento = 0)
 {

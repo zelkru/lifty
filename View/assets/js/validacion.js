@@ -1,8 +1,3 @@
-/*
- * validacion.js: validacion de formularios (jQuery Validate) y utilidades comunes.
- * Los formularios con la clase "validar" se validan solos. Las reglas se leen de los
- * atributos del campo (required, type="email", minlength...) y de data-rule-*.
- */
 $(function () {
 
     $.extend($.validator.messages, {
@@ -49,7 +44,6 @@ $(function () {
         $(this).validate();
     });
 
-    /* Mostrar u ocultar la contrasena */
     $(document).on('click', '.toggle-password', function () {
         var campo = $($(this).data('target'));
         var visible = campo.attr('type') === 'text';
@@ -57,7 +51,6 @@ $(function () {
         $(this).find('i').toggleClass('ti-eye', visible).toggleClass('ti-eye-off', !visible);
     });
 
-    /* Tablas del panel: en pantallas pequenas cada fila se apila como tarjeta usando el encabezado como etiqueta */
     $('table.tabla-apilada').each(function () {
         var etiquetas = $(this).find('thead th').map(function () { return $(this).text().trim(); }).get();
         $(this).find('tbody tr').each(function () {
@@ -67,17 +60,12 @@ $(function () {
         });
     });
 
-    /* Confirmacion antes de acciones delicadas: <form data-confirm="Mensaje"> */
     $(document).on('submit', 'form[data-confirm]', function (e) {
         if (!window.confirm($(this).data('confirm'))) {
             e.preventDefault();
         }
     });
 
-    /*
-     * Modales de edicion: el boton que abre el modal lleva data-fill='{"txtNombre":"..."}'
-     * y se copia a los campos con ese name. Sin data-fill el formulario se limpia (modo nuevo).
-     */
     document.addEventListener('show.bs.modal', function (e) {
         var boton = e.relatedTarget;
         var modal = $(e.target);

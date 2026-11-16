@@ -1,8 +1,3 @@
-/*
- * Tienda Lifty (visitantes y clientes).
- * Base premium oscura y calida; el estilo "cartoon" (borde y sombra dura) vive solo en
- * las tarjetas de producto. Las fotos las carga el administrador; sin foto hay bloque tipografico.
- */
 :root {
   --ember: #ff5a2c;
   --ember-2: #ff8a5c;
@@ -43,7 +38,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .variant-option { background: #fff; border: 1px solid rgba(11, 11, 14, .12); border-radius: 16px; }
 .variant-radio:checked + .variant-option { background: #fff1ea; border-color: var(--ember); box-shadow: 0 0 0 2px var(--ember); }
 
-/* ---------- Barra superior: ancho completo y fija ---------- */
 .tienda-nav { position: sticky; top: 0; z-index: 1030; background: rgba(11, 11, 14, .96); backdrop-filter: blur(14px); padding: 0; min-height: 68px; border-bottom: 1px solid rgba(255, 255, 255, .08); transition: box-shadow .3s; }
 .tienda-nav.scrolled { box-shadow: 0 12px 30px rgba(0, 0, 0, .35); }
 .tienda-nav-in { width: 100%; padding: 0 clamp(1rem, 3vw, 2.5rem); display: flex; flex-wrap: wrap; align-items: center; min-height: 68px; gap: 2rem; }
@@ -74,7 +68,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
   .tienda-btn { width: 100%; text-align: center; margin-top: .4rem; }
 }
 
-/* ---------- Portada oscura ---------- */
 .hero-x {
   --mx: 0; --my: 0; position: relative; isolation: isolate; overflow: hidden; background: #08080a; color: #f6f2ec;
   padding: clamp(3rem, 6vw, 5.5rem) clamp(1.25rem, 5vw, 4.5rem) 6rem;
@@ -131,26 +124,22 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 @media (max-width: 991.98px) { .hero-grid { grid-template-columns: 1fr; } .hero-visual { min-height: 460px; } }
 @media (max-width: 575.98px) { .sello.a { display: none; } .sello.b { left: 0; bottom: 0; } }
 
-/* Escena de color (tarjetas y detalle) y bloque tipografico sin foto */
 .escena { position: relative; overflow: hidden; }
 .sinfoto { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; padding: 1.1rem 1.2rem; overflow: hidden; }
 .sinfoto span { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: clamp(3.4rem, 8vw, 6.4rem); line-height: .8; color: var(--ink); text-transform: uppercase; word-break: break-all; opacity: .92; }
 .sinfoto small { font-weight: 900; letter-spacing: .16em; font-size: .7rem; background: var(--ink); color: var(--cream); padding: .3rem .7rem; border-radius: 999px; align-self: flex-end; }
 
-/* ---------- Cinta diagonal ---------- */
 .cinta-caja { overflow: hidden; padding: 1.8rem 0; margin: -3.6rem 0 -1rem; position: relative; z-index: 3; }
 .cinta { background: var(--ember); color: var(--ink); white-space: nowrap; padding: .85rem 0; transform: rotate(-1.4deg) scale(1.04); box-shadow: 0 14px 34px rgba(255, 90, 44, .3); }
 .cinta-pista { display: inline-flex; will-change: transform; }
 .cinta span { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .03em; padding: 0 1.4rem; }
 .cinta i { font-style: normal; opacity: .55; }
 
-/* ---------- Secciones ---------- */
 .seccion { max-width: var(--ancho); margin: 0 auto; width: 100%; padding: 4.5rem clamp(1rem, 3vw, 2.5rem) 0; }
 .seccion-cabeza { margin-bottom: 1.8rem; }
 .seccion-cabeza .num { font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--ember); margin-bottom: .5rem; }
 .seccion-cabeza h2 { font-size: clamp(3rem, 8vw, 7rem); margin: 0; }
 
-/* Categorias rapidas: fichas compactas */
 .cat-rapidas { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .9rem; padding-top: 4rem; }
 .cat-r { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 118px; padding: 1.1rem 1.2rem; border-radius: 22px; background: var(--ink); color: #fff; text-decoration: none; overflow: hidden; transition: transform .25s, box-shadow .25s; }
 .cat-r::before { content: ''; position: absolute; width: 180px; height: 180px; border-radius: 50%; right: -60px; bottom: -80px; background: radial-gradient(circle, var(--ember), transparent 68%); opacity: .5; transition: opacity .3s, transform .4s; }
@@ -161,7 +150,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .cat-r .f { position: absolute; top: 1rem; right: 1.1rem; font-size: 1.3rem; transition: transform .25s; }
 .cat-r:hover .f { transform: translate(3px, -3px); }
 
-/* Catalogo */
 .catalogo-bg { margin-top: 0; padding-bottom: 4rem; }
 .herramientas { display: flex; flex-wrap: wrap; gap: .7rem; margin: 0 0 1.2rem; }
 .herramientas .form-control, .herramientas .form-select { border: 1px solid rgba(11, 11, 14, .15); border-radius: 999px; background-color: #fff; padding: .75rem 1.3rem; font-weight: 600; max-width: 320px; }
@@ -172,7 +160,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .tab-cat:hover { border-color: var(--ember); color: var(--ember); }
 .tab-cat.activo { background: var(--ink); border-color: var(--ink); color: #fff; }
 
-/* Tarjetas de producto: misma identidad que el resto del sitio (blancas, borde suave, sombra suave) */
 .rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.6rem; perspective: 1200px; }
 .pcard { position: relative; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid rgba(11, 11, 14, .08); border-radius: 26px; padding: .8rem; transition: box-shadow .25s, transform .25s; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); will-change: transform; }
 .pcard:hover { box-shadow: 0 24px 48px rgba(11, 11, 14, .12); color: var(--ink); }
@@ -190,7 +177,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .pcard .agregar { background: var(--ember); color: #fff; border-radius: 999px; padding: .6rem 1.2rem; font-weight: 800; font-size: .76rem; letter-spacing: .08em; text-transform: uppercase; transition: transform .15s, box-shadow .15s; }
 .pcard:hover .agregar { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(255, 90, 44, .35); }
 
-/* Beneficios */
 .valores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
 .valor { background: #fff; border: 1px solid rgba(11, 11, 14, .08); border-radius: 26px; padding: 2rem; transition: transform .25s, box-shadow .25s; }
 .valor:hover { transform: translateY(-5px); box-shadow: 0 22px 44px rgba(11, 11, 14, .09); }
@@ -199,7 +185,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .valor p { margin: 0; color: #5d554b; font-weight: 500; }
 @media (max-width: 767.98px) { .valores { grid-template-columns: 1fr; } }
 
-/* ---------- Banner de scroll: el resplandor crece y el titular se enfoca ---------- */
 .revela { height: 170vh; position: relative; background: #f8f3ec; margin-top: 4rem; }
 .revela-stage { --p: 0; --t: 0; --u: 0; position: sticky; top: 68px; height: calc(100vh - 68px); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 1.2rem; background: #f8f3ec; }
 .revela-blob { position: absolute; left: 50%; bottom: 0; width: 150vmax; height: 150vmax; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, #e8560f 0 46%, rgba(232, 86, 15, .55) 56%, rgba(232, 86, 15, 0) 70%); transform: translate(-50%, 50%) scale(calc(.1 + var(--p) * 1.25)); will-change: transform; filter: blur(14px); }
@@ -211,12 +196,10 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .revela-sub a { display: inline-block; margin-top: 1.4rem; }
 @media (prefers-reduced-motion: reduce) { .revela { height: auto; } .revela-stage { position: relative; top: 0; min-height: 80vh; } }
 
-/* ---------- Detalle del producto ---------- */
 .escenario-producto { border-radius: 30px; background: #ece7df; aspect-ratio: 1 / 1; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .escenario-producto img { width: 100%; height: 100%; object-fit: contain; padding: 2rem; }
 .escenario-producto .sinfoto span { font-size: clamp(5rem, 14vw, 11rem); }
 
-/* ---------- Carrito ---------- */
 .carrito-grid { display: grid; grid-template-columns: 1.4fr .9fr; gap: 1.6rem; align-items: start; }
 .item-carrito { display: grid; grid-template-columns: 96px 1fr auto; gap: 1.1rem; align-items: center; padding: 1.1rem; border-radius: 22px; background: #fff; border: 1px solid rgba(11, 11, 14, .08); margin-bottom: .9rem; transition: box-shadow .2s; }
 .item-carrito:hover { box-shadow: 0 14px 34px rgba(11, 11, 14, .08); }
@@ -245,7 +228,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 @media (max-width: 991.98px) { .carrito-grid { grid-template-columns: 1fr; } .resumen-sticky { position: static; } }
 @media (max-width: 575.98px) { .item-carrito { grid-template-columns: 72px 1fr; } .item-carrito .foto { width: 72px; height: 72px; } .item-carrito .derecha { grid-column: 1 / -1; flex-direction: row; align-items: center; } }
 
-/* ---------- Pedidos ---------- */
 .pedido-card { display: grid; grid-template-columns: auto 1fr auto auto; gap: 1.4rem; align-items: center; padding: 1.2rem 1.5rem; border-radius: 22px; background: #fff; border: 1px solid rgba(11, 11, 14, .08); margin-bottom: .9rem; text-decoration: none; color: var(--ink); transition: transform .2s, box-shadow .2s; }
 .pedido-card:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(11, 11, 14, .09); color: var(--ink); }
 .pedido-card .num { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 2.6rem; line-height: 1; color: var(--ember); min-width: 82px; }
@@ -260,7 +242,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .estado-Cancelado { background: #ffdcd5; color: #9b2a12; }
 @media (max-width: 767.98px) { .pedido-card { grid-template-columns: 1fr auto; } .pedido-card .num { grid-column: 1; } .pedido-card .total { grid-column: 2; } }
 
-/* ---------- Pie con la marca animada ---------- */
 .tienda-footer { background: var(--ink); color: var(--cream); margin: auto calc(-1 * clamp(1rem, 3vw, 2.5rem)) 0; padding: 4rem clamp(1.25rem, 5vw, 4.5rem) 0; overflow: hidden; }
 .tienda-footer-top { max-width: var(--ancho); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
 .tienda-footer-col { display: flex; flex-direction: column; gap: .5rem; }
@@ -275,7 +256,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .tienda-footer-copy { max-width: var(--ancho); margin: 0 auto; padding: 1.1rem 0; border-top: 1px solid rgba(255, 244, 228, .2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; font-size: .8rem; color: rgba(255, 244, 228, .5); }
 @media (max-width: 767.98px) { .tienda-footer-top { grid-template-columns: 1fr; } }
 
-/* Aparicion suave al hacer scroll (solo si hay JavaScript) */
 .js .rv { opacity: 0; transform: translateY(46px); transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1); }
 .js .rv.vis { opacity: 1; transform: none; }
 
@@ -284,7 +264,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
   .tienda-footer-marca span { transform: none; opacity: 1; transition: none; }
 }
 
-/* ---------- Iconos (Tabler) ---------- */
 .tienda-nav .nav-link .ti { font-size: 1.15rem; }
 .tienda-nav .tienda-avatar .ti { font-size: 1.1rem; }
 .tienda-btn .ti { margin-right: .3rem; vertical-align: -2px; }
@@ -302,15 +281,9 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .valor h3 { margin-top: 1.1rem; }
 .btn-primary .ti, .btn-outline-primary .ti, .btn-outline-secondary .ti { vertical-align: -2px; }
 
-/* Ajustes: la etiqueta de categoria no tapa el nombre, y el nombre no se parte en la miniatura del carrito */
 .pcard .sinfoto { padding-top: 3.4rem; }
 .item-carrito .foto .sinfoto span { font-size: 1.35rem; word-break: normal; overflow-wrap: anywhere; line-height: .9; }
 
-
-/* =====================================================================
- * Limpieza de estilo: portada plana, sin burbujas, tarjetas de cristal,
- * anillos ni degradados decorativos. Solo tipografia, color solido e imagen.
- * ===================================================================== */
 .hero-x { background: #0b0b0e; padding-bottom: 7rem; }
 .hero-x::before, .hero-x::after { display: none; }
 .hero-meta { margin: 0 0 1.6rem; font-size: .8rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(246, 242, 236, .6); animation: subir .8s both; }
@@ -329,20 +302,14 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 
 .valor .ico { display: block; width: auto; height: auto; background: none; border-radius: 0; font-size: 2rem; margin-bottom: .2rem; }
 
-/* Menu de usuario: el nombre se mantiene blanco al abrir el menu */
 .tienda-nav .nav-link.show, .tienda-nav .nav-link:focus, .tienda-nav .nav-link:active, .tienda-nav .dropdown-toggle.show { color: #fff !important; background: transparent; }
 .tienda-nav .nav-link:hover, .tienda-nav .nav-item.show > .nav-link { color: #fff !important; }
 
-
-/* Marca del pie: lienzo de puntos */
 .tienda-footer-marca { display: block; margin: 3rem auto 0; line-height: 0; font-size: 0; }
 .tienda-footer-marca canvas { display: block; width: 100%; cursor: crosshair; }
 
-/* Marca del pie: pequena y centrada */
 .tienda-footer-marca { max-width: 560px; margin: 3rem auto 1.2rem; }
 
-
-/* Fichas de categoria: icono, nombre, cantidad y flecha; linea naranja al pasar el mouse */
 .cat-rapidas { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
 .cat-r { min-height: 170px; padding: 1.3rem 1.4rem 1.2rem; background: var(--ink); justify-content: space-between; border-radius: 24px; }
 .cat-r::after { content: ''; position: absolute; left: 1.4rem; right: 1.4rem; bottom: 0; height: 3px; background: var(--ember); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
@@ -356,11 +323,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .cat-r .abajo { display: flex; flex-direction: column; gap: .35rem; position: relative; }
 .cat-r .t { font-size: 2.1rem; }
 
-
-/* =====================================================================
- * Banner de scroll compacto: ya no ocupa toda la pantalla ni usa sticky.
- * El efecto se calcula segun la posicion del banner mientras pasa por la ventana.
- * ===================================================================== */
 .revela { height: auto; margin-top: 4rem; margin-bottom: 0 !important; }
 .revela-stage { position: relative; top: 0; height: clamp(380px, 52vh, 520px); }
 .revela-t { font-size: clamp(2.6rem, 6.6vw, 6.2rem); }
@@ -369,7 +331,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .revela-stage .btn-ember:hover { background: #000; color: #fff; }
 @media (prefers-reduced-motion: reduce) { .revela-stage { min-height: 0; } }
 
-/* Marca del pie: ocupa todo el ancho del pie y queda pegada al borde inferior */
 .tienda-footer { padding-bottom: 0; }
 .tienda-footer-marca { max-width: var(--ancho); margin: 2rem auto 0; }
 .tienda-footer-marca canvas { cursor: crosshair; }
@@ -379,15 +340,11 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .tienda-btn { white-space: nowrap; }
 @media (max-width: 1199.98px) { .tienda-nav .navbar-collapse { padding-bottom: 1rem; } .tienda-nav .nav-link { padding: .8rem 0; } .tienda-nav .nav-link::after { display: none; } .tienda-btn { width: 100%; text-align: center; margin-top: .4rem; } }
 
-/* Selectores: la flecha ya no tapa el texto */
 .form-select { padding-right: 2.6rem; background-position: right 1rem center; background-size: 14px 10px; }
 
-
-/* Pie sin marca grande */
 .tienda-footer { padding-bottom: 0; }
 .tienda-footer-copy { border-top: 1px solid rgba(255, 244, 228, .2); }
 
-/* Secciones por categoria en el inicio */
 .cat-cabeza { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: end; margin-bottom: 1.4rem; }
 .cat-cabeza h2 { font-size: clamp(2.6rem, 6vw, 5rem); margin: 0; }
 .cat-cabeza .num { font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--ember); margin-bottom: .4rem; }
@@ -395,7 +352,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .ver-todo:hover { gap: .9rem; color: var(--ember); }
 .seccion-cat { padding-top: 3.5rem; }
 
-/* Catalogo: titulo y paginador */
 .catalogo-cabeza { padding-top: 1rem; }
 .paginador { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; align-items: center; margin-top: 2.4rem; }
 .paginador a, .paginador span { min-width: 44px; height: 44px; padding: 0 .9rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-weight: 800; font-size: .9rem; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid rgba(11, 11, 14, .12); transition: all .15s; }
@@ -404,16 +360,13 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .paginador .inactivo { opacity: .4; pointer-events: none; }
 .paginador-info { text-align: center; color: #6b6256; font-size: .85rem; font-weight: 600; margin-top: .9rem; }
 
-/* Bloque tipografico sin foto: las palabras largas ya no se parten */
 .sinfoto span { font-size: clamp(2.2rem, 4.2vw, 3.8rem); word-break: normal; overflow-wrap: normal; hyphens: none; line-height: .88; }
 .pcard .sinfoto { justify-content: flex-end; gap: .8rem; padding-top: 3.4rem; }
 .item-carrito .foto .sinfoto span { font-size: 1.2rem; }
 .escenario-producto .sinfoto span { font-size: clamp(3rem, 8vw, 6rem); }
 
-/* Las fotos de producto traen su propio fondo de estudio: llenan todo el marco, sin caja visible. */
 .pcard .escena, .escenario-producto, .item-carrito .foto, .ficha-hero .escena { background: #e9e9ea; }
 .pcard .escena img, .escenario-producto img, .item-carrito .foto img, .ficha-hero .escena img { object-fit: cover; padding: 0; }
 
-/* Hero: la imagen se funde con el fondo oscuro (sin caja) y sus bordes se desvanecen. */
 .hero-foto { width: min(100%, 640px); }
 .hero-foto img { mix-blend-mode: lighten; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }

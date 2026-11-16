@@ -8,7 +8,6 @@ $esAdmin = EsAdministrador();
 $estadoFiltro = $_GET['estado'] ?? '';
 $pedidos = ConsultarPedidos();
 
-/* El cliente filtra por estado en el servidor; el administrador usa los filtros de la tabla. */
 if (!$esAdmin && $estadoFiltro != '') {
     $pedidos = array_filter($pedidos, function ($p) use ($estadoFiltro) { return $p['EstadoPedido'] == $estadoFiltro; });
 }

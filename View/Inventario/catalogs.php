@@ -8,7 +8,6 @@ $categorias = ConsultarCategorias();
 $marcas = ConsultarMarcas();
 $metodos = ConsultarMetodosPago();
 
-/* Las categorias y las marcas comparten el mismo formulario; solo cambia el boton. */
 $maestros = [
     'categoria' => ['Categorías', $categorias, 'btnGuardarCategoria'],
     'marca' => ['Marcas', $marcas, 'btnGuardarMarca'],
@@ -154,7 +153,6 @@ $maestros = [
 
     <?php IncludeJS(); ?>
     <script>
-        /* El mismo modal guarda categorías o marcas según el botón que lo abrió. */
         document.getElementById('modalMaestro').addEventListener('show.bs.modal', function (e) {
             var boton = e.relatedTarget;
             $('#btnGuardarMaestro').attr('name', boton.dataset.boton);

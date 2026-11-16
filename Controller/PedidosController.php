@@ -4,7 +4,6 @@ include_once __DIR__ . '/../Model/InventarioModel.php';
 include_once __DIR__ . '/../Model/PersonalModel.php';
 include_once __DIR__ . '/ConfigController.php';
 
-/* Estados a los que puede pasar un pedido (los cambia el administrador, salvo el pago). */
 function TransicionesPedido($estadoActual)
 {
     $transiciones = [
@@ -24,14 +23,6 @@ function ClaseEstadoPedido($estado)
     return $clases[$estado] ?? 'secondary';
 }
 
-/* ---------- Carrito (vive en la sesion; no descuenta stock) ---------- */
-
-function CantidadEnCarrito()
-{
-    return isset($_SESSION['Carrito']) ? array_sum($_SESSION['Carrito']) : 0;
-}
-
-/* Arma el carrito con los datos actuales de la base de datos y calcula los montos. */
 function ConsultarCarrito()
 {
     $lineas = [];
@@ -117,8 +108,6 @@ if (isset($_POST['btnQuitarCarrito'])) {
     Redirigir('cart.php');
 }
 
-/* ---------- Pago simulado: solo se valida el formato, nunca se guardan los datos ---------- */
-
 function ValidarPagoSimulado($nombreMetodo)
 {
     if (stripos($nombreMetodo, 'SINPE') !== false) {
@@ -153,7 +142,6 @@ function ConsultarMetodoPagoActivo($consecutivo)
     return null;
 }
 
-/* Cobra (simulado) un pedido pendiente, descuenta el stock y avisa por correo. */
 function ProcesarPagoPedido($consecutivoPedido)
 {
     if (!PagarPedidoModel($consecutivoPedido, $_SESSION['ConsecutivoUsuario'])) {
@@ -256,14 +244,11 @@ if (isset($_POST['btnPagarPedido'])) {
     Redirigir('order.php?id=' . $consecutivoPedido);
 }
 
-/* ---------- Consulta de pedidos ---------- */
-
 function ConsultarPedidos()
 {
     return ConsultarPedidosModel(EsAdministrador() ? 0 : $_SESSION['ConsecutivoUsuario']);
 }
 
-/* Devuelve el pedido solo si es del usuario (o si es administrador). */
 function ConsultarPedido($consecutivo)
 {
     $pedido = ConsultarPedidoModel($consecutivo);

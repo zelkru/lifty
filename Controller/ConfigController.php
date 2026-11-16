@@ -2,25 +2,17 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as MailException;
 
-/*
- * ConfigController: sesion, mensajes, control de acceso y correo.
- * Lo incluyen todos los demas controladores.
- */
 include_once __DIR__ . '/../Model/ConfigModel.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-/* Reglas de negocio acordadas por el equipo (ver RF-15). */
 const PORCENTAJE_IVA = 0.13;
 const COSTO_ENVIO = 2500;
-/* Existencias iguales o menores a este numero se consideran stock bajo. */
 const UMBRAL_STOCK_BAJO = 5;
 const ROL_CLIENTE = 1;
 const ROL_ADMINISTRADOR = 2;
-
-/* ---------- Mensajes ---------- */
 
 function AsignarMensaje($texto, $tipo = 'success')
 {
@@ -41,27 +33,22 @@ function MostrarMensaje()
     }
 }
 
-/* ---------- Utilidades ---------- */
-
 function Redirigir($url)
 {
     header('Location: ' . $url);
     exit();
 }
 
-/* Escapa texto para imprimirlo en HTML. */
 function Texto($valor)
 {
     return htmlspecialchars((string) $valor, ENT_QUOTES, 'UTF-8');
 }
 
-/* Formato de dinero en colones: 32000 => ₡32.000 */
 function Dinero($valor)
 {
     return '₡' . number_format((float) $valor, 0, ',', '.');
 }
 
-/* Lee un campo de $_POST como texto sin espacios sobrantes. */
 function LeerTexto($clave)
 {
     return isset($_POST[$clave]) ? trim((string) $_POST[$clave]) : '';
@@ -71,8 +58,6 @@ function LeerEntero($clave)
 {
     return isset($_POST[$clave]) ? (int) $_POST[$clave] : 0;
 }
-
-/* ---------- Seguridad de sesion ---------- */
 
 function EstaAutenticado()
 {
@@ -89,7 +74,6 @@ function EsCliente()
     return EstaAutenticado() && $_SESSION['ConsecutivoRol'] == ROL_CLIENTE;
 }
 
-/* Pagina de inicio segun el rol del usuario. */
 function PaginaInicioRol()
 {
     return EsAdministrador() ? '../Inicio/home.php' : '../Catalogo/home.php';
@@ -120,7 +104,6 @@ function ValidarCliente()
     }
 }
 
-/* Token CSRF: se agrega a cada formulario privado con <?php CampoCsrf(); ?> */
 function CampoCsrf()
 {
     if (empty($_SESSION['TokenCsrf'])) {
@@ -129,7 +112,6 @@ function CampoCsrf()
     echo '<input type="hidden" name="tokenCsrf" value="' . $_SESSION['TokenCsrf'] . '">';
 }
 
-/* Si un usuario con sesion envia un formulario sin token valido, se descarta el envio completo. */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && EstaAutenticado()) {
     $tokenRecibido = $_POST['tokenCsrf'] ?? '';
     $tokenSesion = $_SESSION['TokenCsrf'] ?? '';
@@ -139,8 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && EstaAutenticado()) {
         AsignarMensaje('La sesión del formulario expiró. Intente de nuevo.', 'warning');
     }
 }
-
-/* ---------- Correo electronico ---------- */
 
 function GenerarContrasennaTemporal()
 {
@@ -155,7 +135,6 @@ function GenerarContrasennaTemporal()
     return $resultado;
 }
 
-/* Lee una plantilla de View/Template y reemplaza {{Clave}} por su valor. */
 function ArmarPlantilla($archivo, $valores)
 {
     $plantilla = file_get_contents(__DIR__ . '/../View/Template/' . $archivo);
@@ -167,11 +146,6 @@ function ArmarPlantilla($archivo, $valores)
     return $plantilla;
 }
 
-/*
- * Envia un correo por SMTP (Gmail). Las credenciales se toman de las variables de
- * entorno MAIL_USER y MAIL_PASS. Si no estan configuradas el envio se simula y el
- * mensaje queda en el log de errores de PHP (igual que en las practicas del curso).
- */
 function EnviarCorreoElectronico($asunto, $contenido, $destinatario)
 {
     $correoSalida = getenv('MAIL_USER') ?: '';

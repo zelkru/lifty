@@ -106,7 +106,6 @@ foreach ($variantes as $v) {
     <?php IncludeJS(); ?>
     <script>
         $(function () {
-            /* El maximo de la cantidad es el stock de la presentacion elegida. */
             $('input[name="txtVariante"]').on('change', function () {
                 var stock = parseInt($(this).data('stock'), 10);
                 var $cantidad = $('#txtCantidad');

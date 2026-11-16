@@ -125,7 +125,6 @@ $tarjetas = [
     <?php IncludeJS(); ?>
     <script>
         $(function () {
-            /* Las cifras del panel suben desde cero al cargar. */
             $('.stat-value').each(function () {
                 var $el = $(this), texto = $.trim($el.text()), m = texto.match(/^([^\d]*)([\d.,]+)(.*)$/);
                 if (!m) { return; }

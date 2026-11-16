@@ -188,46 +188,26 @@ INSERT INTO tmarca (Consecutivo,Nombre,Descripcion) VALUES
 (6,'Lifty Drinks','Bebidas e hidratación');
 
 INSERT INTO tproducto (Consecutivo,ConsecutivoCategoria,ConsecutivoMarca,Nombre,Descripcion,Imagen,Estado,FechaCreacion) VALUES
-(1,1,1,'Whey Gold 100%','Proteína de suero de leche con 24 g de proteína por porción. Ideal para la recuperación muscular.','',1,NOW()),
-(2,1,1,'Iso Hydro 100','Proteína aislada hidrolizada de rápida absorción, baja en azúcar y grasa.','',1,NOW()),
-(3,1,2,'Creatina Platinum','Creatina monohidratada micronizada para aumentar fuerza y rendimiento.','',1,NOW()),
-(4,1,2,'Pre-Workout Ignite','Pre entreno con cafeína y beta-alanina para energía y enfoque.','',1,NOW()),
-(5,3,6,'Zero Isotónica','Bebida isotónica sin azúcar para reponer electrolitos.','',1,NOW()),
-(6,2,3,'Camiseta Dry-Fit','Camiseta deportiva de secado rápido, corte atlético.','',1,NOW()),
-(7,4,4,'Shaker Lifty 700 ml','Shaker con mezclador metálico y tapa antiderrames.','',1,NOW()),
-(8,3,5,'Barras Proteicas Lifty','Caja de 12 barras con 20 g de proteína y bajo azúcar. El snack perfecto después de entrenar.','',1,NOW()),
-(9,2,3,'Short Training','Short ligero con bolsillos y cintura elástica para entrenamiento y running.','',1,NOW()),
-(10,1,2,'BCAA 2:1:1 Recovery','Aminoácidos ramificados en proporción 2:1:1 para apoyar la recuperación muscular durante y después del entrenamiento.','',1,NOW()),
-(11,1,2,'Glutamina Pura','L-glutamina micronizada sin sabor. Se mezcla fácil y no tiene azúcar añadida.','',1,NOW()),
-(12,1,2,'Omega 3 Ultra','Aceite de pescado concentrado con EPA y DHA. Apoya la salud cardiovascular y articular.','',1,NOW()),
-(13,1,2,'Multivitamínico Daily','Complejo de vitaminas y minerales para deportistas, una cápsula al día.','',1,NOW()),
-(14,1,1,'Caseína Micelar Night','Proteína de digestión lenta, ideal antes de dormir para una recuperación sostenida.','',1,NOW()),
-(15,1,1,'Mass Gainer 5 lb','Ganador de peso con carbohidratos complejos y 50 g de proteína por porción.','',1,NOW()),
-(16,2,3,'Leggings Seamless','Leggings sin costuras de alta compresión, cintura alta y tejido que respira.','',1,NOW()),
-(17,2,3,'Top Deportivo Impact','Top de soporte medio con tirantes cruzados y tela de secado rápido.','',1,NOW()),
-(18,2,3,'Sudadera Hoodie Training','Hoodie de felpa ligera con bolsillo canguro, perfecta para el calentamiento.','',1,NOW()),
-(19,2,3,'Camiseta Oversize Gym','Corte amplio de algodón peinado con estampado Lifty en la espalda.','',1,NOW()),
-(20,2,3,'Chaqueta Cortaviento','Chaqueta ligera y plegable con capucha, resistente a la llovizna.','',1,NOW()),
-(21,2,3,'Medias de Compresión','Medias de compresión graduada para mejorar la circulación al correr.','',1,NOW()),
-(22,2,3,'Gorra Training','Gorra ajustable con malla trasera y banda absorbente.','',1,NOW()),
-(23,2,3,'Tank Top Performance','Camiseta sin mangas de tejido técnico, ideal para entrenamientos intensos.','',1,NOW()),
-(24,3,5,'Barras Energéticas de Avena','Barras de avena con miel y frutos secos. Energía natural para antes de entrenar.','',1,NOW()),
-(25,3,5,'Mix de Nueces Premium','Mezcla de almendras, nueces y marañones tostados sin sal.','',1,NOW()),
-(26,3,5,'Mantequilla de Maní Natural','Mantequilla de maní 100 % natural, sin azúcar ni aceites añadidos.','',1,NOW()),
-(27,3,5,'Chips de Proteína','Chips horneados con 15 g de proteína por bolsa. Salados y crocantes.','',1,NOW()),
-(28,3,5,'Galletas Proteicas','Galletas suaves con 12 g de proteína y bajo contenido de azúcar.','',1,NOW()),
-(29,3,6,'Agua con Electrolitos','Agua mineral con sodio, potasio y magnesio para hidratarte mejor.','',1,NOW()),
-(30,3,6,'Café Proteico Listo','Café frío listo para tomar con 20 g de proteína de suero.','',1,NOW()),
-(31,3,5,'Granola Fit','Granola crujiente con semillas y frutos rojos, baja en azúcar.','',1,NOW()),
-(32,4,4,'Guantes de Entrenamiento','Guantes acolchados con agarre antideslizante y muñequera ajustable.','',1,NOW()),
-(33,4,4,'Cinturón de Levantamiento','Cinturón de cuero reforzado para sentadilla y peso muerto, 10 cm de ancho.','',1,NOW()),
-(34,4,4,'Bandas de Resistencia Set','Set de 5 bandas elásticas con distintos niveles de resistencia y bolsa.','',1,NOW()),
-(35,4,4,'Cuerda para Saltar Speed','Cuerda de velocidad con rodamientos y mangos de aluminio antideslizantes.','',1,NOW()),
-(36,4,4,'Botella Térmica 1 L','Botella de acero inoxidable que mantiene el frío 24 horas.','',1,NOW()),
-(37,4,4,'Toalla de Microfibra','Toalla de secado rápido, compacta y con clip para colgar en la máquina.','',1,NOW()),
-(38,4,4,'Straps de Agarre','Correas de algodón reforzado para jalones y peso muerto pesado.','',1,NOW()),
-(39,4,4,'Rodilleras Deportivas','Rodilleras de neopreno de 7 mm con soporte para sentadillas.','',1,NOW()),
-(40,4,4,'Bolso Deportivo 40 L','Bolso con compartimiento para zapatos y bolsillo húmedo.','',1,NOW());
+(1,1,1,'Whey Gold 100%','Proteína de suero de leche con 24 g de proteína por porción. Ideal para la recuperación muscular.','whey-gold.jpg',1,NOW()),
+(2,1,1,'Iso Hydro 100','Proteína aislada hidrolizada de rápida absorción, baja en azúcar y grasa.','iso-hydro.jpg',1,NOW()),
+(3,1,2,'Creatina Platinum','Creatina monohidratada micronizada para aumentar fuerza y rendimiento.','creatina.jpg',1,NOW()),
+(4,1,2,'Pre-Workout Ignite','Pre entreno con cafeína y beta-alanina para energía y enfoque.','preworkout.jpg',1,NOW()),
+(5,3,6,'Zero Isotónica','Bebida isotónica sin azúcar para reponer electrolitos.','zero-isotonica.jpg',1,NOW()),
+(6,2,3,'Camiseta Dry-Fit','Camiseta deportiva de secado rápido, corte atlético.','camiseta-dryfit.jpg',1,NOW()),
+(7,4,4,'Shaker Lifty 700 ml','Shaker con mezclador metálico y tapa antiderrames.','shaker.jpg',1,NOW()),
+(8,3,5,'Barras Proteicas Lifty','Caja de 12 barras con 20 g de proteína y bajo azúcar. El snack perfecto después de entrenar.','barras-proteicas.jpg',1,NOW()),
+(9,2,3,'Short Training','Short ligero con bolsillos y cintura elástica para entrenamiento y running.','short-training.jpg',1,NOW()),
+(10,1,2,'BCAA 2:1:1 Recovery','Aminoácidos ramificados en proporción 2:1:1 para apoyar la recuperación muscular durante y después del entrenamiento.','bcaa.jpg',1,NOW()),
+(11,2,3,'Leggings Seamless','Leggings sin costuras de alta compresión, cintura alta y tejido que respira.','leggings.jpg',1,NOW()),
+(12,2,3,'Sudadera Hoodie Training','Hoodie de felpa ligera con bolsillo canguro, perfecta para el calentamiento.','hoodie.jpg',1,NOW()),
+(13,2,3,'Tank Top Performance','Camiseta sin mangas de tejido técnico, ideal para entrenamientos intensos.','tank-top.jpg',1,NOW()),
+(14,3,5,'Chips de Proteína','Chips horneados con 15 g de proteína por bolsa. Salados y crocantes.','chips-proteina.jpg',1,NOW()),
+(15,3,5,'Galletas Proteicas','Galletas suaves con 12 g de proteína y bajo contenido de azúcar.','galletas.jpg',1,NOW()),
+(16,3,6,'Café Proteico Listo','Café frío listo para tomar con 20 g de proteína de suero.','cafe-proteico.jpg',1,NOW()),
+(17,4,4,'Guantes de Entrenamiento','Guantes acolchados con agarre antideslizante y muñequera ajustable.','guantes.jpg',1,NOW()),
+(18,4,4,'Bandas de Resistencia Set','Set de 5 bandas elásticas con distintos niveles de resistencia y bolsa.','bandas.jpg',1,NOW()),
+(19,4,4,'Botella Térmica 1 L','Botella de acero inoxidable que mantiene el frío 24 horas.','botella-termica.jpg',1,NOW()),
+(20,4,4,'Bolso Deportivo 40 L','Bolso con compartimiento para zapatos y bolsillo húmedo.','bolso.jpg',1,NOW());
 
 INSERT INTO tvariante (ConsecutivoProducto,Sku,Presentacion,Precio,Stock,Estado) VALUES
 (1,'WHEY-CHO-2LB','Chocolate 2 lb',32000.00,25,1),
@@ -252,66 +232,27 @@ INSERT INTO tvariante (ConsecutivoProducto,Sku,Presentacion,Precio,Stock,Estado)
 (9,'SHT-TRN-L','Talla L',9800.00,16,1),
 (10,'BCAA-SAN-30','Sandía 30 porciones',18500.00,26,1),
 (10,'BCAA-LIM-30','Limón 30 porciones',18500.00,19,1),
-(11,'GLU-300G','300 g sin sabor',16500.00,31,1),
-(11,'GLU-500G','500 g sin sabor',24500.00,14,1),
-(12,'OME-60','60 cápsulas',12500.00,44,1),
-(12,'OME-120','120 cápsulas',21500.00,25,1),
-(13,'MUL-60','60 cápsulas',13500.00,38,1),
-(13,'MUL-120','120 cápsulas',23500.00,12,1),
-(14,'CAS-CHO-2LB','Chocolate 2 lb',34500.00,15,1),
-(14,'CAS-VAI-2LB','Vainilla 2 lb',34500.00,9,1),
-(15,'MAS-CHO-5LB','Chocolate 5 lb',39500.00,11,1),
-(15,'MAS-FRE-5LB','Fresa 5 lb',39500.00,6,1),
-(16,'LEG-SEA-S','Talla S',18900.00,18,1),
-(16,'LEG-SEA-M','Talla M',18900.00,22,1),
-(16,'LEG-SEA-L','Talla L',18900.00,10,1),
-(17,'TOP-IMP-S','Talla S',11900.00,20,1),
-(17,'TOP-IMP-M','Talla M',11900.00,24,1),
-(18,'HOO-TRN-M','Talla M',24900.00,14,1),
-(18,'HOO-TRN-L','Talla L',24900.00,13,1),
-(18,'HOO-TRN-XL','Talla XL',24900.00,7,1),
-(19,'OVR-GYM-M','Talla M',13900.00,26,1),
-(19,'OVR-GYM-L','Talla L',13900.00,21,1),
-(20,'COR-VIE-M','Talla M',27900.00,9,1),
-(20,'COR-VIE-L','Talla L',27900.00,8,1),
-(21,'MED-COM-M','Talla M, par',7900.00,35,1),
-(21,'MED-COM-L','Talla L, par',7900.00,30,1),
-(22,'GOR-TRN-NEG','Negra',6900.00,40,1),
-(22,'GOR-TRN-NAR','Naranja',6900.00,28,1),
-(23,'TNK-PER-M','Talla M',9400.00,25,1),
-(23,'TNK-PER-L','Talla L',9400.00,17,1),
-(24,'BAR-AVE-12','Caja x12',16900.00,33,1),
-(24,'BAR-AVE-24','Caja x24',31500.00,15,1),
-(25,'NUE-250G','Bolsa 250 g',6900.00,42,1),
-(25,'NUE-500G','Bolsa 500 g',12500.00,20,1),
-(26,'MAN-CRE-454','Cremosa 454 g',5900.00,36,1),
-(26,'MAN-CRO-454','Crujiente 454 g',5900.00,29,1),
-(27,'CHP-QUE-6','Queso, caja x6',14500.00,24,1),
-(27,'CHP-BBQ-6','BBQ, caja x6',14500.00,18,1),
-(28,'GAL-CHO-8','Chocolate, caja x8',13500.00,27,1),
-(28,'GAL-VAI-8','Vainilla, caja x8',13500.00,21,1),
-(29,'AGU-ELE-6','Pack x6, 500 ml',5400.00,60,1),
-(29,'AGU-ELE-12','Pack x12, 500 ml',9900.00,32,1),
-(30,'CAF-VAI-4','Vainilla, pack x4',9800.00,30,1),
-(30,'CAF-MOC-4','Moca, pack x4',9800.00,23,1),
-(31,'GRA-FIT-350','Bolsa 350 g',5200.00,38,1),
-(31,'GRA-FIT-700','Bolsa 700 g',9500.00,16,1),
-(32,'GUA-TRN-M','Talla M',8900.00,22,1),
-(32,'GUA-TRN-L','Talla L',8900.00,18,1),
-(33,'CIN-LEV-M','Talla M',21900.00,10,1),
-(33,'CIN-LEV-L','Talla L',21900.00,8,1),
-(34,'BAN-RES-5','Set de 5 bandas',12900.00,28,1),
-(35,'CUE-SPD-NEG','Negra',6500.00,34,1),
-(35,'CUE-SPD-NAR','Naranja',6500.00,26,1),
-(36,'BOT-TER-NEG','Negra 1 L',14900.00,20,1),
-(36,'BOT-TER-BLA','Blanca 1 L',14900.00,16,1),
-(37,'TOA-MIC-GRI','Gris',4900.00,45,1),
-(37,'TOA-MIC-NEG','Negra',4900.00,40,1),
-(38,'STR-AGA-NEG','Negras, par',5900.00,31,1),
-(39,'ROD-DEP-M','Talla M, par',17500.00,12,1),
-(39,'ROD-DEP-L','Talla L, par',17500.00,9,1),
-(40,'BOL-DEP-NEG','Negro 40 L',19900.00,14,1),
-(40,'BOL-DEP-NAR','Naranja 40 L',19900.00,11,1);
+(11,'LEG-SEA-S','Talla S',18900.00,18,1),
+(11,'LEG-SEA-M','Talla M',18900.00,22,1),
+(11,'LEG-SEA-L','Talla L',18900.00,10,1),
+(12,'HOO-TRN-M','Talla M',24900.00,14,1),
+(12,'HOO-TRN-L','Talla L',24900.00,13,1),
+(12,'HOO-TRN-XL','Talla XL',24900.00,7,1),
+(13,'TNK-PER-M','Talla M',9400.00,25,1),
+(13,'TNK-PER-L','Talla L',9400.00,17,1),
+(14,'CHP-QUE-6','Queso, caja x6',14500.00,24,1),
+(14,'CHP-BBQ-6','BBQ, caja x6',14500.00,18,1),
+(15,'GAL-CHO-8','Chocolate, caja x8',13500.00,27,1),
+(15,'GAL-VAI-8','Vainilla, caja x8',13500.00,21,1),
+(16,'CAF-VAI-4','Vainilla, pack x4',9800.00,30,1),
+(16,'CAF-MOC-4','Moca, pack x4',9800.00,23,1),
+(17,'GUA-TRN-M','Talla M',8900.00,22,1),
+(17,'GUA-TRN-L','Talla L',8900.00,18,1),
+(18,'BAN-RES-5','Set de 5 bandas',12900.00,28,1),
+(19,'BOT-TER-NEG','Negra 1 L',14900.00,20,1),
+(19,'BOT-TER-BLA','Blanca 1 L',14900.00,16,1),
+(20,'BOL-DEP-NEG','Negro 40 L',19900.00,14,1),
+(20,'BOL-DEP-NAR','Naranja 40 L',19900.00,11,1);
 
 UPDATE tproducto SET Destacado = 1 WHERE Consecutivo = 1;
 
@@ -342,74 +283,72 @@ INSERT INTO tdireccion (ConsecutivoUsuario,Provincia,Canton,Distrito,Detalle,Cod
 
 INSERT INTO tpedido (ConsecutivoUsuario,ConsecutivoDireccion,ConsecutivoMetodoPago,EstadoPedido,FechaPedido,Subtotal,Impuesto,CostoEnvio,Total) VALUES
 (2,1,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 28 DAY), INTERVAL 3 HOUR),38500.00,5005.00,2500.00,46005.00),
-(3,2,2,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 26 DAY), INTERVAL 5 HOUR),49700.00,6461.00,2500.00,58661.00),
+(3,2,2,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 26 DAY), INTERVAL 5 HOUR),47200.00,6136.00,2500.00,55836.00),
 (4,3,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 22 DAY), INTERVAL 2 HOUR),40500.00,5265.00,2500.00,48265.00),
 (5,4,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 19 DAY), INTERVAL 6 HOUR),24900.00,3237.00,2500.00,30637.00),
-(6,5,2,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 7 DAY), INTERVAL 4 HOUR),52400.00,6812.00,2500.00,61712.00),
-(3,8,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 6 DAY), INTERVAL 1 HOUR),25200.00,3276.00,2500.00,30976.00),
-(7,6,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 7 HOUR),39700.00,5161.00,2500.00,47361.00),
+(6,5,2,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 7 DAY), INTERVAL 4 HOUR),60900.00,7917.00,2500.00,71317.00),
+(3,8,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 6 DAY), INTERVAL 1 HOUR),50800.00,6604.00,2500.00,59904.00),
+(7,6,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 7 HOUR),38800.00,5044.00,2500.00,46344.00),
 (2,1,2,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 3 DAY), INTERVAL 2 HOUR),36500.00,4745.00,2500.00,43745.00),
-(4,3,1,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 2 DAY), INTERVAL 5 HOUR),31900.00,4147.00,2500.00,38547.00),
-(5,4,2,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR),42500.00,5525.00,2500.00,50525.00),
-(2,1,1,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 1 HOUR),53900.00,7007.00,2500.00,63407.00),
+(4,3,1,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 2 DAY), INTERVAL 5 HOUR),44900.00,5837.00,2500.00,53237.00),
+(5,4,2,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR),50500.00,6565.00,2500.00,59565.00),
+(2,1,1,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 1 HOUR),54500.00,7085.00,2500.00,64085.00),
 (2,1,2,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 6 HOUR),39400.00,5122.00,2500.00,47022.00),
 (6,5,1,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 3 HOUR),9800.00,1274.00,2500.00,13574.00),
-(7,6,1,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 14 DAY), INTERVAL 2 HOUR),34500.00,4485.00,2500.00,41485.00),
-(3,2,2,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 9 DAY), INTERVAL 4 HOUR),39400.00,5122.00,2500.00,47022.00);
+(7,6,1,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 14 DAY), INTERVAL 2 HOUR),18900.00,2457.00,2500.00,23857.00),
+(3,2,2,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 9 DAY), INTERVAL 4 HOUR),33800.00,4394.00,2500.00,40694.00);
 
 INSERT INTO tdetallepedido (ConsecutivoPedido,ConsecutivoVariante,Cantidad,PrecioUnitario,Subtotal) VALUES
 (1,1,1,32000.00,32000.00),
 (1,15,1,6500.00,6500.00),
-(2,34,2,18900.00,37800.00),
-(2,37,1,11900.00,11900.00),
+(2,24,2,18900.00,37800.00),
+(2,29,1,9400.00,9400.00),
 (3,6,1,22000.00,22000.00),
 (3,21,1,18500.00,18500.00),
-(4,39,1,24900.00,24900.00),
-(5,31,1,39500.00,39500.00),
-(5,71,1,12900.00,12900.00),
-(6,67,1,8900.00,8900.00),
-(6,72,1,6500.00,6500.00),
-(6,76,2,4900.00,9800.00),
-(7,51,2,16900.00,33800.00),
-(7,55,1,5900.00,5900.00),
+(4,27,1,24900.00,24900.00),
+(5,4,1,48000.00,48000.00),
+(5,39,1,12900.00,12900.00),
+(6,37,1,8900.00,8900.00),
+(6,40,1,14900.00,14900.00),
+(6,33,2,13500.00,27000.00),
+(7,31,2,14500.00,29000.00),
+(7,35,1,9800.00,9800.00),
 (8,8,1,27500.00,27500.00),
 (8,10,6,1500.00,9000.00),
 (9,13,2,12500.00,25000.00),
-(9,47,1,6900.00,6900.00),
-(10,25,1,12500.00,12500.00),
-(10,27,1,13500.00,13500.00),
-(10,23,1,16500.00,16500.00),
-(11,4,1,48000.00,48000.00),
-(11,78,1,5900.00,5900.00),
+(9,42,1,19900.00,19900.00),
+(10,2,1,32000.00,32000.00),
+(10,22,1,18500.00,18500.00),
+(11,5,1,48000.00,48000.00),
+(11,16,1,6500.00,6500.00),
 (12,17,1,24500.00,24500.00),
-(12,74,1,14900.00,14900.00),
+(12,41,1,14900.00,14900.00),
 (13,19,1,9800.00,9800.00),
-(14,29,1,34500.00,34500.00),
-(15,79,1,17500.00,17500.00),
-(15,69,1,21900.00,21900.00);
+(14,25,1,18900.00,18900.00),
+(15,26,1,24900.00,24900.00),
+(15,38,1,8900.00,8900.00);
 
 -- El stock baja por los pedidos ya pagados (Pagado, Enviado y Entregado). Pendiente y Cancelado no descuentan.
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 1;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 2;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 4;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 6;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 8;
 UPDATE tvariante SET Stock = Stock - 6 WHERE Consecutivo = 10;
 UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 13;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 15;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 21;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 23;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 25;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 22;
+UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 24;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 27;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 31;
-UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 34;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 29;
+UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 31;
+UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 33;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 35;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 37;
 UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 39;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 47;
-UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 51;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 55;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 67;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 71;
-UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 72;
-UPDATE tvariante SET Stock = Stock - 2 WHERE Consecutivo = 76;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 40;
+UPDATE tvariante SET Stock = Stock - 1 WHERE Consecutivo = 42;
 
 -- ----------------------------------------------------------------------------
 -- Procedimientos almacenados

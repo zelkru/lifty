@@ -409,3 +409,7 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .pcard .sinfoto { justify-content: flex-end; gap: .8rem; padding-top: 3.4rem; }
 .item-carrito .foto .sinfoto span { font-size: 1.2rem; }
 .escenario-producto .sinfoto span { font-size: clamp(3rem, 8vw, 6rem); }
+
+/* Las fotos de producto traen su propio fondo de estudio: llenan todo el marco, sin caja visible. */
+.pcard .escena, .escenario-producto, .item-carrito .foto, .ficha-hero .escena { background: #e9e9ea; }
+.pcard .escena img, .escenario-producto img, .item-carrito .foto img, .ficha-hero .escena img { object-fit: cover; padding: 0; }

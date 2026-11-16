@@ -1,7 +1,6 @@
 <?php
 include_once __DIR__ . '/ConfigModel.php';
 
-/* Devuelve el consecutivo del usuario nuevo, 0 si falla o -1 si el correo ya existe. */
 function RegistroModel($nombre, $apellido1, $apellido2, $correoElectronico, $telefono, $contrasennaHash)
 {
     try {

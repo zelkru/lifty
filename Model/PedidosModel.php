@@ -1,12 +1,6 @@
 <?php
 include_once __DIR__ . '/ConfigModel.php';
 
-/*
- * Crea el pedido (estado Pendiente) con su detalle dentro de una transaccion.
- * $lineas = [ ['Variante' => id, 'Cantidad' => n, 'Precio' => decimal], ... ]
- * Los precios los lee el Controller de la base de datos, nunca del navegador.
- * Devuelve el consecutivo del pedido o 0 si falla.
- */
 function RegistrarPedidoModel($consecutivoUsuario, $consecutivoDireccion, $consecutivoMetodoPago, $subtotal, $impuesto, $costoEnvio, $total, $lineas)
 {
     $context = null;
@@ -53,7 +47,6 @@ function PagarPedidoModel($consecutivoPedido, $consecutivoUsuario)
     }
 }
 
-/* $consecutivoUsuario = 0 devuelve todos los pedidos (administrador). */
 function ConsultarPedidosModel($consecutivoUsuario)
 {
     try {

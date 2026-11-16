@@ -2,7 +2,6 @@
 include_once __DIR__ . '/../layoutInterno.php';
 include_once __DIR__ . '/../../Controller/CatalogoController.php';
 
-/* Catalogo: pagina aparte del inicio, paginada desde la base de datos. */
 const PRODUCTOS_POR_PAGINA = 12;
 
 $busqueda = trim($_GET['q'] ?? '');
@@ -26,7 +25,6 @@ foreach ($categorias as $c) {
 }
 $hayFiltros = $busqueda != '' || $categoria > 0 || $marca > 0;
 
-/* Direccion del catalogo con los filtros actuales y los cambios indicados (cambiar de filtro vuelve a la pagina 1). */
 function UrlCatalogo($cambios)
 {
     $parametros = array_merge(['q' => $_GET['q'] ?? '', 'categoria' => $_GET['categoria'] ?? 0, 'marca' => $_GET['marca'] ?? 0, 'pagina' => 1], $cambios);

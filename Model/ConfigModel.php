@@ -1,10 +1,4 @@
 <?php
-/*
- * ConfigModel: conexion a la base de datos y utilidades comunes del Model.
- *
- * En XAMPP funciona sin configurar nada (127.0.0.1:3307, root, sin clave).
- * Con Docker los datos se toman de las variables de entorno DB_*.
- */
 
 function Conectar()
 {
@@ -18,7 +12,6 @@ function Conectar()
 
     $context = new mysqli($servidor, $usuario, $clave, $baseDatos, $puerto);
     $context -> set_charset('utf8mb4');
-    // Misma collation que las tablas, para que MySQL 8 y MariaDB (XAMPP) comparen igual.
     $context -> query("SET collation_connection = 'utf8mb4_general_ci'");
     return $context;
 }
@@ -28,10 +21,6 @@ function Cerrar($context)
     $context -> close();
 }
 
-/*
- * Convierte un valor PHP a un literal SQL seguro para armar el CALL.
- * Los numeros pasan tal cual, null es NULL y el texto se escapa.
- */
 function ParametroSql($context, $valor)
 {
     if ($valor === null) {
@@ -43,10 +32,6 @@ function ParametroSql($context, $valor)
     return "'" . $context -> real_escape_string((string) $valor) . "'";
 }
 
-/*
- * Ejecuta un procedimiento almacenado y devuelve todas sus filas.
- * Uso: Procedimiento($context, 'spConsultarUsuario', [$consecutivo]);
- */
 function Procedimiento($context, $nombre, $parametros = [])
 {
     $lista = [];
@@ -65,7 +50,6 @@ function Procedimiento($context, $nombre, $parametros = [])
         $response -> free();
     }
 
-    // Se libera cualquier resultado adicional para poder seguir usando la conexion.
     while ($context -> more_results() && $context -> next_result()) {
         $extra = $context -> use_result();
         if ($extra instanceof mysqli_result) {
@@ -76,14 +60,12 @@ function Procedimiento($context, $nombre, $parametros = [])
     return $data;
 }
 
-/* Igual que Procedimiento, pero devuelve solo la primera fila (o null). */
 function ProcedimientoFila($context, $nombre, $parametros = [])
 {
     $data = Procedimiento($context, $nombre, $parametros);
     return count($data) > 0 ? $data[0] : null;
 }
 
-/* Para los procedimientos que responden con una sola columna booleana (Actualizado, Pagado...). */
 function ProcedimientoBooleano($context, $nombre, $parametros = [])
 {
     $fila = ProcedimientoFila($context, $nombre, $parametros);

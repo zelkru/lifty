@@ -143,7 +143,6 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
     <?php IncludeJS(); ?>
     <script>
         $(function () {
-            /* Muestra solo los campos del método de pago elegido. */
             function mostrarPago() {
                 var tipo = $('.metodo-pago:checked').data('tipo');
                 $('.pay-box').removeClass('active').filter('[data-tipo="' + tipo + '"]').addClass('active');
@@ -151,7 +150,6 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
             $('.metodo-pago').on('change', mostrarPago);
             mostrarPago();
 
-            /* Los botones + y - actualizan el carrito sin pasos extra. */
             $('.form-cantidad').each(function () {
                 var $f = $(this), $c = $f.find('input[type=number]');
                 var max = parseInt($c.attr('max'), 10);

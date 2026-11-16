@@ -17,7 +17,6 @@ function ConsultarUsuarioModel($consecutivo)
     }
 }
 
-/* Devuelve true si se actualizo, o -1 si el correo ya pertenece a otro usuario. */
 function ActualizarDatosCuentaModel($consecutivo, $nombre, $apellido1, $apellido2, $correoElectronico, $telefono)
 {
     try {
@@ -136,8 +135,6 @@ function InactivarDireccionModel($consecutivo, $consecutivoUsuario)
     }
 }
 
-/* ---------- Gestion de usuarios por el administrador ---------- */
-
 function ConsultarRolesModel()
 {
     try {
@@ -152,7 +149,6 @@ function ConsultarRolesModel()
     }
 }
 
-/* Devuelve el consecutivo del usuario nuevo, 0 si falla o -1 si el correo ya existe. */
 function RegistrarUsuarioAdminModel($nombre, $apellido1, $apellido2, $correoElectronico, $telefono, $contrasennaHash, $consecutivoRol)
 {
     try {
@@ -171,7 +167,6 @@ function RegistrarUsuarioAdminModel($nombre, $apellido1, $apellido2, $correoElec
     }
 }
 
-/* Devuelve true, false o -1 si el correo ya pertenece a otro usuario. */
 function ActualizarUsuarioAdminModel($consecutivo, $nombre, $apellido1, $apellido2, $correoElectronico, $telefono, $consecutivoRol, $estado)
 {
     try {

@@ -1,4 +1,3 @@
-/* Lifty: estilos propios sobre la plantilla (main.css). Usa las variables de Bootstrap. */
 
 :root {
   --lifty-ink: #1f2430;
@@ -10,7 +9,6 @@
 
 body { background: #f7f7f9; color: var(--lifty-ink); }
 
-/* ---------- Marca ---------- */
 .lifty-brand { color: var(--lifty-ink); }
 .lifty-brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
@@ -18,12 +16,10 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
   background: var(--bs-primary); color: #fff; font-size: 1.15rem;
 }
 
-/* ---------- Menu lateral ---------- */
 .sidebar .nav-link { border-radius: 10px; margin: 2px 12px; transition: background .15s, color .15s; }
 .sidebar .nav-link:hover { background: var(--lifty-soft); color: var(--bs-primary); }
 .sidebar .nav-link.active { background: var(--lifty-soft); color: var(--bs-primary); font-weight: 600; }
 
-/* ---------- Acceso (login, registro, recuperar) ---------- */
 .auth-wrap {
   min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;
   background:
@@ -38,12 +34,10 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .auth-card .form-control { padding: .65rem .85rem; border-radius: 10px; }
 .auth-card .btn-primary { padding: .7rem; border-radius: 10px; font-weight: 600; }
 
-/* ---------- Encabezado de pagina ---------- */
 .page-head { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
 .page-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 .page-head p { margin: .15rem 0 0; color: var(--lifty-muted); }
 
-/* ---------- Tarjetas ---------- */
 .l-card { background: #fff; border: 1px solid var(--lifty-line); border-radius: var(--lifty-radius); }
 .l-card-body { padding: 1.25rem; }
 .l-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
@@ -56,7 +50,6 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
 .stat-label { color: var(--lifty-muted); font-size: .85rem; }
 
-/* ---------- Catalogo ---------- */
 .hero {
   border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; color: #fff;
   background: linear-gradient(120deg, #1f2430 0%, #3a2d2a 55%, var(--bs-primary) 140%);
@@ -79,7 +72,6 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .variant-option.disabled { opacity: .5; cursor: not-allowed; }
 .form-check-input:checked + .variant-option, .variant-radio:checked + .variant-option { border-color: var(--bs-primary); background: var(--lifty-soft); }
 
-/* ---------- Tablas ---------- */
 .l-table { margin: 0; }
 .l-table th { font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; color: var(--lifty-muted); font-weight: 600; background: #fafafc; white-space: nowrap; }
 .l-table td { vertical-align: middle; }
@@ -87,7 +79,6 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .cart-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .qty-input { width: 76px; }
 
-/* ---------- Varios ---------- */
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--lifty-muted); }
 .empty-state i { font-size: 2.6rem; color: #c9ccd3; display: block; margin-bottom: .5rem; }
 .bar-track { background: #f0f0f4; border-radius: 99px; height: 10px; overflow: hidden; }
@@ -107,7 +98,6 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
   .page-head h1 { font-size: 1.35rem; }
 }
 
-/* ---------- Acceso: escenario oscuro con brillo ember ---------- */
 body { font-family: 'Manrope', system-ui, sans-serif; }
 .display { font-family: 'Big Shoulders Display', 'Impact', sans-serif; text-transform: uppercase; font-weight: 900; line-height: .9; }
 .page-head h1 { font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase; font-weight: 800; letter-spacing: 0; }
@@ -126,10 +116,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 .auth-card .input-group .form-control { border-radius: 14px 0 0 14px; }
 .auth-card .link-primary { color: #e04a1f !important; }
 
-/* =====================================================================
- * Acceso (ingreso, registro, recuperar): pantalla dividida.
- * Izquierda: formulario sobre blanco. Derecha: palabras fitness en diagonal.
- * ===================================================================== */
 .auth-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; background: #fff; }
 .auth-form { position: relative; display: flex; align-items: center; justify-content: center; padding: 5rem clamp(1.5rem, 5vw, 5rem) 3rem; }
 .auth-form-in { width: 100%; max-width: 440px; }
@@ -169,11 +155,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 }
 @media (prefers-reduced-motion: reduce) { .auth-fila .pista { animation: none; } }
 
-
-/* =====================================================================
- * Badges suaves: fondo tenue y texto sobrio. Sin verdes ni rojos fuertes,
- * para que el naranja de la marca siga siendo el unico color protagonista.
- * ===================================================================== */
 .badge { font-weight: 700; font-size: .74rem; letter-spacing: 0; padding: .38em .8em; border-radius: 999px; }
 .badge.text-bg-success { background-color: #e5f2e9 !important; color: #2f6b45 !important; }
 .badge.text-bg-secondary { background-color: #ecebe8 !important; color: #6b6558 !important; }
@@ -185,7 +166,6 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 .badge.text-bg-light { background-color: #f3f0ea !important; color: #4a443a !important; border-color: transparent !important; }
 .badge.text-bg-light.border { border: 0 !important; }
 
-/* El registro lleva el formulario a la derecha y el panel visual a la izquierda */
 .auth-split.invertido .auth-form { order: 2; }
 .auth-split.invertido .auth-art { order: 1; }
 .auth-split.invertido .auth-volver { left: clamp(1.5rem, 5vw, 3rem); }

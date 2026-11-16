@@ -1,15 +1,3 @@
-/*
- * tablas.js: ordenar, filtrar y paginar las tablas del panel (solo jQuery).
- *
- * Uso:
- *   <table id="tablaX" class="tabla-datos" data-pagina="12"> con <th data-orden="texto|numero|fecha">
- *   Controles de filtro (en cualquier parte de la pagina) con data-tabla="#tablaX":
- *     - input de texto: busca en todas las columnas.
- *     - select con data-col="2": la columna 2 (desde 0) debe coincidir con el valor elegido.
- *     - input date con data-col y data-rango="desde|hasta": compara contra data-valor="AAAA-MM-DD ..." de la celda.
- *     - boton .limpiar-filtros con data-tabla: reinicia los filtros.
- *   Una celda puede traer data-valor para ordenar o filtrar por un valor distinto al texto mostrado.
- */
 $(function () {
 
     function valorCelda($td) {
@@ -26,12 +14,10 @@ $(function () {
         var orden = { col: -1, dir: 1 };
         var pagina = 1;
 
-        /* Encabezados ordenables */
         $tabla.find('thead th[data-orden]').each(function () {
             $(this).addClass('ordenable').attr('tabindex', 0).append(' <i class="ti ti-arrows-sort ord"></i>');
         });
 
-        /* Pie con informacion y paginas */
         var $pie = $('<div class="tabla-pie"><span class="tabla-info"></span><div class="tabla-paginas"></div></div>');
         $tabla.closest('.l-card').append($pie);
 
@@ -64,7 +50,6 @@ $(function () {
         }
 
         function dibujar() {
-            /* 1) ordenar (estable) */
             if (orden.col >= 0) {
                 var tipo = $tabla.find('thead th').eq(orden.col).data('orden');
                 filas = filas.map(function (f, i) { return { f: f, i: i }; }).sort(function (a, b) {
@@ -75,7 +60,6 @@ $(function () {
                 $cuerpo.append(filas);
             }
 
-            /* 2) filtrar y paginar */
             var visibles = filas.filter(pasaFiltros);
             var paginas = Math.max(1, Math.ceil(visibles.length / porPagina));
             if (pagina > paginas) { pagina = paginas; }
@@ -91,7 +75,6 @@ $(function () {
                 $cuerpo.append('<tr class="sin-resultados"><td colspan="' + columnas + '" class="text-center text-secondary py-5"><i class="ti ti-filter-off fs-3 d-block mb-2"></i>No hay resultados con esos filtros.</td></tr>');
             }
 
-            /* 3) indicador de orden */
             $tabla.find('thead th.ordenable').each(function (i) {
                 var $i = $(this).find('i.ord');
                 var activo = $tabla.find('thead th').index(this) === orden.col;
@@ -99,7 +82,6 @@ $(function () {
                 $i.attr('class', 'ti ord ' + (activo ? (orden.dir === 1 ? 'ti-sort-ascending' : 'ti-sort-descending') : 'ti-arrows-sort'));
             });
 
-            /* 4) pie (sin filas de datos no hay nada que contar) */
             $pie.toggle(filas.length > 0);
             $pie.find('.tabla-info').text(visibles.length === 0 ? '0 resultados' :
                 'Mostrando ' + (desde + 1) + ' a ' + Math.min(hasta, visibles.length) + ' de ' + visibles.length +

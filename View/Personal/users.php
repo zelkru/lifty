@@ -163,7 +163,6 @@ $roles = ConsultarRoles();
 
     <?php IncludeJS(); ?>
     <script>
-        /* Un solo modal crea o edita; al crear la contraseña es obligatoria, al editar es opcional (restablecerla). */
         document.getElementById('modalUsuario').addEventListener('show.bs.modal', function (e) {
             var boton = e.relatedTarget;
             var editando = !!(boton && boton.dataset.fill);
@@ -180,7 +179,6 @@ $roles = ConsultarRoles();
             if ($contrasenna.data('rule-required') !== undefined) { $contrasenna.removeData('rule-required'); }
             if (!editando) { $('#modalUsuario form')[0].reset(); }
         });
-        /* El rol de una cuenta propia no se envia (el servidor lo conserva). */
         $('#modalUsuario form').on('submit', function () { $('#txtRol').prop('disabled', false); });
     </script>
 

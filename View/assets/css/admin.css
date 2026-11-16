@@ -123,3 +123,7 @@ tr.fila-oculta { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .content .container-fluid > *, .content .container-fluid > .row > [class*="col"], .l-table tbody tr, .sidebar .nav > li { animation: none !important; }
 }
+
+.select-auto { width: auto; }
+#avisoPropio { display: none; }
+.menu-usuario { min-width: 240px; }

@@ -370,3 +370,6 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 
 .hero-foto { width: min(100%, 640px); }
 .hero-foto img { mix-blend-mode: lighten; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+
+.titulo-catalogo { font-size: clamp(3rem, 8vw, 6.5rem); margin: 0; }
+.menu-usuario { min-width: 240px; }

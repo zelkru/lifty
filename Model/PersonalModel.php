@@ -85,13 +85,13 @@ function ConsultarDireccionesModel($consecutivoUsuario)
     }
 }
 
-function RegistrarDireccionModel($consecutivoUsuario, $provincia, $canton, $distrito, $detalle, $codigoPostal)
+function RegistrarDireccionModel($consecutivoUsuario, $consecutivoProvincia, $canton, $distrito, $detalle, $codigoPostal)
 {
     try {
         $context = Conectar();
 
         $fila = ProcedimientoFila($context, 'spRegistrarDireccion',
-            [(int) $consecutivoUsuario, $provincia, $canton, $distrito, $detalle, $codigoPostal]);
+            [(int) $consecutivoUsuario, (int) $consecutivoProvincia, $canton, $distrito, $detalle, $codigoPostal]);
 
         Cerrar($context);
         return $fila !== null;
@@ -102,13 +102,13 @@ function RegistrarDireccionModel($consecutivoUsuario, $provincia, $canton, $dist
     }
 }
 
-function ActualizarDireccionModel($consecutivo, $consecutivoUsuario, $provincia, $canton, $distrito, $detalle, $codigoPostal)
+function ActualizarDireccionModel($consecutivo, $consecutivoUsuario, $consecutivoProvincia, $canton, $distrito, $detalle, $codigoPostal)
 {
     try {
         $context = Conectar();
 
         $actualizado = ProcedimientoBooleano($context, 'spActualizarDireccion',
-            [(int) $consecutivo, (int) $consecutivoUsuario, $provincia, $canton, $distrito, $detalle, $codigoPostal]);
+            [(int) $consecutivo, (int) $consecutivoUsuario, (int) $consecutivoProvincia, $canton, $distrito, $detalle, $codigoPostal]);
 
         Cerrar($context);
         return $actualizado;
@@ -182,5 +182,19 @@ function ActualizarUsuarioAdminModel($consecutivo, $nombre, $apellido1, $apellid
         }
         RegistrarError($exc, 'ActualizarUsuarioAdminModel');
         return false;
+    }
+}
+
+function ConsultarProvinciasModel()
+{
+    try {
+        $context = Conectar();
+        $data = Procedimiento($context, 'spConsultarProvincias');
+        Cerrar($context);
+        return $data;
+    }
+    catch (Exception $exc) {
+        RegistrarError($exc, 'ConsultarProvinciasModel');
+        return [];
     }
 }

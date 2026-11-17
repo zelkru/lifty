@@ -77,7 +77,7 @@ lifty/
 - Funciones en PascalCase: `ConsultarUsuarioModel`, `RegistrarProductoModel`. Las del Model
   terminan en `Model`.
 - Procedimientos almacenados con prefijo `sp`, tablas con prefijo `t`, llave primaria
-  `Consecutivo`, borrado lógico con la columna `Estado`.
+  `Consecutivo`, borrado lógico con la tabla `testado` (llave `ConsecutivoEstado`).
 - Botones de formulario con prefijo `btn` (`btnRegistro`), campos con prefijo `txt`.
 - Todo acceso a la base de datos pasa por `Procedimiento()` de `ConfigModel.php`, que escapa
   los parámetros. Las contraseñas se guardan con `password_hash`.

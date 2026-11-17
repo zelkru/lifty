@@ -32,12 +32,16 @@ body { background: var(--paper); font-family: 'Manrope', system-ui, sans-serif; 
 .dropdown-menu { border: 0; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, .18); }
 
 .l-card { background: #fff; border: 1px solid rgba(11, 11, 14, .08); border-radius: 22px; box-shadow: none; }
-.stat-card { padding: 1.3rem 1.4rem; align-items: flex-end; gap: 1rem; }
+.stat-card { padding: 1.3rem 1.25rem; align-items: flex-end; gap: .85rem; height: 100%; min-height: 6.5rem; }
 .stat-icon { background: none; color: var(--ember); font-size: 1.9rem; width: auto; height: auto; align-self: flex-start; }
-.stat-value { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: 2.6rem; line-height: .9; }
+.stat-card > div:last-child { min-width: 0; }
+.stat-value { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; font-size: clamp(1.6rem, 1.75vw, 2.3rem); line-height: .9; white-space: nowrap; }
 .stat-label { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; margin-top: .3rem; }
 .btn { border-radius: 999px; font-weight: 700; }
 .btn .ti { vertical-align: -2px; font-size: 1.05rem; }
+.table td .btn, .table th .btn { white-space: nowrap; }
+.table td:last-child { white-space: nowrap; }
+.table td.text-end .btn { min-width: 6.6rem; text-align: center; }
 .btn-primary { background: var(--ember); border-color: var(--ember); color: #fff; }
 .btn-primary:hover, .btn-primary:focus { background: #ff8a5c; border-color: #ff8a5c; color: #fff; }
 .btn-outline-primary { color: var(--ember); border-color: var(--ember); }

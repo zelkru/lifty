@@ -82,7 +82,8 @@ lifty/
 - Todo acceso a la base de datos pasa por `Procedimiento()` de `ConfigModel.php`, que escapa
   los parámetros. Las contraseñas se guardan con `password_hash`.
 - Todo formulario privado lleva `<?php CampoCsrf(); ?>`.
-- Comentarios en español, explicando el porqué y no el qué.
+- Código autoexplicativo con nombres descriptivos en español; solo se comenta lo que no se
+  entiende leyéndolo (reglas de negocio y seguridad).
 
 ## Funcionalidades de esta entrega
 
@@ -96,24 +97,30 @@ lifty/
 - Administrador: productos, presentaciones y stock, categorías, marcas, métodos de pago,
   pedidos con cambio de estado, usuarios y reportes básicos.
 
-## Con Docker (solo para quien lo use)
+## Base de datos
 
-El profesor y el resto del equipo usan XAMPP. Quien desarrolla con Docker usa los archivos
-`docker-compose.yml` y `.env.example` que están una carpeta arriba de `lifty`:
+13 tablas normalizadas (prefijo `t`, llave `Consecutivo`) y 46 procedimientos almacenados
+(prefijo `sp`). El estado lógico vive en `testado` y las provincias en `tprovincia`. El
+diagrama entidad-relación se entrega aparte, en draw.io.
+
+## Despliegue con Docker
+
+`docker-compose.yml` y `.env.example` están una carpeta arriba de `lifty` y no forman parte
+de este repositorio. En XAMPP no hacen falta. Con Docker:
 
 ```bash
 cp .env.example .env     # ajustar DB_PASS
 docker compose up -d
 ```
 
-La aplicación queda en <http://localhost:8080/lifty> y se conecta al contenedor MySQL
-existente por la red `mysql_default`.
+La aplicación queda en <http://localhost:8080/lifty>.
 
 ## Flujo de trabajo
 
-El repositorio trabaja con **feature branches**; nunca se hace commit directo a `main`.
-Commits con el formato `tipo(alcance): mensaje` en inglés (`feat`, `fix`, `docs`, `style`,
-`refactor`, `chore`) y Pull Request hacia `main` revisado por al menos un compañero.
+Ramas de trabajo (`feat/...`, `fix/...`) hacia `develop` con Pull Request, y de `develop`
+hacia `main` para cada entrega. Nunca se hace commit directo a `main`. Commits con el
+formato `tipo(alcance): mensaje` en inglés (`feat`, `fix`, `docs`, `style`, `refactor`,
+`chore`).
 
 ## Créditos
 

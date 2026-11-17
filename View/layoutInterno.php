@@ -131,8 +131,8 @@ function MostrarHeaderTienda()
                 <li class="nav-item dropdown">
                   <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="tienda-avatar"><i class="ti ti-user"></i></span>
-                    <span class="d-none d-xl-inline">' . Texto($_SESSION['NombreUsuario']) . '</span>
-                    <i class="ti ti-chevron-down small d-none d-xl-inline"></i>
+                    <span>' . Texto($_SESSION['NombreUsuario']) . '</span>
+                    <i class="ti ti-chevron-down small ms-xl-0 ms-auto"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-end tienda-menu-usuario">
                     <div class="px-3 pt-2 pb-2 small text-secondary">' . Texto($_SESSION['NombreRol']) . '</div>'

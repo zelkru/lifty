@@ -25,8 +25,9 @@ Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Entrega 2 (S02).
 
 1. Copiar la carpeta `lifty` dentro de `htdocs`.
 2. Iniciar Apache y MySQL desde el panel de XAMPP.
-3. Importar `lifty_bd.sql` en phpMyAdmin (crea la base `lifty_bd`, las tablas, los
-   procedimientos y los datos de ejemplo).
+3. Ejecutar `lifty_bd.sql` en MySQL con su cliente de preferencia (Workbench o la consola
+   `mysql`). El script crea la base `lifty_bd`, las tablas, los procedimientos y los datos de
+   ejemplo.
 4. Abrir <http://localhost/lifty>.
 
 La conexión (`Model/ConfigModel.php`) usa por defecto `127.0.0.1:3307`, usuario `root` y sin

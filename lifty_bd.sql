@@ -5,7 +5,7 @@ SET NAMES utf8mb4 COLLATE utf8mb4_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `tdetallepedido`, `tpedido`, `tmetodopago`, `tvariante`, `tproducto`,
-                     `tmarca`, `tcategoria`, `tdireccion`, `tusuario`, `trol`, `terror`;
+                     `tmarca`, `tcategoria`, `tdireccion`, `tprovincia`, `tusuario`, `trol`, `testado`, `terror`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- Tablas
@@ -17,6 +17,20 @@ CREATE TABLE `terror` (
   `ConsecutivoUsuario` int DEFAULT NULL,
   `FechaHora` datetime DEFAULT NULL,
   PRIMARY KEY (`Consecutivo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `testado` (
+  `Consecutivo` int NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`Consecutivo`),
+  UNIQUE KEY `UK_testado_Nombre` (`Nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `tprovincia` (
+  `Consecutivo` int NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`Consecutivo`),
+  UNIQUE KEY `UK_tprovincia_Nombre` (`Nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `trol` (
@@ -33,45 +47,55 @@ CREATE TABLE `tusuario` (
   `CorreoElectronico` varchar(100) NOT NULL,
   `Telefono` varchar(20) NOT NULL,
   `Contrasenna` varchar(255) NOT NULL,
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   `ConsecutivoRol` int NOT NULL,
   `FechaRegistro` datetime NOT NULL,
   PRIMARY KEY (`Consecutivo`),
   UNIQUE KEY `UK_tusuario_CorreoElectronico` (`CorreoElectronico`),
   KEY `FK_tusuario_ConsecutivoRol` (`ConsecutivoRol`),
-  CONSTRAINT `FK_tusuario_ConsecutivoRol` FOREIGN KEY (`ConsecutivoRol`) REFERENCES `trol` (`Consecutivo`)
+  CONSTRAINT `FK_tusuario_ConsecutivoRol` FOREIGN KEY (`ConsecutivoRol`) REFERENCES `trol` (`Consecutivo`),
+  KEY `FK_tusuario_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tusuario_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tdireccion` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
   `ConsecutivoUsuario` int NOT NULL,
-  `Provincia` varchar(50) NOT NULL,
+  `ConsecutivoProvincia` int NOT NULL,
   `Canton` varchar(50) NOT NULL,
   `Distrito` varchar(50) NOT NULL,
   `Detalle` varchar(250) NOT NULL,
   `CodigoPostal` varchar(10) NOT NULL DEFAULT '',
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   PRIMARY KEY (`Consecutivo`),
   KEY `FK_tdireccion_ConsecutivoUsuario` (`ConsecutivoUsuario`),
-  CONSTRAINT `FK_tdireccion_ConsecutivoUsuario` FOREIGN KEY (`ConsecutivoUsuario`) REFERENCES `tusuario` (`Consecutivo`)
+  CONSTRAINT `FK_tdireccion_ConsecutivoUsuario` FOREIGN KEY (`ConsecutivoUsuario`) REFERENCES `tusuario` (`Consecutivo`),
+  KEY `FK_tdireccion_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tdireccion_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`),
+  KEY `FK_tdireccion_ConsecutivoProvincia` (`ConsecutivoProvincia`),
+  CONSTRAINT `FK_tdireccion_ConsecutivoProvincia` FOREIGN KEY (`ConsecutivoProvincia`) REFERENCES `tprovincia` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tcategoria` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(50) NOT NULL,
   `Descripcion` varchar(150) NOT NULL DEFAULT '',
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   PRIMARY KEY (`Consecutivo`),
-  UNIQUE KEY `UK_tcategoria_Nombre` (`Nombre`)
+  UNIQUE KEY `UK_tcategoria_Nombre` (`Nombre`),
+  KEY `FK_tcategoria_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tcategoria_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tmarca` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(50) NOT NULL,
   `Descripcion` varchar(150) NOT NULL DEFAULT '',
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   PRIMARY KEY (`Consecutivo`),
-  UNIQUE KEY `UK_tmarca_Nombre` (`Nombre`)
+  UNIQUE KEY `UK_tmarca_Nombre` (`Nombre`),
+  KEY `FK_tmarca_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tmarca_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tproducto` (
@@ -81,14 +105,16 @@ CREATE TABLE `tproducto` (
   `Nombre` varchar(100) NOT NULL,
   `Descripcion` text NOT NULL,
   `Imagen` varchar(255) NOT NULL DEFAULT '',
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   `Destacado` tinyint(1) NOT NULL DEFAULT 0,
   `FechaCreacion` datetime NOT NULL,
   PRIMARY KEY (`Consecutivo`),
   KEY `FK_tproducto_ConsecutivoCategoria` (`ConsecutivoCategoria`),
   KEY `FK_tproducto_ConsecutivoMarca` (`ConsecutivoMarca`),
   CONSTRAINT `FK_tproducto_ConsecutivoCategoria` FOREIGN KEY (`ConsecutivoCategoria`) REFERENCES `tcategoria` (`Consecutivo`),
-  CONSTRAINT `FK_tproducto_ConsecutivoMarca` FOREIGN KEY (`ConsecutivoMarca`) REFERENCES `tmarca` (`Consecutivo`)
+  CONSTRAINT `FK_tproducto_ConsecutivoMarca` FOREIGN KEY (`ConsecutivoMarca`) REFERENCES `tmarca` (`Consecutivo`),
+  KEY `FK_tproducto_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tproducto_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tvariante` (
@@ -98,19 +124,23 @@ CREATE TABLE `tvariante` (
   `Presentacion` varchar(100) NOT NULL,
   `Precio` decimal(10,2) NOT NULL,
   `Stock` int NOT NULL DEFAULT 0,
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
   PRIMARY KEY (`Consecutivo`),
   UNIQUE KEY `UK_tvariante_Sku` (`Sku`),
   KEY `FK_tvariante_ConsecutivoProducto` (`ConsecutivoProducto`),
-  CONSTRAINT `FK_tvariante_ConsecutivoProducto` FOREIGN KEY (`ConsecutivoProducto`) REFERENCES `tproducto` (`Consecutivo`)
+  CONSTRAINT `FK_tvariante_ConsecutivoProducto` FOREIGN KEY (`ConsecutivoProducto`) REFERENCES `tproducto` (`Consecutivo`),
+  KEY `FK_tvariante_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tvariante_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tmetodopago` (
   `Consecutivo` int NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(50) NOT NULL,
   `Descripcion` varchar(150) NOT NULL DEFAULT '',
-  `Estado` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`Consecutivo`)
+  `ConsecutivoEstado` int NOT NULL DEFAULT 1,
+  PRIMARY KEY (`Consecutivo`),
+  KEY `FK_tmetodopago_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tmetodopago_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tpedido` (
@@ -118,7 +148,7 @@ CREATE TABLE `tpedido` (
   `ConsecutivoUsuario` int NOT NULL,
   `ConsecutivoDireccion` int NOT NULL,
   `ConsecutivoMetodoPago` int NOT NULL,
-  `EstadoPedido` varchar(20) NOT NULL DEFAULT 'Pendiente',
+  `ConsecutivoEstado` int NOT NULL DEFAULT 3,
   `FechaPedido` datetime NOT NULL,
   `Subtotal` decimal(10,2) NOT NULL,
   `Impuesto` decimal(10,2) NOT NULL,
@@ -130,7 +160,9 @@ CREATE TABLE `tpedido` (
   KEY `FK_tpedido_ConsecutivoMetodoPago` (`ConsecutivoMetodoPago`),
   CONSTRAINT `FK_tpedido_ConsecutivoUsuario` FOREIGN KEY (`ConsecutivoUsuario`) REFERENCES `tusuario` (`Consecutivo`),
   CONSTRAINT `FK_tpedido_ConsecutivoDireccion` FOREIGN KEY (`ConsecutivoDireccion`) REFERENCES `tdireccion` (`Consecutivo`),
-  CONSTRAINT `FK_tpedido_ConsecutivoMetodoPago` FOREIGN KEY (`ConsecutivoMetodoPago`) REFERENCES `tmetodopago` (`Consecutivo`)
+  CONSTRAINT `FK_tpedido_ConsecutivoMetodoPago` FOREIGN KEY (`ConsecutivoMetodoPago`) REFERENCES `tmetodopago` (`Consecutivo`),
+  KEY `FK_tpedido_ConsecutivoEstado` (`ConsecutivoEstado`),
+  CONSTRAINT `FK_tpedido_ConsecutivoEstado` FOREIGN KEY (`ConsecutivoEstado`) REFERENCES `testado` (`Consecutivo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tdetallepedido` (
@@ -149,14 +181,18 @@ CREATE TABLE `tdetallepedido` (
 
 -- Datos de ejemplo
 
+INSERT INTO testado (Consecutivo, Nombre) VALUES (1,'Activo'),(2,'Inactivo'),(3,'Pendiente'),(4,'Pagado'),(5,'Enviado'),(6,'Entregado'),(7,'Cancelado');
+
+INSERT INTO tprovincia (Consecutivo, Nombre) VALUES (1,'San José'),(2,'Alajuela'),(3,'Cartago'),(4,'Heredia'),(5,'Guanacaste'),(6,'Puntarenas'),(7,'Limón');
+
 INSERT INTO trol (Consecutivo, NombreRol) VALUES (1,'Cliente'),(2,'Administrador');
 
-INSERT INTO tusuario (Consecutivo,Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,Estado,ConsecutivoRol,FechaRegistro) VALUES
+INSERT INTO tusuario (Consecutivo,Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,ConsecutivoEstado,ConsecutivoRol,FechaRegistro) VALUES
 (1,'Administrador','Lifty','','admin@lifty.com','88880001','$2y$10$gYXux5/VZNSWHQGSAsozx.F0Z6CJKXLc5.qU2PxXtYMozBReba3yK',1,2,NOW()),
 (2,'Cliente','Demo','Lifty','cliente@lifty.com','88880002','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,NOW());
 
-INSERT INTO tdireccion (ConsecutivoUsuario,Provincia,Canton,Distrito,Detalle,CodigoPostal,Estado) VALUES
-(2,'San José','Montes de Oca','San Pedro','200 m este de la Universidad Fidélitas','11501',1);
+INSERT INTO tdireccion (ConsecutivoUsuario,ConsecutivoProvincia,Canton,Distrito,Detalle,CodigoPostal,ConsecutivoEstado) VALUES
+(2,1,'Montes de Oca','San Pedro','200 m este de la Universidad Fidélitas','11501',1);
 
 INSERT INTO tcategoria (Consecutivo,Nombre,Descripcion) VALUES
 (1,'Suplementos','Proteínas, creatinas, pre entrenos y aminoácidos'),
@@ -172,7 +208,7 @@ INSERT INTO tmarca (Consecutivo,Nombre,Descripcion) VALUES
 (5,'Lifty Snacks','Snacks saludables y barras'),
 (6,'Lifty Drinks','Bebidas e hidratación');
 
-INSERT INTO tproducto (Consecutivo,ConsecutivoCategoria,ConsecutivoMarca,Nombre,Descripcion,Imagen,Estado,FechaCreacion) VALUES
+INSERT INTO tproducto (Consecutivo,ConsecutivoCategoria,ConsecutivoMarca,Nombre,Descripcion,Imagen,ConsecutivoEstado,FechaCreacion) VALUES
 (1,1,1,'Whey Gold 100%','Proteína de suero de leche con 24 g de proteína por porción. Ideal para la recuperación muscular.','whey-gold.jpg',1,NOW()),
 (2,1,1,'Iso Hydro 100','Proteína aislada hidrolizada de rápida absorción, baja en azúcar y grasa.','iso-hydro.jpg',1,NOW()),
 (3,1,2,'Creatina Platinum','Creatina monohidratada micronizada para aumentar fuerza y rendimiento.','creatina.jpg',1,NOW()),
@@ -194,7 +230,7 @@ INSERT INTO tproducto (Consecutivo,ConsecutivoCategoria,ConsecutivoMarca,Nombre,
 (19,4,4,'Botella Térmica 1 L','Botella de acero inoxidable que mantiene el frío 24 horas.','botella-termica.jpg',1,NOW()),
 (20,4,4,'Bolso Deportivo 40 L','Bolso con compartimiento para zapatos y bolsillo húmedo.','bolso.jpg',1,NOW());
 
-INSERT INTO tvariante (ConsecutivoProducto,Sku,Presentacion,Precio,Stock,Estado) VALUES
+INSERT INTO tvariante (ConsecutivoProducto,Sku,Presentacion,Precio,Stock,ConsecutivoEstado) VALUES
 (1,'WHEY-CHO-2LB','Chocolate 2 lb',32000.00,25,1),
 (1,'WHEY-VAI-2LB','Vainilla 2 lb',32000.00,18,1),
 (1,'WHEY-CHO-5LB','Chocolate 5 lb',68000.00,10,1),
@@ -241,44 +277,44 @@ INSERT INTO tvariante (ConsecutivoProducto,Sku,Presentacion,Precio,Stock,Estado)
 
 UPDATE tproducto SET Destacado = 1 WHERE Consecutivo = 1;
 
-INSERT INTO tmetodopago (Consecutivo,Nombre,Descripcion,Estado) VALUES
+INSERT INTO tmetodopago (Consecutivo,Nombre,Descripcion,ConsecutivoEstado) VALUES
 (1,'Tarjeta','Pago simulado con tarjeta de crédito o débito',1),
 (2,'SINPE Móvil','Pago simulado por SINPE Móvil',1);
 
-INSERT INTO tusuario (Consecutivo,Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,Estado,ConsecutivoRol,FechaRegistro) VALUES
+INSERT INTO tusuario (Consecutivo,Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,ConsecutivoEstado,ConsecutivoRol,FechaRegistro) VALUES
 (3,'Mariana','Rojas','Vargas','mariana.rojas@correo.com','88110001','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 40 DAY)),
 (4,'Carlos','Jiménez','Mora','carlos.jimenez@correo.com','88110002','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 35 DAY)),
 (5,'Sofía','Araya','Campos','sofia.araya@correo.com','88110003','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 28 DAY)),
 (6,'Diego','Quesada','Solano','diego.quesada@correo.com','88110004','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 22 DAY)),
 (7,'Valeria','Chaves','Brenes','valeria.chaves@correo.com','88110005','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',1,1,DATE_SUB(NOW(), INTERVAL 15 DAY)),
-(8,'Andrés','Salas','Umaña','andres.salas@correo.com','88110006','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',0,1,DATE_SUB(NOW(), INTERVAL 10 DAY)),
+(8,'Andrés','Salas','Umaña','andres.salas@correo.com','88110006','$2y$10$RYAUAT780rsknhq/o2ZAPO/nyDBLjsyoNMuTx5Ada.e3U4zjKF.D2',2,1,DATE_SUB(NOW(), INTERVAL 10 DAY)),
 (9,'Soporte','Lifty','','soporte@lifty.com','88110007','$2y$10$gYXux5/VZNSWHQGSAsozx.F0Z6CJKXLc5.qU2PxXtYMozBReba3yK',1,2,DATE_SUB(NOW(), INTERVAL 5 DAY));
 
-INSERT INTO tdireccion (ConsecutivoUsuario,Provincia,Canton,Distrito,Detalle,CodigoPostal,Estado) VALUES
-(3,'San José','Escazú','San Rafael','100 m norte del Multiplaza','10203',1),
-(4,'Heredia','Heredia','Mercedes','Frente a la iglesia, casa 14B','40101',1),
-(5,'Alajuela','Alajuela','San José','Condominio Los Robles, casa 7','20101',1),
-(6,'Cartago','Cartago','Oriental','50 m sur del parque central','30101',1),
-(7,'San José','Curridabat','Granadilla','Del Más x Menos 200 m este','11801',1),
-(8,'Guanacaste','Liberia','Liberia','Barrio Capulín, casa verde','50101',1),
-(3,'San José','Santa Ana','Pozos','Residencial Lindora, casa 22','10901',1);
+INSERT INTO tdireccion (ConsecutivoUsuario,ConsecutivoProvincia,Canton,Distrito,Detalle,CodigoPostal,ConsecutivoEstado) VALUES
+(3,1,'Escazú','San Rafael','100 m norte del Multiplaza','10203',1),
+(4,4,'Heredia','Mercedes','Frente a la iglesia, casa 14B','40101',1),
+(5,2,'Alajuela','San José','Condominio Los Robles, casa 7','20101',1),
+(6,3,'Cartago','Oriental','50 m sur del parque central','30101',1),
+(7,1,'Curridabat','Granadilla','Del Más x Menos 200 m este','11801',1),
+(8,5,'Liberia','Liberia','Barrio Capulín, casa verde','50101',1),
+(3,1,'Santa Ana','Pozos','Residencial Lindora, casa 22','10901',1);
 
-INSERT INTO tpedido (ConsecutivoUsuario,ConsecutivoDireccion,ConsecutivoMetodoPago,EstadoPedido,FechaPedido,Subtotal,Impuesto,CostoEnvio,Total) VALUES
-(2,1,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 28 DAY), INTERVAL 3 HOUR),38500.00,5005.00,2500.00,46005.00),
-(3,2,2,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 26 DAY), INTERVAL 5 HOUR),47200.00,6136.00,2500.00,55836.00),
-(4,3,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 22 DAY), INTERVAL 2 HOUR),40500.00,5265.00,2500.00,48265.00),
-(5,4,1,'Entregado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 19 DAY), INTERVAL 6 HOUR),24900.00,3237.00,2500.00,30637.00),
-(6,5,2,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 7 DAY), INTERVAL 4 HOUR),60900.00,7917.00,2500.00,71317.00),
-(3,8,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 6 DAY), INTERVAL 1 HOUR),50800.00,6604.00,2500.00,59904.00),
-(7,6,1,'Enviado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 7 HOUR),38800.00,5044.00,2500.00,46344.00),
-(2,1,2,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 3 DAY), INTERVAL 2 HOUR),36500.00,4745.00,2500.00,43745.00),
-(4,3,1,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 2 DAY), INTERVAL 5 HOUR),44900.00,5837.00,2500.00,53237.00),
-(5,4,2,'Pagado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR),50500.00,6565.00,2500.00,59565.00),
-(2,1,1,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 1 HOUR),54500.00,7085.00,2500.00,64085.00),
-(2,1,2,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 6 HOUR),39400.00,5122.00,2500.00,47022.00),
-(6,5,1,'Pendiente',DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 3 HOUR),9800.00,1274.00,2500.00,13574.00),
-(7,6,1,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 14 DAY), INTERVAL 2 HOUR),18900.00,2457.00,2500.00,23857.00),
-(3,2,2,'Cancelado',DATE_SUB(DATE_SUB(NOW(), INTERVAL 9 DAY), INTERVAL 4 HOUR),33800.00,4394.00,2500.00,40694.00);
+INSERT INTO tpedido (ConsecutivoUsuario,ConsecutivoDireccion,ConsecutivoMetodoPago,ConsecutivoEstado,FechaPedido,Subtotal,Impuesto,CostoEnvio,Total) VALUES
+(2,1,1,6,DATE_SUB(DATE_SUB(NOW(), INTERVAL 28 DAY), INTERVAL 3 HOUR),38500.00,5005.00,2500.00,46005.00),
+(3,2,2,6,DATE_SUB(DATE_SUB(NOW(), INTERVAL 26 DAY), INTERVAL 5 HOUR),47200.00,6136.00,2500.00,55836.00),
+(4,3,1,6,DATE_SUB(DATE_SUB(NOW(), INTERVAL 22 DAY), INTERVAL 2 HOUR),40500.00,5265.00,2500.00,48265.00),
+(5,4,1,6,DATE_SUB(DATE_SUB(NOW(), INTERVAL 19 DAY), INTERVAL 6 HOUR),24900.00,3237.00,2500.00,30637.00),
+(6,5,2,5,DATE_SUB(DATE_SUB(NOW(), INTERVAL 7 DAY), INTERVAL 4 HOUR),60900.00,7917.00,2500.00,71317.00),
+(3,8,1,5,DATE_SUB(DATE_SUB(NOW(), INTERVAL 6 DAY), INTERVAL 1 HOUR),50800.00,6604.00,2500.00,59904.00),
+(7,6,1,5,DATE_SUB(DATE_SUB(NOW(), INTERVAL 5 DAY), INTERVAL 7 HOUR),38800.00,5044.00,2500.00,46344.00),
+(2,1,2,4,DATE_SUB(DATE_SUB(NOW(), INTERVAL 3 DAY), INTERVAL 2 HOUR),36500.00,4745.00,2500.00,43745.00),
+(4,3,1,4,DATE_SUB(DATE_SUB(NOW(), INTERVAL 2 DAY), INTERVAL 5 HOUR),44900.00,5837.00,2500.00,53237.00),
+(5,4,2,4,DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 3 HOUR),50500.00,6565.00,2500.00,59565.00),
+(2,1,1,3,DATE_SUB(DATE_SUB(NOW(), INTERVAL 1 DAY), INTERVAL 1 HOUR),54500.00,7085.00,2500.00,64085.00),
+(2,1,2,3,DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 6 HOUR),39400.00,5122.00,2500.00,47022.00),
+(6,5,1,3,DATE_SUB(DATE_SUB(NOW(), INTERVAL 0 DAY), INTERVAL 3 HOUR),9800.00,1274.00,2500.00,13574.00),
+(7,6,1,7,DATE_SUB(DATE_SUB(NOW(), INTERVAL 14 DAY), INTERVAL 2 HOUR),18900.00,2457.00,2500.00,23857.00),
+(3,2,2,7,DATE_SUB(DATE_SUB(NOW(), INTERVAL 9 DAY), INTERVAL 4 HOUR),33800.00,4394.00,2500.00,40694.00);
 
 INSERT INTO tdetallepedido (ConsecutivoPedido,ConsecutivoVariante,Cantidad,PrecioUnitario,Subtotal) VALUES
 (1,1,1,32000.00,32000.00),
@@ -348,7 +384,7 @@ DROP PROCEDURE IF EXISTS spRegistrarUsuario;;
 CREATE PROCEDURE spRegistrarUsuario(pNombre varchar(50), pApellido1 varchar(50), pApellido2 varchar(50),
 	pCorreoElectronico varchar(100), pTelefono varchar(20), pContrasenna varchar(255))
 BEGIN
-	INSERT INTO tusuario(Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,Estado,ConsecutivoRol,FechaRegistro)
+	INSERT INTO tusuario(Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,ConsecutivoEstado,ConsecutivoRol,FechaRegistro)
 	VALUES (pNombre,pApellido1,pApellido2,pCorreoElectronico,pTelefono,pContrasenna,1,1,NOW());
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
@@ -357,19 +393,19 @@ DROP PROCEDURE IF EXISTS spIniciarSesionUsuario;;
 CREATE PROCEDURE spIniciarSesionUsuario(pCorreoElectronico varchar(100))
 BEGIN
 	SELECT U.Consecutivo, U.Nombre, U.Apellido1, U.Apellido2, U.CorreoElectronico, U.Contrasenna,
-		   U.Estado, U.ConsecutivoRol, R.NombreRol
+		   IF(U.ConsecutivoEstado = 1,1,0) AS Estado, U.ConsecutivoRol, R.NombreRol
 	FROM   tusuario U
 	INNER JOIN trol R ON U.ConsecutivoRol = R.Consecutivo
 	WHERE  U.CorreoElectronico = pCorreoElectronico
-	   AND U.Estado = 1;
+	   AND U.ConsecutivoEstado = 1;
 END;;
 
 DROP PROCEDURE IF EXISTS spConsultarCorreo;;
 CREATE PROCEDURE spConsultarCorreo(pCorreoElectronico varchar(100))
 BEGIN
-	SELECT Consecutivo, Nombre, Apellido1, CorreoElectronico, Estado
+	SELECT Consecutivo, Nombre, Apellido1, CorreoElectronico, IF(ConsecutivoEstado = 1,1,0) AS Estado
 	FROM   tusuario
-	WHERE  CorreoElectronico = pCorreoElectronico AND Estado = 1;
+	WHERE  CorreoElectronico = pCorreoElectronico AND ConsecutivoEstado = 1;
 END;;
 
 DROP PROCEDURE IF EXISTS spConsultarContrasenna;;
@@ -389,7 +425,7 @@ DROP PROCEDURE IF EXISTS spConsultarUsuario;;
 CREATE PROCEDURE spConsultarUsuario(pConsecutivo int)
 BEGIN
 	SELECT U.Consecutivo, U.Nombre, U.Apellido1, U.Apellido2, U.CorreoElectronico, U.Telefono,
-		   U.Estado, U.ConsecutivoRol, R.NombreRol, U.FechaRegistro
+		   IF(U.ConsecutivoEstado = 1,1,0) AS Estado, U.ConsecutivoRol, R.NombreRol, U.FechaRegistro
 	FROM   tusuario U
 	INNER JOIN trol R ON U.ConsecutivoRol = R.Consecutivo
 	WHERE  U.Consecutivo = pConsecutivo;
@@ -410,7 +446,7 @@ DROP PROCEDURE IF EXISTS spConsultarUsuarios;;
 CREATE PROCEDURE spConsultarUsuarios()
 BEGIN
 	SELECT U.Consecutivo, U.Nombre, U.Apellido1, U.Apellido2, U.CorreoElectronico, U.Telefono,
-		   U.Estado, U.ConsecutivoRol, R.NombreRol, U.FechaRegistro
+		   IF(U.ConsecutivoEstado = 1,1,0) AS Estado, U.ConsecutivoRol, R.NombreRol, U.FechaRegistro
 	FROM   tusuario U
 	INNER JOIN trol R ON U.ConsecutivoRol = R.Consecutivo
 	ORDER BY U.Consecutivo;
@@ -419,7 +455,7 @@ END;;
 DROP PROCEDURE IF EXISTS spActualizarEstadoUsuario;;
 CREATE PROCEDURE spActualizarEstadoUsuario(pConsecutivo int, pEstado tinyint)
 BEGIN
-	UPDATE tusuario SET Estado = pEstado WHERE Consecutivo = pConsecutivo;
+	UPDATE tusuario SET ConsecutivoEstado = IF(pEstado = 1,1,2) WHERE Consecutivo = pConsecutivo;
 	SELECT ROW_COUNT() > 0 AS Actualizado;
 END;;
 
@@ -433,7 +469,7 @@ DROP PROCEDURE IF EXISTS spRegistrarUsuarioAdmin;;
 CREATE PROCEDURE spRegistrarUsuarioAdmin(pNombre varchar(50), pApellido1 varchar(50), pApellido2 varchar(50),
 	pCorreoElectronico varchar(100), pTelefono varchar(20), pContrasenna varchar(255), pConsecutivoRol int)
 BEGIN
-	INSERT INTO tusuario(Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,Estado,ConsecutivoRol,FechaRegistro)
+	INSERT INTO tusuario(Nombre,Apellido1,Apellido2,CorreoElectronico,Telefono,Contrasenna,ConsecutivoEstado,ConsecutivoRol,FechaRegistro)
 	VALUES (pNombre,pApellido1,pApellido2,pCorreoElectronico,pTelefono,pContrasenna,1,pConsecutivoRol,NOW());
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
@@ -445,7 +481,7 @@ BEGIN
 	UPDATE tusuario
 	SET    Nombre = pNombre, Apellido1 = pApellido1, Apellido2 = pApellido2,
 		   CorreoElectronico = pCorreoElectronico, Telefono = pTelefono,
-		   ConsecutivoRol = pConsecutivoRol, Estado = pEstado
+		   ConsecutivoRol = pConsecutivoRol, ConsecutivoEstado = IF(pEstado = 1,1,2)
 	WHERE  Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
@@ -455,27 +491,28 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarDirecciones;;
 CREATE PROCEDURE spConsultarDirecciones(pConsecutivoUsuario int)
 BEGIN
-	SELECT Consecutivo, Provincia, Canton, Distrito, Detalle, CodigoPostal
-	FROM   tdireccion
-	WHERE  ConsecutivoUsuario = pConsecutivoUsuario AND Estado = 1
-	ORDER BY Consecutivo;
+	SELECT D.Consecutivo, D.ConsecutivoProvincia, P.Nombre AS Provincia, D.Canton, D.Distrito, D.Detalle, D.CodigoPostal
+	FROM   tdireccion D
+	INNER JOIN tprovincia P ON D.ConsecutivoProvincia = P.Consecutivo
+	WHERE  D.ConsecutivoUsuario = pConsecutivoUsuario AND D.ConsecutivoEstado = 1
+	ORDER BY D.Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spRegistrarDireccion;;
-CREATE PROCEDURE spRegistrarDireccion(pConsecutivoUsuario int, pProvincia varchar(50), pCanton varchar(50),
+CREATE PROCEDURE spRegistrarDireccion(pConsecutivoUsuario int, pConsecutivoProvincia int, pCanton varchar(50),
 	pDistrito varchar(50), pDetalle varchar(250), pCodigoPostal varchar(10))
 BEGIN
-	INSERT INTO tdireccion(ConsecutivoUsuario,Provincia,Canton,Distrito,Detalle,CodigoPostal,Estado)
-	VALUES (pConsecutivoUsuario,pProvincia,pCanton,pDistrito,pDetalle,pCodigoPostal,1);
+	INSERT INTO tdireccion(ConsecutivoUsuario,ConsecutivoProvincia,Canton,Distrito,Detalle,CodigoPostal,ConsecutivoEstado)
+	VALUES (pConsecutivoUsuario,pConsecutivoProvincia,pCanton,pDistrito,pDetalle,pCodigoPostal,1);
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spActualizarDireccion;;
-CREATE PROCEDURE spActualizarDireccion(pConsecutivo int, pConsecutivoUsuario int, pProvincia varchar(50),
+CREATE PROCEDURE spActualizarDireccion(pConsecutivo int, pConsecutivoUsuario int, pConsecutivoProvincia int,
 	pCanton varchar(50), pDistrito varchar(50), pDetalle varchar(250), pCodigoPostal varchar(10))
 BEGIN
 	UPDATE tdireccion
-	SET    Provincia = pProvincia, Canton = pCanton, Distrito = pDistrito,
+	SET    ConsecutivoProvincia = pConsecutivoProvincia, Canton = pCanton, Distrito = pDistrito,
 		   Detalle = pDetalle, CodigoPostal = pCodigoPostal
 	WHERE  Consecutivo = pConsecutivo AND ConsecutivoUsuario = pConsecutivoUsuario;
 	SELECT 1 AS Actualizado;
@@ -484,9 +521,15 @@ END;;
 DROP PROCEDURE IF EXISTS spInactivarDireccion;;
 CREATE PROCEDURE spInactivarDireccion(pConsecutivo int, pConsecutivoUsuario int)
 BEGIN
-	UPDATE tdireccion SET Estado = 0
+	UPDATE tdireccion SET ConsecutivoEstado = 2
 	WHERE  Consecutivo = pConsecutivo AND ConsecutivoUsuario = pConsecutivoUsuario;
 	SELECT ROW_COUNT() > 0 AS Actualizado;
+END;;
+
+DROP PROCEDURE IF EXISTS spConsultarProvincias;;
+CREATE PROCEDURE spConsultarProvincias()
+BEGIN
+	SELECT Consecutivo, Nombre FROM tprovincia ORDER BY Consecutivo;
 END;;
 
 -- Categorias y marcas
@@ -494,23 +537,23 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarCategorias;;
 CREATE PROCEDURE spConsultarCategorias(pSoloActivas tinyint)
 BEGIN
-	SELECT Consecutivo, Nombre, Descripcion, Estado
+	SELECT Consecutivo, Nombre, Descripcion, IF(ConsecutivoEstado = 1,1,0) AS Estado
 	FROM   tcategoria
-	WHERE  (pSoloActivas = 0 OR Estado = 1)
+	WHERE  (pSoloActivas = 0 OR ConsecutivoEstado = 1)
 	ORDER BY Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spRegistrarCategoria;;
 CREATE PROCEDURE spRegistrarCategoria(pNombre varchar(50), pDescripcion varchar(150))
 BEGIN
-	INSERT INTO tcategoria(Nombre,Descripcion,Estado) VALUES (pNombre,pDescripcion,1);
+	INSERT INTO tcategoria(Nombre,Descripcion,ConsecutivoEstado) VALUES (pNombre,pDescripcion,1);
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spActualizarCategoria;;
 CREATE PROCEDURE spActualizarCategoria(pConsecutivo int, pNombre varchar(50), pDescripcion varchar(150), pEstado tinyint)
 BEGIN
-	UPDATE tcategoria SET Nombre = pNombre, Descripcion = pDescripcion, Estado = pEstado
+	UPDATE tcategoria SET Nombre = pNombre, Descripcion = pDescripcion, ConsecutivoEstado = IF(pEstado = 1,1,2)
 	WHERE Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
@@ -518,23 +561,23 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarMarcas;;
 CREATE PROCEDURE spConsultarMarcas(pSoloActivas tinyint)
 BEGIN
-	SELECT Consecutivo, Nombre, Descripcion, Estado
+	SELECT Consecutivo, Nombre, Descripcion, IF(ConsecutivoEstado = 1,1,0) AS Estado
 	FROM   tmarca
-	WHERE  (pSoloActivas = 0 OR Estado = 1)
+	WHERE  (pSoloActivas = 0 OR ConsecutivoEstado = 1)
 	ORDER BY Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spRegistrarMarca;;
 CREATE PROCEDURE spRegistrarMarca(pNombre varchar(50), pDescripcion varchar(150))
 BEGIN
-	INSERT INTO tmarca(Nombre,Descripcion,Estado) VALUES (pNombre,pDescripcion,1);
+	INSERT INTO tmarca(Nombre,Descripcion,ConsecutivoEstado) VALUES (pNombre,pDescripcion,1);
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spActualizarMarca;;
 CREATE PROCEDURE spActualizarMarca(pConsecutivo int, pNombre varchar(50), pDescripcion varchar(150), pEstado tinyint)
 BEGIN
-	UPDATE tmarca SET Nombre = pNombre, Descripcion = pDescripcion, Estado = pEstado
+	UPDATE tmarca SET Nombre = pNombre, Descripcion = pDescripcion, ConsecutivoEstado = IF(pEstado = 1,1,2)
 	WHERE Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
@@ -544,12 +587,12 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarProductosAdmin;;
 CREATE PROCEDURE spConsultarProductosAdmin()
 BEGIN
-	SELECT P.Consecutivo, P.Nombre, P.Descripcion, P.Imagen, P.Estado, P.Destacado,
+	SELECT P.Consecutivo, P.Nombre, P.Descripcion, P.Imagen, IF(P.ConsecutivoEstado = 1,1,0) AS Estado, P.Destacado,
 		   P.ConsecutivoCategoria, C.Nombre AS NombreCategoria,
 		   P.ConsecutivoMarca, M.Nombre AS NombreMarca,
-		   (SELECT COUNT(*) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.Estado = 1) AS Variantes,
-		   (SELECT IFNULL(SUM(V.Stock),0) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.Estado = 1) AS StockTotal,
-		   (SELECT MIN(V.Precio) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.Estado = 1) AS PrecioDesde
+		   (SELECT COUNT(*) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.ConsecutivoEstado = 1) AS Variantes,
+		   (SELECT IFNULL(SUM(V.Stock),0) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.ConsecutivoEstado = 1) AS StockTotal,
+		   (SELECT MIN(V.Precio) FROM tvariante V WHERE V.ConsecutivoProducto = P.Consecutivo AND V.ConsecutivoEstado = 1) AS PrecioDesde
 	FROM   tproducto P
 	INNER JOIN tcategoria C ON P.ConsecutivoCategoria = C.Consecutivo
 	INNER JOIN tmarca M ON P.ConsecutivoMarca = M.Consecutivo
@@ -564,10 +607,10 @@ BEGIN
 		   C.Nombre AS NombreCategoria, M.Nombre AS NombreMarca,
 		   MIN(V.Precio) AS PrecioDesde, SUM(V.Stock) AS StockTotal
 	FROM   tproducto P
-	INNER JOIN tcategoria C ON P.ConsecutivoCategoria = C.Consecutivo AND C.Estado = 1
-	INNER JOIN tmarca M ON P.ConsecutivoMarca = M.Consecutivo AND M.Estado = 1
-	INNER JOIN tvariante V ON V.ConsecutivoProducto = P.Consecutivo AND V.Estado = 1
-	WHERE  P.Estado = 1
+	INNER JOIN tcategoria C ON P.ConsecutivoCategoria = C.Consecutivo AND C.ConsecutivoEstado = 1
+	INNER JOIN tmarca M ON P.ConsecutivoMarca = M.Consecutivo AND M.ConsecutivoEstado = 1
+	INNER JOIN tvariante V ON V.ConsecutivoProducto = P.Consecutivo AND V.ConsecutivoEstado = 1
+	WHERE  P.ConsecutivoEstado = 1
 	   AND (pConsecutivoCategoria = 0 OR P.ConsecutivoCategoria = pConsecutivoCategoria)
 	   AND (pConsecutivoMarca = 0 OR P.ConsecutivoMarca = pConsecutivoMarca)
 	   AND (pBusqueda = '' OR P.Nombre LIKE CONCAT('%', pBusqueda, '%'))
@@ -581,10 +624,10 @@ CREATE PROCEDURE spContarCatalogo(pConsecutivoCategoria int, pConsecutivoMarca i
 BEGIN
 	SELECT COUNT(DISTINCT P.Consecutivo) AS Total
 	FROM   tproducto P
-	INNER JOIN tcategoria C ON P.ConsecutivoCategoria = C.Consecutivo AND C.Estado = 1
-	INNER JOIN tmarca M ON P.ConsecutivoMarca = M.Consecutivo AND M.Estado = 1
-	INNER JOIN tvariante V ON V.ConsecutivoProducto = P.Consecutivo AND V.Estado = 1
-	WHERE  P.Estado = 1
+	INNER JOIN tcategoria C ON P.ConsecutivoCategoria = C.Consecutivo AND C.ConsecutivoEstado = 1
+	INNER JOIN tmarca M ON P.ConsecutivoMarca = M.Consecutivo AND M.ConsecutivoEstado = 1
+	INNER JOIN tvariante V ON V.ConsecutivoProducto = P.Consecutivo AND V.ConsecutivoEstado = 1
+	WHERE  P.ConsecutivoEstado = 1
 	   AND (pConsecutivoCategoria = 0 OR P.ConsecutivoCategoria = pConsecutivoCategoria)
 	   AND (pConsecutivoMarca = 0 OR P.ConsecutivoMarca = pConsecutivoMarca)
 	   AND (pBusqueda = '' OR P.Nombre LIKE CONCAT('%', pBusqueda, '%'));
@@ -593,7 +636,7 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarProducto;;
 CREATE PROCEDURE spConsultarProducto(pConsecutivo int)
 BEGIN
-	SELECT P.Consecutivo, P.Nombre, P.Descripcion, P.Imagen, P.Estado, P.Destacado,
+	SELECT P.Consecutivo, P.Nombre, P.Descripcion, P.Imagen, IF(P.ConsecutivoEstado = 1,1,0) AS Estado, P.Destacado,
 		   P.ConsecutivoCategoria, C.Nombre AS NombreCategoria,
 		   P.ConsecutivoMarca, M.Nombre AS NombreMarca
 	FROM   tproducto P
@@ -606,7 +649,7 @@ DROP PROCEDURE IF EXISTS spRegistrarProducto;;
 CREATE PROCEDURE spRegistrarProducto(pConsecutivoCategoria int, pConsecutivoMarca int, pNombre varchar(100),
 	pDescripcion text, pImagen varchar(255))
 BEGIN
-	INSERT INTO tproducto(ConsecutivoCategoria,ConsecutivoMarca,Nombre,Descripcion,Imagen,Estado,FechaCreacion)
+	INSERT INTO tproducto(ConsecutivoCategoria,ConsecutivoMarca,Nombre,Descripcion,Imagen,ConsecutivoEstado,FechaCreacion)
 	VALUES (pConsecutivoCategoria,pConsecutivoMarca,pNombre,pDescripcion,pImagen,1,NOW());
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
@@ -621,7 +664,7 @@ BEGIN
 
 	UPDATE tproducto
 	SET    ConsecutivoCategoria = pConsecutivoCategoria, ConsecutivoMarca = pConsecutivoMarca,
-		   Nombre = pNombre, Descripcion = pDescripcion, Imagen = pImagen, Estado = pEstado, Destacado = pDestacado
+		   Nombre = pNombre, Descripcion = pDescripcion, Imagen = pImagen, ConsecutivoEstado = IF(pEstado = 1,1,2), Destacado = pDestacado
 	WHERE  Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
@@ -629,17 +672,17 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarVariantes;;
 CREATE PROCEDURE spConsultarVariantes(pConsecutivoProducto int, pSoloActivas tinyint)
 BEGIN
-	SELECT Consecutivo, ConsecutivoProducto, Sku, Presentacion, Precio, Stock, Estado
+	SELECT Consecutivo, ConsecutivoProducto, Sku, Presentacion, Precio, Stock, IF(ConsecutivoEstado = 1,1,0) AS Estado
 	FROM   tvariante
-	WHERE  ConsecutivoProducto = pConsecutivoProducto AND (pSoloActivas = 0 OR Estado = 1)
+	WHERE  ConsecutivoProducto = pConsecutivoProducto AND (pSoloActivas = 0 OR ConsecutivoEstado = 1)
 	ORDER BY Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spConsultarVariante;;
 CREATE PROCEDURE spConsultarVariante(pConsecutivo int)
 BEGIN
-	SELECT V.Consecutivo, V.ConsecutivoProducto, V.Sku, V.Presentacion, V.Precio, V.Stock, V.Estado,
-		   P.Nombre AS NombreProducto, P.Imagen, P.Estado AS EstadoProducto
+	SELECT V.Consecutivo, V.ConsecutivoProducto, V.Sku, V.Presentacion, V.Precio, V.Stock, IF(V.ConsecutivoEstado = 1,1,0) AS Estado,
+		   P.Nombre AS NombreProducto, P.Imagen, IF(P.ConsecutivoEstado = 1,1,0) AS EstadoProducto
 	FROM   tvariante V
 	INNER JOIN tproducto P ON V.ConsecutivoProducto = P.Consecutivo
 	WHERE  V.Consecutivo = pConsecutivo;
@@ -649,7 +692,7 @@ DROP PROCEDURE IF EXISTS spRegistrarVariante;;
 CREATE PROCEDURE spRegistrarVariante(pConsecutivoProducto int, pSku varchar(30), pPresentacion varchar(100),
 	pPrecio decimal(10,2), pStock int)
 BEGIN
-	INSERT INTO tvariante(ConsecutivoProducto,Sku,Presentacion,Precio,Stock,Estado)
+	INSERT INTO tvariante(ConsecutivoProducto,Sku,Presentacion,Precio,Stock,ConsecutivoEstado)
 	VALUES (pConsecutivoProducto,pSku,pPresentacion,pPrecio,pStock,1);
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
@@ -659,7 +702,7 @@ CREATE PROCEDURE spActualizarVariante(pConsecutivo int, pSku varchar(30), pPrese
 	pPrecio decimal(10,2), pStock int, pEstado tinyint)
 BEGIN
 	UPDATE tvariante
-	SET    Sku = pSku, Presentacion = pPresentacion, Precio = pPrecio, Stock = pStock, Estado = pEstado
+	SET    Sku = pSku, Presentacion = pPresentacion, Precio = pPrecio, Stock = pStock, ConsecutivoEstado = IF(pEstado = 1,1,2)
 	WHERE  Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
@@ -669,16 +712,16 @@ END;;
 DROP PROCEDURE IF EXISTS spConsultarMetodosPago;;
 CREATE PROCEDURE spConsultarMetodosPago(pSoloActivos tinyint)
 BEGIN
-	SELECT Consecutivo, Nombre, Descripcion, Estado
+	SELECT Consecutivo, Nombre, Descripcion, IF(ConsecutivoEstado = 1,1,0) AS Estado
 	FROM   tmetodopago
-	WHERE  (pSoloActivos = 0 OR Estado = 1)
+	WHERE  (pSoloActivos = 0 OR ConsecutivoEstado = 1)
 	ORDER BY Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spActualizarEstadoMetodoPago;;
 CREATE PROCEDURE spActualizarEstadoMetodoPago(pConsecutivo int, pEstado tinyint)
 BEGIN
-	UPDATE tmetodopago SET Estado = pEstado WHERE Consecutivo = pConsecutivo;
+	UPDATE tmetodopago SET ConsecutivoEstado = IF(pEstado = 1,1,2) WHERE Consecutivo = pConsecutivo;
 	SELECT 1 AS Actualizado;
 END;;
 
@@ -688,8 +731,8 @@ DROP PROCEDURE IF EXISTS spRegistrarPedido;;
 CREATE PROCEDURE spRegistrarPedido(pConsecutivoUsuario int, pConsecutivoDireccion int, pConsecutivoMetodoPago int,
 	pSubtotal decimal(10,2), pImpuesto decimal(10,2), pCostoEnvio decimal(10,2), pTotal decimal(10,2))
 BEGIN
-	INSERT INTO tpedido(ConsecutivoUsuario,ConsecutivoDireccion,ConsecutivoMetodoPago,EstadoPedido,FechaPedido,Subtotal,Impuesto,CostoEnvio,Total)
-	VALUES (pConsecutivoUsuario,pConsecutivoDireccion,pConsecutivoMetodoPago,'Pendiente',NOW(),pSubtotal,pImpuesto,pCostoEnvio,pTotal);
+	INSERT INTO tpedido(ConsecutivoUsuario,ConsecutivoDireccion,ConsecutivoMetodoPago,ConsecutivoEstado,FechaPedido,Subtotal,Impuesto,CostoEnvio,Total)
+	VALUES (pConsecutivoUsuario,pConsecutivoDireccion,pConsecutivoMetodoPago,3,NOW(),pSubtotal,pImpuesto,pCostoEnvio,pTotal);
 	SELECT LAST_INSERT_ID() AS Consecutivo;
 END;;
 
@@ -710,12 +753,12 @@ BEGIN
 	START TRANSACTION;
 
 	SELECT COUNT(*) INTO vPendiente FROM tpedido
-	WHERE Consecutivo = pConsecutivo AND ConsecutivoUsuario = pConsecutivoUsuario AND EstadoPedido = 'Pendiente';
+	WHERE Consecutivo = pConsecutivo AND ConsecutivoUsuario = pConsecutivoUsuario AND ConsecutivoEstado = 3;
 
 	SELECT COUNT(*) INTO vFaltantes
 	FROM   tdetallepedido D
 	INNER JOIN tvariante V ON D.ConsecutivoVariante = V.Consecutivo
-	WHERE  D.ConsecutivoPedido = pConsecutivo AND (V.Stock < D.Cantidad OR V.Estado = 0);
+	WHERE  D.ConsecutivoPedido = pConsecutivo AND (V.Stock < D.Cantidad OR V.ConsecutivoEstado = 2);
 
 	IF vPendiente = 1 AND vFaltantes = 0 THEN
 		UPDATE tvariante V
@@ -723,7 +766,7 @@ BEGIN
 		SET    V.Stock = V.Stock - D.Cantidad
 		WHERE  D.ConsecutivoPedido = pConsecutivo;
 
-		UPDATE tpedido SET EstadoPedido = 'Pagado' WHERE Consecutivo = pConsecutivo;
+		UPDATE tpedido SET ConsecutivoEstado = 4 WHERE Consecutivo = pConsecutivo;
 		COMMIT;
 		SELECT 1 AS Pagado;
 	ELSE
@@ -736,11 +779,12 @@ DROP PROCEDURE IF EXISTS spConsultarPedidos;;
 CREATE PROCEDURE spConsultarPedidos(pConsecutivoUsuario int)
 BEGIN
 	SELECT P.Consecutivo, P.ConsecutivoUsuario, CONCAT(U.Nombre,' ',U.Apellido1) AS NombreCliente,
-		   P.EstadoPedido, P.FechaPedido, P.Subtotal, P.Impuesto, P.CostoEnvio, P.Total,
+		   EP.Nombre AS EstadoPedido, P.FechaPedido, P.Subtotal, P.Impuesto, P.CostoEnvio, P.Total,
 		   MP.Nombre AS NombreMetodoPago
 	FROM   tpedido P
 	INNER JOIN tusuario U ON P.ConsecutivoUsuario = U.Consecutivo
 	INNER JOIN tmetodopago MP ON P.ConsecutivoMetodoPago = MP.Consecutivo
+	INNER JOIN testado EP ON P.ConsecutivoEstado = EP.Consecutivo
 	WHERE  (pConsecutivoUsuario = 0 OR P.ConsecutivoUsuario = pConsecutivoUsuario)
 	ORDER BY P.Consecutivo DESC;
 END;;
@@ -749,13 +793,15 @@ DROP PROCEDURE IF EXISTS spConsultarPedido;;
 CREATE PROCEDURE spConsultarPedido(pConsecutivo int)
 BEGIN
 	SELECT P.Consecutivo, P.ConsecutivoUsuario, CONCAT(U.Nombre,' ',U.Apellido1) AS NombreCliente,
-		   U.CorreoElectronico, P.EstadoPedido, P.FechaPedido, P.Subtotal, P.Impuesto, P.CostoEnvio, P.Total,
+		   U.CorreoElectronico, EP.Nombre AS EstadoPedido, P.FechaPedido, P.Subtotal, P.Impuesto, P.CostoEnvio, P.Total,
 		   MP.Nombre AS NombreMetodoPago,
-		   CONCAT(D.Detalle,', ',D.Distrito,', ',D.Canton,', ',D.Provincia) AS Direccion
+		   CONCAT(D.Detalle,', ',D.Distrito,', ',D.Canton,', ',PR.Nombre) AS Direccion
 	FROM   tpedido P
 	INNER JOIN tusuario U ON P.ConsecutivoUsuario = U.Consecutivo
 	INNER JOIN tmetodopago MP ON P.ConsecutivoMetodoPago = MP.Consecutivo
 	INNER JOIN tdireccion D ON P.ConsecutivoDireccion = D.Consecutivo
+	INNER JOIN tprovincia PR ON D.ConsecutivoProvincia = PR.Consecutivo
+	INNER JOIN testado EP ON P.ConsecutivoEstado = EP.Consecutivo
 	WHERE  P.Consecutivo = pConsecutivo;
 END;;
 
@@ -774,17 +820,23 @@ DROP PROCEDURE IF EXISTS spActualizarEstadoPedido;;
 CREATE PROCEDURE spActualizarEstadoPedido(pConsecutivo int, pEstadoPedido varchar(20))
 BEGIN
 	DECLARE vActual varchar(20) DEFAULT NULL;
+	DECLARE vNuevo int DEFAULT NULL;
 
-	SELECT EstadoPedido INTO vActual FROM tpedido WHERE Consecutivo = pConsecutivo;
+	SELECT E.Nombre INTO vActual
+	FROM   tpedido P
+	INNER JOIN testado E ON P.ConsecutivoEstado = E.Consecutivo
+	WHERE  P.Consecutivo = pConsecutivo;
 
-	IF vActual IS NOT NULL AND vActual <> pEstadoPedido THEN
+	SELECT Consecutivo INTO vNuevo FROM testado WHERE Nombre = pEstadoPedido AND Consecutivo >= 3;
+
+	IF vActual IS NOT NULL AND vNuevo IS NOT NULL AND vActual <> pEstadoPedido THEN
 		IF pEstadoPedido = 'Cancelado' AND vActual IN ('Pagado','Enviado') THEN
 			UPDATE tvariante V
 			INNER JOIN tdetallepedido D ON D.ConsecutivoVariante = V.Consecutivo
 			SET    V.Stock = V.Stock + D.Cantidad
 			WHERE  D.ConsecutivoPedido = pConsecutivo;
 		END IF;
-		UPDATE tpedido SET EstadoPedido = pEstadoPedido WHERE Consecutivo = pConsecutivo;
+		UPDATE tpedido SET ConsecutivoEstado = vNuevo WHERE Consecutivo = pConsecutivo;
 		SELECT 1 AS Actualizado;
 	ELSE
 		SELECT 0 AS Actualizado;
@@ -796,10 +848,11 @@ END;;
 DROP PROCEDURE IF EXISTS spReportePedidosPorEstado;;
 CREATE PROCEDURE spReportePedidosPorEstado()
 BEGIN
-	SELECT EstadoPedido, COUNT(*) AS Cantidad, IFNULL(SUM(Total),0) AS Monto
-	FROM   tpedido
-	GROUP BY EstadoPedido
-	ORDER BY FIELD(EstadoPedido,'Pendiente','Pagado','Enviado','Entregado','Cancelado');
+	SELECT E.Nombre AS EstadoPedido, COUNT(*) AS Cantidad, IFNULL(SUM(P.Total),0) AS Monto
+	FROM   tpedido P
+	INNER JOIN testado E ON P.ConsecutivoEstado = E.Consecutivo
+	GROUP BY E.Consecutivo, E.Nombre
+	ORDER BY E.Consecutivo;
 END;;
 
 DROP PROCEDURE IF EXISTS spReporteStockBajo;;
@@ -808,19 +861,19 @@ BEGIN
 	SELECT V.Consecutivo, P.Nombre AS NombreProducto, V.Sku, V.Presentacion, V.Stock
 	FROM   tvariante V
 	INNER JOIN tproducto P ON V.ConsecutivoProducto = P.Consecutivo
-	WHERE  V.Estado = 1 AND P.Estado = 1 AND V.Stock <= pUmbral
+	WHERE  V.ConsecutivoEstado = 1 AND P.ConsecutivoEstado = 1 AND V.Stock <= pUmbral
 	ORDER BY V.Stock, P.Nombre;
 END;;
 
 DROP PROCEDURE IF EXISTS spConsultarResumen;;
 CREATE PROCEDURE spConsultarResumen()
 BEGIN
-	SELECT (SELECT COUNT(*) FROM tproducto WHERE Estado = 1) AS Productos,
-		   (SELECT IFNULL(SUM(Stock),0) FROM tvariante WHERE Estado = 1) AS UnidadesStock,
+	SELECT (SELECT COUNT(*) FROM tproducto WHERE ConsecutivoEstado = 1) AS Productos,
+		   (SELECT IFNULL(SUM(Stock),0) FROM tvariante WHERE ConsecutivoEstado = 1) AS UnidadesStock,
 		   (SELECT COUNT(*) FROM tpedido) AS Pedidos,
-		   (SELECT COUNT(*) FROM tpedido WHERE EstadoPedido = 'Pendiente') AS PedidosPendientes,
-		   (SELECT IFNULL(SUM(Total),0) FROM tpedido WHERE EstadoPedido IN ('Pagado','Enviado','Entregado')) AS Ventas,
-		   (SELECT COUNT(*) FROM tusuario WHERE ConsecutivoRol = 1 AND Estado = 1) AS Clientes;
+		   (SELECT COUNT(*) FROM tpedido WHERE ConsecutivoEstado = 3) AS PedidosPendientes,
+		   (SELECT IFNULL(SUM(Total),0) FROM tpedido WHERE ConsecutivoEstado IN (4,5,6)) AS Ventas,
+		   (SELECT COUNT(*) FROM tusuario WHERE ConsecutivoRol = 1 AND ConsecutivoEstado = 1) AS Clientes;
 END;;
 
 DELIMITER ;

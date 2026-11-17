@@ -105,7 +105,7 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
                         <?php } else { ?>
                             <div class="row g-3">
                                 <?php foreach ($direcciones as $d) {
-                                    $datos = ['txtConsecutivo' => $d['Consecutivo'], 'txtProvincia' => $d['Provincia'], 'txtCanton' => $d['Canton'],
+                                    $datos = ['txtConsecutivo' => $d['Consecutivo'], 'txtProvincia' => $d['ConsecutivoProvincia'], 'txtCanton' => $d['Canton'],
                                               'txtDistrito' => $d['Distrito'], 'txtDetalle' => $d['Detalle'], 'txtCodigoPostal' => $d['CodigoPostal']]; ?>
                                     <div class="col-12 col-md-6 col-xl-4">
                                         <div class="border rounded-3 p-3 h-100 d-flex flex-column">
@@ -151,7 +151,12 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
                     <div class="row g-3">
                         <div class="col-12 col-md-4">
                             <label class="form-label" for="txtProvincia">Provincia</label>
-                            <input id="txtProvincia" name="txtProvincia" type="text" class="form-control" maxlength="50" required>
+                            <select id="txtProvincia" name="txtProvincia" class="form-select" required>
+                                <option value="">Seleccione</option>
+                                <?php foreach (ConsultarProvincias() as $p) { ?>
+                                    <option value="<?php echo $p['Consecutivo']; ?>"><?php echo Texto($p['Nombre']); ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div class="col-6 col-md-4">
                             <label class="form-label" for="txtCanton">Cantón</label>

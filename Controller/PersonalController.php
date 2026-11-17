@@ -11,6 +11,11 @@ function ConsultarUsuario()
     return ConsultarUsuarioModel($_SESSION['ConsecutivoUsuario']);
 }
 
+function ConsultarProvincias()
+{
+    return ConsultarProvinciasModel();
+}
+
 function ConsultarDirecciones()
 {
     return ConsultarDireccionesModel($_SESSION['ConsecutivoUsuario']);
@@ -74,12 +79,12 @@ if (isset($_POST['btnCambiarDatosCuenta'])) {
 
 function LeerDireccion()
 {
-    return [LeerTexto('txtProvincia'), LeerTexto('txtCanton'), LeerTexto('txtDistrito'), LeerTexto('txtDetalle'), LeerTexto('txtCodigoPostal')];
+    return [LeerEntero('txtProvincia'), LeerTexto('txtCanton'), LeerTexto('txtDistrito'), LeerTexto('txtDetalle'), LeerTexto('txtCodigoPostal')];
 }
 
 function DireccionValida($d)
 {
-    return $d[0] != '' && $d[1] != '' && $d[2] != '' && $d[3] != '' && ($d[4] == '' || preg_match('/^[0-9]{4,10}$/', $d[4]));
+    return in_array($d[0], array_column(ConsultarProvinciasModel(), 'Consecutivo')) && $d[1] != '' && $d[2] != '' && $d[3] != '' && ($d[4] == '' || preg_match('/^[0-9]{4,10}$/', $d[4]));
 }
 
 if (isset($_POST['btnRegistrarDireccion'])) {

@@ -37,14 +37,14 @@ function MostrarArteAuth()
     $estilos = ['solido', 'contorno', 'ember', 'contorno', 'solido', 'ember', 'contorno'];
 
     echo '<div class="auth-filas" aria-hidden="true">';
-    foreach ($filas as $i => $palabras) {
+    foreach ($filas as $posicion => $palabras) {
         $contenido = '';
-        for ($r = 0; $r < 4; $r++) {
+        for ($repeticion = 0; $repeticion < 4; $repeticion++) {
             foreach ($palabras as $palabra) {
                 $contenido .= '<span>' . htmlspecialchars($palabra) . '</span><b>/</b>';
             }
         }
-        echo '<div class="auth-fila ' . $estilos[$i] . ($i % 2 ? ' inv' : '') . '" style="--v:' . (34 + $i * 6) . 's"><div class="pista">' . $contenido . '</div></div>';
+        echo '<div class="auth-fila ' . $estilos[$posicion] . ($posicion % 2 ? ' inv' : '') . '" style="--v:' . (34 + $posicion * 6) . 's"><div class="pista">' . $contenido . '</div></div>';
     }
     echo '</div>';
 }

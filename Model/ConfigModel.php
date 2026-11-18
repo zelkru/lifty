@@ -108,7 +108,7 @@ function RegistrarError($exc, $accion)
 
         Cerrar($context);
     }
-    catch (Exception $e) {
+    catch (Exception $excepcion) {
         error_log('Lifty: no se pudo registrar el error de ' . $accion . ': ' . $exc -> getMessage());
     }
 }

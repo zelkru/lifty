@@ -54,21 +54,21 @@ $(function () {
     $('table.tabla-apilada').each(function () {
         var etiquetas = $(this).find('thead th').map(function () { return $(this).text().trim(); }).get();
         $(this).find('tbody tr').each(function () {
-            $(this).children('td').each(function (i) {
-                if (!$(this).attr('data-etiqueta') && etiquetas[i]) { $(this).attr('data-etiqueta', etiquetas[i]); }
+            $(this).children('td').each(function (indice) {
+                if (!$(this).attr('data-etiqueta') && etiquetas[indice]) { $(this).attr('data-etiqueta', etiquetas[indice]); }
             });
         });
     });
 
-    $(document).on('submit', 'form[data-confirm]', function (e) {
+    $(document).on('submit', 'form[data-confirm]', function (evento) {
         if (!window.confirm($(this).data('confirm'))) {
-            e.preventDefault();
+            evento.preventDefault();
         }
     });
 
-    document.addEventListener('show.bs.modal', function (e) {
-        var boton = e.relatedTarget;
-        var modal = $(e.target);
+    document.addEventListener('show.bs.modal', function (evento) {
+        var boton = evento.relatedTarget;
+        var modal = $(evento.target);
         var formulario = modal.find('form');
 
         if (!formulario.length) { return; }

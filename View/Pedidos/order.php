@@ -53,7 +53,7 @@ $indice = array_search($pedido['EstadoPedido'], $pasos);
                         <input type="hidden" name="txtConsecutivo" value="<?php echo $pedido['Consecutivo']; ?>">
                         <input type="hidden" name="txtRetorno" value="detalle">
                         <select name="txtEstadoPedido" class="form-select" aria-label="Nuevo estado">
-                            <?php foreach ($siguientes as $s) { ?><option value="<?php echo $s; ?>"><?php echo $s; ?></option><?php } ?>
+                            <?php foreach ($siguientes as $estadoSiguiente) { ?><option value="<?php echo $estadoSiguiente; ?>"><?php echo $estadoSiguiente; ?></option><?php } ?>
                         </select>
                         <button type="submit" name="btnCambiarEstadoPedido" class="btn btn-primary text-nowrap">Cambiar estado</button>
                     </form>
@@ -64,8 +64,8 @@ $indice = array_search($pedido['EstadoPedido'], $pasos);
 
             <?php if ($indice !== false) { ?>
                 <div class="order-steps mb-4">
-                    <?php foreach ($pasos as $i => $paso) { ?>
-                        <div class="order-step <?php echo $i < $indice ? 'done' : ($i == $indice ? 'current' : ''); ?>"><?php echo $paso; ?></div>
+                    <?php foreach ($pasos as $posicion => $paso) { ?>
+                        <div class="order-step <?php echo $posicion < $indice ? 'done' : ($posicion == $indice ? 'current' : ''); ?>"><?php echo $paso; ?></div>
                     <?php } ?>
                 </div>
             <?php } ?>
@@ -77,15 +77,15 @@ $indice = array_search($pedido['EstadoPedido'], $pasos);
                             <table class="table l-table">
                                 <thead><tr><th>Producto</th><th class="text-end">Precio</th><th class="text-center">Cant.</th><th class="text-end">Importe</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($detalle as $d) { ?>
+                                <?php foreach ($detalle as $linea) { ?>
                                     <tr>
                                         <td>
-                                            <div class="fw-semibold"><?php echo Texto($d['NombreProducto']); ?></div>
-                                            <div class="small text-secondary"><?php echo Texto($d['Presentacion']); ?> &middot; <?php echo Texto($d['Sku']); ?></div>
+                                            <div class="fw-semibold"><?php echo Texto($linea['NombreProducto']); ?></div>
+                                            <div class="small text-secondary"><?php echo Texto($linea['Presentacion']); ?> &middot; <?php echo Texto($linea['Sku']); ?></div>
                                         </td>
-                                        <td class="text-end text-nowrap"><?php echo Dinero($d['PrecioUnitario']); ?></td>
-                                        <td class="text-center"><?php echo $d['Cantidad']; ?></td>
-                                        <td class="text-end text-nowrap"><?php echo Dinero($d['Subtotal']); ?></td>
+                                        <td class="text-end text-nowrap"><?php echo Dinero($linea['PrecioUnitario']); ?></td>
+                                        <td class="text-center"><?php echo $linea['Cantidad']; ?></td>
+                                        <td class="text-end text-nowrap"><?php echo Dinero($linea['Subtotal']); ?></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>

@@ -56,18 +56,18 @@ if (!$producto) {
 
                                 <h2 class="h6 mt-4 mb-2">Presentación</h2>
                                 <div class="row g-2 mb-3">
-                                    <?php foreach ($producto['Variantes'] as $i => $v) { ?>
+                                    <?php foreach ($producto['Variantes'] as $posicion => $variante) { ?>
                                         <div class="col-12 col-sm-6">
-                                            <input class="visually-hidden variant-radio" type="radio" name="txtVariante" id="variante<?php echo $v['Consecutivo']; ?>"
-                                                   value="<?php echo $v['Consecutivo']; ?>" data-stock="<?php echo (int) $v['Stock']; ?>" <?php echo $v['Stock'] < 1 ? 'disabled' : ''; ?> required>
-                                            <label for="variante<?php echo $v['Consecutivo']; ?>" class="variant-option d-block w-100 <?php echo $v['Stock'] < 1 ? 'disabled' : ''; ?>">
+                                            <input class="visually-hidden variant-radio" type="radio" name="txtVariante" id="variante<?php echo $variante['Consecutivo']; ?>"
+                                                   value="<?php echo $variante['Consecutivo']; ?>" data-stock="<?php echo (int) $variante['Stock']; ?>" <?php echo $variante['Stock'] < 1 ? 'disabled' : ''; ?> required>
+                                            <label for="variante<?php echo $variante['Consecutivo']; ?>" class="variant-option d-block w-100 <?php echo $variante['Stock'] < 1 ? 'disabled' : ''; ?>">
                                                 <div class="d-flex justify-content-between">
-                                                    <strong><?php echo Texto($v['Presentacion']); ?></strong>
-                                                    <span class="price"><?php echo Dinero($v['Precio']); ?></span>
+                                                    <strong><?php echo Texto($variante['Presentacion']); ?></strong>
+                                                    <span class="price"><?php echo Dinero($variante['Precio']); ?></span>
                                                 </div>
-                                                <div class="small <?php echo $v['Stock'] < 1 ? 'text-danger' : ($v['Stock'] <= 5 ? 'text-warning' : 'text-secondary'); ?>">
-                                                    <?php echo $v['Stock'] < 1 ? 'Agotado' : ($v['Stock'] <= 5 ? 'Quedan ' . $v['Stock'] : $v['Stock'] . ' disponibles'); ?>
-                                                    &middot; SKU <?php echo Texto($v['Sku']); ?>
+                                                <div class="small <?php echo $variante['Stock'] < 1 ? 'text-danger' : ($variante['Stock'] <= 5 ? 'text-warning' : 'text-secondary'); ?>">
+                                                    <?php echo $variante['Stock'] < 1 ? 'Agotado' : ($variante['Stock'] <= 5 ? 'Quedan ' . $variante['Stock'] : $variante['Stock'] . ' disponibles'); ?>
+                                                    &middot; SKU <?php echo Texto($variante['Sku']); ?>
                                                 </div>
                                             </label>
                                         </div>

@@ -37,13 +37,13 @@ $tarjetas = ConsultarTarjetasResumen();
             </div>
 
             <div class="row g-3 mb-4">
-                <?php foreach ($tarjetas as $t) { ?>
+                <?php foreach ($tarjetas as $tarjeta) { ?>
                     <div class="col-6 col-xl-2">
                         <div class="l-card stat-card">
-                            <span class="stat-icon"><i class="ti <?php echo $t[0]; ?>"></i></span>
+                            <span class="stat-icon"><i class="ti <?php echo $tarjeta[0]; ?>"></i></span>
                             <div>
-                                <div class="stat-value"><?php echo $t[2]; ?></div>
-                                <div class="stat-label"><?php echo $t[1]; ?></div>
+                                <div class="stat-value"><?php echo $tarjeta[2]; ?></div>
+                                <div class="stat-label"><?php echo $tarjeta[1]; ?></div>
                             </div>
                         </div>
                     </div>
@@ -61,13 +61,13 @@ $tarjetas = ConsultarTarjetasResumen();
                             <table class="table l-table">
                                 <thead><tr><th>#</th><th>Cliente</th><th>Fecha</th><th class="text-end">Total</th><th>Estado</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($recientes as $p) { ?>
+                                <?php foreach ($recientes as $pedido) { ?>
                                     <tr>
-                                        <td><a href="../Pedidos/order.php?id=<?php echo $p['Consecutivo']; ?>">#<?php echo $p['Consecutivo']; ?></a></td>
-                                        <td><?php echo Texto($p['NombreCliente']); ?></td>
-                                        <td class="text-nowrap"><?php echo date('d/m/Y', strtotime($p['FechaPedido'])); ?></td>
-                                        <td class="text-end"><?php echo Dinero($p['Total']); ?></td>
-                                        <td><span class="badge text-bg-<?php echo ClaseEstadoPedido($p['EstadoPedido']); ?>"><?php echo $p['EstadoPedido']; ?></span></td>
+                                        <td><a href="../Pedidos/order.php?id=<?php echo $pedido['Consecutivo']; ?>">#<?php echo $pedido['Consecutivo']; ?></a></td>
+                                        <td><?php echo Texto($pedido['NombreCliente']); ?></td>
+                                        <td class="text-nowrap"><?php echo date('d/m/Y', strtotime($pedido['FechaPedido'])); ?></td>
+                                        <td class="text-end"><?php echo Dinero($pedido['Total']); ?></td>
+                                        <td><span class="badge text-bg-<?php echo ClaseEstadoPedido($pedido['EstadoPedido']); ?>"><?php echo $pedido['EstadoPedido']; ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <?php if (count($recientes) == 0) { ?>
@@ -89,13 +89,13 @@ $tarjetas = ConsultarTarjetasResumen();
                             <table class="table l-table">
                                 <thead><tr><th>Producto</th><th class="text-end">Stock</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($stockBajo as $s) { ?>
+                                <?php foreach ($stockBajo as $producto) { ?>
                                     <tr>
                                         <td>
-                                            <?php echo Texto($s['NombreProducto']); ?>
-                                            <div class="small text-secondary"><?php echo Texto($s['Presentacion']); ?></div>
+                                            <?php echo Texto($producto['NombreProducto']); ?>
+                                            <div class="small text-secondary"><?php echo Texto($producto['Presentacion']); ?></div>
                                         </td>
-                                        <td class="text-end"><span class="badge text-bg-<?php echo $s['Stock'] == 0 ? 'danger' : 'warning'; ?>"><?php echo $s['Stock']; ?></span></td>
+                                        <td class="text-end"><span class="badge text-bg-<?php echo $producto['Stock'] == 0 ? 'danger' : 'warning'; ?>"><?php echo $producto['Stock']; ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <?php if (count($stockBajo) == 0) { ?>

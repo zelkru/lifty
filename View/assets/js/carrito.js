@@ -1,16 +1,38 @@
 $(function () {
-    function mostrarPago() {
-        var tipo = $('.metodo-pago:checked').data('tipo');
-        $('.pay-box').removeClass('active').filter('[data-tipo="' + tipo + '"]').addClass('active');
+    function mostrarCamposDePago() {
+        var tipoPago = $('.metodo-pago:checked').data('tipo');
+        $('.pay-box').removeClass('active').filter('[data-tipo="' + tipoPago + '"]').addClass('active');
     }
-    $('.metodo-pago').on('change', mostrarPago);
-    mostrarPago();
+
+    $('.metodo-pago').on('change', mostrarCamposDePago);
+    mostrarCamposDePago();
 
     $('.form-cantidad').each(function () {
-        var $f = $(this), $c = $f.find('input[type=number]');
-        var max = parseInt($c.attr('max'), 10);
-        $f.find('.mas').on('click', function () { if (parseInt($c.val(), 10) < max) { $c.val(parseInt($c.val(), 10) + 1); $f[0].submit(); } });
-        $f.find('.menos').on('click', function () { var v = parseInt($c.val(), 10) - 1; $c.val(v < 1 ? 0 : v); $f[0].submit(); });
-        $c.on('change', function () { $f[0].submit(); });
+        var $formulario = $(this);
+        var $cantidad = $formulario.find('input[type=number]');
+        var stockMaximo = parseInt($cantidad.attr('max'), 10);
+
+        function leerCantidad() {
+            return parseInt($cantidad.val(), 10);
+        }
+
+        function guardarCantidad(cantidad) {
+            $cantidad.val(cantidad);
+            $formulario[0].submit();
+        }
+
+        $formulario.find('.mas').on('click', function () {
+            if (leerCantidad() < stockMaximo) {
+                guardarCantidad(leerCantidad() + 1);
+            }
+        });
+
+        $formulario.find('.menos').on('click', function () {
+            guardarCantidad(Math.max(leerCantidad() - 1, 0));
+        });
+
+        $cantidad.on('change', function () {
+            $formulario[0].submit();
+        });
     });
 });

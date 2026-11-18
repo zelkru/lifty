@@ -104,20 +104,20 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
                             </div>
                         <?php } else { ?>
                             <div class="row g-3">
-                                <?php foreach ($direcciones as $d) {
-                                    $datos = ['txtConsecutivo' => $d['Consecutivo'], 'txtProvincia' => $d['ConsecutivoProvincia'], 'txtCanton' => $d['Canton'],
-                                              'txtDistrito' => $d['Distrito'], 'txtDetalle' => $d['Detalle'], 'txtCodigoPostal' => $d['CodigoPostal']]; ?>
+                                <?php foreach ($direcciones as $direccion) {
+                                    $datos = ['txtConsecutivo' => $direccion['Consecutivo'], 'txtProvincia' => $direccion['ConsecutivoProvincia'], 'txtCanton' => $direccion['Canton'],
+                                              'txtDistrito' => $direccion['Distrito'], 'txtDetalle' => $direccion['Detalle'], 'txtCodigoPostal' => $direccion['CodigoPostal']]; ?>
                                     <div class="col-12 col-md-6 col-xl-4">
                                         <div class="border rounded-3 p-3 h-100 d-flex flex-column">
-                                            <div class="fw-semibold"><i class="ti ti-map-pin text-primary"></i> <?php echo Texto($d['Provincia']); ?>, <?php echo Texto($d['Canton']); ?></div>
-                                            <div class="text-secondary small"><?php echo Texto($d['Distrito']); ?><?php echo $d['CodigoPostal'] != '' ? ' &middot; ' . Texto($d['CodigoPostal']) : ''; ?></div>
-                                            <p class="small mt-2 mb-3"><?php echo Texto($d['Detalle']); ?></p>
+                                            <div class="fw-semibold"><i class="ti ti-map-pin text-primary"></i> <?php echo Texto($direccion['Provincia']); ?>, <?php echo Texto($direccion['Canton']); ?></div>
+                                            <div class="text-secondary small"><?php echo Texto($direccion['Distrito']); ?><?php echo $direccion['CodigoPostal'] != '' ? ' &middot; ' . Texto($direccion['CodigoPostal']) : ''; ?></div>
+                                            <p class="small mt-2 mb-3"><?php echo Texto($direccion['Detalle']); ?></p>
                                             <div class="mt-auto d-flex gap-2">
                                                 <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDireccion"
                                                         data-fill="<?php echo Texto(json_encode($datos)); ?>">Editar</button>
                                                 <form action="" method="POST" class="m-0" data-confirm="¿Eliminar esta dirección?">
                                                     <?php CampoCsrf(); ?>
-                                                    <input type="hidden" name="txtConsecutivo" value="<?php echo $d['Consecutivo']; ?>">
+                                                    <input type="hidden" name="txtConsecutivo" value="<?php echo $direccion['Consecutivo']; ?>">
                                                     <button type="submit" name="btnInactivarDireccion" class="btn btn-outline-danger btn-sm">Eliminar</button>
                                                 </form>
                                             </div>
@@ -153,8 +153,8 @@ $direcciones = EsCliente() ? ConsultarDirecciones() : [];
                             <label class="form-label" for="txtProvincia">Provincia</label>
                             <select id="txtProvincia" name="txtProvincia" class="form-select" required>
                                 <option value="">Seleccione</option>
-                                <?php foreach (ConsultarProvincias() as $p) { ?>
-                                    <option value="<?php echo $p['Consecutivo']; ?>"><?php echo Texto($p['Nombre']); ?></option>
+                                <?php foreach (ConsultarProvincias() as $provincia) { ?>
+                                    <option value="<?php echo $provincia['Consecutivo']; ?>"><?php echo Texto($provincia['Nombre']); ?></option>
                                 <?php } ?>
                             </select>
                         </div>

@@ -46,11 +46,10 @@ $todasMarcas = ConsultarMarcas();
                     <option value="">Todas las marcas</option>
                     <?php foreach ($todasMarcas as $m) { ?><option value="<?php echo Texto($m['Nombre']); ?>"><?php echo Texto($m['Nombre']); ?></option><?php } ?>
                 </select>
-                <select class="form-select ft" data-tabla="#tablaProductos" data-col="6" aria-label="Estado">
-                    <option value="">Todos los estados</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                </select>
+                <div class="btn-group pestanas-estado" role="group" aria-label="Estado" data-tabla="#tablaProductos" data-col="6">
+                    <button type="button" class="btn btn-outline-secondary active" data-estado="activo">Activos <span class="badge text-bg-light border"></span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-estado="inactivo">Inactivos <span class="badge text-bg-light border"></span></button>
+                </div>
                 <button type="button" class="btn btn-outline-secondary limpiar-filtros" data-tabla="#tablaProductos"><i class="ti ti-filter-off"></i> Limpiar</button>
             </div>
 

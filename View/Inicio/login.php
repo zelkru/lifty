@@ -39,7 +39,7 @@ if (isset($_POST['mensaje'])) {
                     <div class="mb-2">
                         <label for="txtContrasenna" class="form-label d-flex justify-content-between">
                             <span>Contraseña</span>
-                            <a href="forgot-password.php" class="small auth-enlace">¿Olvidaste tu contraseña?</a>
+                            <a href="forgotPassword.php" class="small auth-enlace">¿Olvidaste tu contraseña?</a>
                         </label>
                         <div class="input-group">
                             <input id="txtContrasenna" name="txtContrasenna" type="password" class="form-control" autocomplete="current-password" required>

@@ -37,7 +37,7 @@ $roles = ConsultarRoles();
                 <input type="search" class="form-control ft ft-buscar" data-tabla="#tablaUsuarios" placeholder="Buscar por nombre, correo o teléfono..." aria-label="Buscar">
                 <select class="form-select ft" data-tabla="#tablaUsuarios" data-col="4" aria-label="Rol">
                     <option value="">Todos los roles</option>
-                    <?php foreach ($roles as $r) { ?><option value="<?php echo Texto($r['NombreRol']); ?>"><?php echo Texto($r['NombreRol']); ?></option><?php } ?>
+                    <?php foreach ($roles as $rol) { ?><option value="<?php echo Texto($rol['NombreRol']); ?>"><?php echo Texto($rol['NombreRol']); ?></option><?php } ?>
                 </select>
                 <div class="btn-group pestanas-estado" role="group" aria-label="Estado" data-tabla="#tablaUsuarios" data-col="6">
                     <button type="button" class="btn btn-outline-secondary active" data-estado="activo">Activos <span class="badge text-bg-light border"></span></button>
@@ -59,29 +59,29 @@ $roles = ConsultarRoles();
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($usuarios as $u) {
-                            $esUno = $u['Consecutivo'] == $_SESSION['ConsecutivoUsuario'];
-                            $datos = ['txtConsecutivo' => $u['Consecutivo'], 'txtNombre' => $u['Nombre'], 'txtApellido1' => $u['Apellido1'],
-                                      'txtApellido2' => $u['Apellido2'], 'txtCorreoElectronico' => $u['CorreoElectronico'], 'txtTelefono' => $u['Telefono'],
-                                      'txtRol' => $u['ConsecutivoRol'], 'txtEstado' => $u['Estado'], 'txtContrasenna' => '']; ?>
+                        <?php foreach ($usuarios as $usuario) {
+                            $esUno = $usuario['Consecutivo'] == $_SESSION['ConsecutivoUsuario'];
+                            $datos = ['txtConsecutivo' => $usuario['Consecutivo'], 'txtNombre' => $usuario['Nombre'], 'txtApellido1' => $usuario['Apellido1'],
+                                      'txtApellido2' => $usuario['Apellido2'], 'txtCorreoElectronico' => $usuario['CorreoElectronico'], 'txtTelefono' => $usuario['Telefono'],
+                                      'txtRol' => $usuario['ConsecutivoRol'], 'txtEstado' => $usuario['Estado'], 'txtContrasenna' => '']; ?>
                             <tr>
-                                <td><?php echo $u['Consecutivo']; ?></td>
-                                <td><?php echo Texto(trim($u['Nombre'] . ' ' . $u['Apellido1'] . ' ' . $u['Apellido2'])); ?><?php echo $esUno ? ' <span class="badge text-bg-light border">Usted</span>' : ''; ?></td>
-                                <td><?php echo Texto($u['CorreoElectronico']); ?></td>
-                                <td><?php echo Texto($u['Telefono']); ?></td>
-                                <td data-valor="<?php echo Texto($u['NombreRol']); ?>"><span class="badge text-bg-<?php echo $u['ConsecutivoRol'] == ROL_ADMINISTRADOR ? 'dark' : 'light border'; ?>"><?php echo Texto($u['NombreRol']); ?></span></td>
-                                <td class="text-nowrap" data-valor="<?php echo date('Y-m-d H:i', strtotime($u['FechaRegistro'])); ?>"><?php echo date('d/m/Y', strtotime($u['FechaRegistro'])); ?></td>
-                                <td data-valor="<?php echo $u['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?>"><span class="badge text-bg-<?php echo $u['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $u['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
+                                <td><?php echo $usuario['Consecutivo']; ?></td>
+                                <td><?php echo Texto(trim($usuario['Nombre'] . ' ' . $usuario['Apellido1'] . ' ' . $usuario['Apellido2'])); ?><?php echo $esUno ? ' <span class="badge text-bg-light border">Usted</span>' : ''; ?></td>
+                                <td><?php echo Texto($usuario['CorreoElectronico']); ?></td>
+                                <td><?php echo Texto($usuario['Telefono']); ?></td>
+                                <td data-valor="<?php echo Texto($usuario['NombreRol']); ?>"><span class="badge text-bg-<?php echo $usuario['ConsecutivoRol'] == ROL_ADMINISTRADOR ? 'dark' : 'light border'; ?>"><?php echo Texto($usuario['NombreRol']); ?></span></td>
+                                <td class="text-nowrap" data-valor="<?php echo date('Y-m-d H:i', strtotime($usuario['FechaRegistro'])); ?>"><?php echo date('d/m/Y', strtotime($usuario['FechaRegistro'])); ?></td>
+                                <td data-valor="<?php echo $usuario['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?>"><span class="badge text-bg-<?php echo $usuario['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $usuario['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
                                 <td class="text-end text-nowrap">
                                     <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalUsuario"
                                             data-propio="<?php echo $esUno ? 1 : 0; ?>" data-fill="<?php echo Texto(json_encode($datos)); ?>"><i class="ti ti-edit"></i> Editar</button>
                                     <?php if (!$esUno) { ?>
-                                        <form action="" method="POST" class="d-inline m-0" data-confirm="<?php echo $u['Estado'] == 1 ? '¿Inactivar esta cuenta?' : '¿Activar esta cuenta?'; ?>">
+                                        <form action="" method="POST" class="d-inline m-0" data-confirm="<?php echo $usuario['Estado'] == 1 ? '¿Inactivar esta cuenta?' : '¿Activar esta cuenta?'; ?>">
                                             <?php CampoCsrf(); ?>
-                                            <input type="hidden" name="txtConsecutivo" value="<?php echo $u['Consecutivo']; ?>">
-                                            <input type="hidden" name="txtEstado" value="<?php echo $u['Estado'] == 1 ? 0 : 1; ?>">
-                                            <button type="submit" name="btnCambiarEstadoUsuario" class="btn btn-sm btn-outline-<?php echo $u['Estado'] == 1 ? 'danger' : 'success'; ?>">
-                                                <i class="ti <?php echo $u['Estado'] == 1 ? 'ti-user-off' : 'ti-user-check'; ?>"></i> <?php echo $u['Estado'] == 1 ? 'Inactivar' : 'Activar'; ?>
+                                            <input type="hidden" name="txtConsecutivo" value="<?php echo $usuario['Consecutivo']; ?>">
+                                            <input type="hidden" name="txtEstado" value="<?php echo $usuario['Estado'] == 1 ? 0 : 1; ?>">
+                                            <button type="submit" name="btnCambiarEstadoUsuario" class="btn btn-sm btn-outline-<?php echo $usuario['Estado'] == 1 ? 'danger' : 'success'; ?>">
+                                                <i class="ti <?php echo $usuario['Estado'] == 1 ? 'ti-user-off' : 'ti-user-check'; ?>"></i> <?php echo $usuario['Estado'] == 1 ? 'Inactivar' : 'Activar'; ?>
                                             </button>
                                         </form>
                                     <?php } ?>
@@ -132,7 +132,7 @@ $roles = ConsultarRoles();
                         <div class="col-6">
                             <label class="form-label" for="txtRol">Rol</label>
                             <select id="txtRol" name="txtRol" class="form-select" required>
-                                <?php foreach ($roles as $r) { ?><option value="<?php echo $r['Consecutivo']; ?>"><?php echo Texto($r['NombreRol']); ?></option><?php } ?>
+                                <?php foreach ($roles as $rol) { ?><option value="<?php echo $rol['Consecutivo']; ?>"><?php echo Texto($rol['NombreRol']); ?></option><?php } ?>
                             </select>
                         </div>
                         <div class="col-6" id="grupoEstadoUsuario">

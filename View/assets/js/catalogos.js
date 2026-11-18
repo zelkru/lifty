@@ -1,5 +1,5 @@
-document.getElementById('modalMaestro').addEventListener('show.bs.modal', function (e) {
-    var boton = e.relatedTarget;
+document.getElementById('modalMaestro').addEventListener('show.bs.modal', function (evento) {
+    var boton = evento.relatedTarget;
     $('#btnGuardarMaestro').attr('name', boton.dataset.boton);
     $('#tituloMaestro').text(boton.dataset.titulo);
     $('#grupoEstadoMaestro').toggle(!!boton.dataset.fill);

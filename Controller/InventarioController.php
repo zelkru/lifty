@@ -48,22 +48,22 @@ function LeerProducto()
     ];
 }
 
-function ProductoValido($p)
+function ProductoValido($datosProducto)
 {
-    return $p[0] > 0 && $p[1] > 0 && $p[2] != '' && strlen($p[2]) <= 100 && $p[3] != ''
-        && ($p[4] == '' || filter_var($p[4], FILTER_VALIDATE_URL) || preg_match('/^[\w.\- ]+\.(png|jpe?g|webp|avif|gif)$/i', $p[4]));
+    return $datosProducto[0] > 0 && $datosProducto[1] > 0 && $datosProducto[2] != '' && strlen($datosProducto[2]) <= 100 && $datosProducto[3] != ''
+        && ($datosProducto[4] == '' || filter_var($datosProducto[4], FILTER_VALIDATE_URL) || preg_match('/^[\w.\- ]+\.(png|jpe?g|webp|avif|gif)$/i', $datosProducto[4]));
 }
 
 if (isset($_POST['btnRegistrarProducto'])) {
     ValidarAccionAdmin();
-    $p = LeerProducto();
+    $datosProducto = LeerProducto();
 
-    if (!ProductoValido($p)) {
+    if (!ProductoValido($datosProducto)) {
         AsignarMensaje('Complete nombre, descripción, categoría y marca. La imagen debe ser una dirección web o el nombre de un archivo (png, jpg, webp).', 'danger');
         Redirigir('inventory.php');
     }
 
-    $consecutivo = RegistrarProductoModel($p[0], $p[1], $p[2], $p[3], $p[4]);
+    $consecutivo = RegistrarProductoModel($datosProducto[0], $datosProducto[1], $datosProducto[2], $datosProducto[3], $datosProducto[4]);
 
     if ($consecutivo > 0) {
         AsignarMensaje('Producto creado. Ahora agregue sus presentaciones (variantes).');
@@ -76,16 +76,16 @@ if (isset($_POST['btnRegistrarProducto'])) {
 
 if (isset($_POST['btnActualizarProducto'])) {
     ValidarAccionAdmin();
-    $p = LeerProducto();
+    $datosProducto = LeerProducto();
     $consecutivo = LeerEntero('txtConsecutivo');
     $estado = LeerEntero('txtEstado') == 1 ? 1 : 0;
     $destacado = LeerEntero('txtDestacado') == 1 ? 1 : 0;
     $retorno = LeerTexto('txtRetorno') == 'variants' ? 'variants.php?id=' . $consecutivo : 'inventory.php';
 
-    if (!ProductoValido($p)) {
+    if (!ProductoValido($datosProducto)) {
         AsignarMensaje('Complete nombre, descripción, categoría y marca. La imagen debe ser una dirección web o el nombre de un archivo (png, jpg, webp).', 'danger');
     }
-    else if (ActualizarProductoModel($consecutivo, $p[0], $p[1], $p[2], $p[3], $p[4], $estado, $destacado)) {
+    else if (ActualizarProductoModel($consecutivo, $datosProducto[0], $datosProducto[1], $datosProducto[2], $datosProducto[3], $datosProducto[4], $estado, $destacado)) {
         AsignarMensaje('El producto se ha actualizado correctamente.');
     }
     else {
@@ -100,23 +100,23 @@ function LeerVariante()
     return [LeerTexto('txtSku'), LeerTexto('txtPresentacion'), LeerTexto('txtPrecio'), LeerTexto('txtStock')];
 }
 
-function VarianteValida($v)
+function VarianteValida($datosVariante)
 {
-    return $v[0] != '' && strlen($v[0]) <= 30 && $v[1] != '' && strlen($v[1]) <= 100
-        && is_numeric($v[2]) && (float) $v[2] > 0
-        && ctype_digit($v[3]);
+    return $datosVariante[0] != '' && strlen($datosVariante[0]) <= 30 && $datosVariante[1] != '' && strlen($datosVariante[1]) <= 100
+        && is_numeric($datosVariante[2]) && (float) $datosVariante[2] > 0
+        && ctype_digit($datosVariante[3]);
 }
 
 if (isset($_POST['btnRegistrarVariante'])) {
     ValidarAccionAdmin();
     $producto = LeerEntero('txtProducto');
-    $v = LeerVariante();
+    $datosVariante = LeerVariante();
 
-    if (!VarianteValida($v)) {
+    if (!VarianteValida($datosVariante)) {
         AsignarMensaje('Verifique SKU, presentación, precio mayor a cero y stock (número entero).', 'danger');
     }
     else {
-        $response = RegistrarVarianteModel($producto, strtoupper($v[0]), $v[1], $v[2], $v[3]);
+        $response = RegistrarVarianteModel($producto, strtoupper($datosVariante[0]), $datosVariante[1], $datosVariante[2], $datosVariante[3]);
 
         if ($response === -1) {
             AsignarMensaje('Ese SKU ya existe. Use uno distinto.', 'danger');
@@ -135,14 +135,14 @@ if (isset($_POST['btnRegistrarVariante'])) {
 if (isset($_POST['btnActualizarVariante'])) {
     ValidarAccionAdmin();
     $producto = LeerEntero('txtProducto');
-    $v = LeerVariante();
+    $datosVariante = LeerVariante();
     $estado = LeerEntero('txtEstado') == 1 ? 1 : 0;
 
-    if (!VarianteValida($v)) {
+    if (!VarianteValida($datosVariante)) {
         AsignarMensaje('Verifique SKU, presentación, precio mayor a cero y stock (número entero).', 'danger');
     }
     else {
-        $response = ActualizarVarianteModel(LeerEntero('txtConsecutivo'), strtoupper($v[0]), $v[1], $v[2], $v[3], $estado);
+        $response = ActualizarVarianteModel(LeerEntero('txtConsecutivo'), strtoupper($datosVariante[0]), $datosVariante[1], $datosVariante[2], $datosVariante[3], $estado);
 
         if ($response === -1) {
             AsignarMensaje('Ese SKU ya existe. Use uno distinto.', 'danger');

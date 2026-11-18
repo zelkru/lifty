@@ -37,11 +37,11 @@ $totalPedidos = array_sum(array_column($porEstado, 'Cantidad'));
                         <?php if ($totalPedidos == 0) { ?>
                             <div class="empty-state py-4"><i class="ti ti-receipt-off"></i><p class="mb-0">Todavía no hay pedidos.</p></div>
                         <?php } ?>
-                        <?php foreach ($porEstado as $e) { $porcentaje = $totalPedidos > 0 ? round($e['Cantidad'] * 100 / $totalPedidos) : 0; ?>
+                        <?php foreach ($porEstado as $estadoPedido) { $porcentaje = $totalPedidos > 0 ? round($estadoPedido['Cantidad'] * 100 / $totalPedidos) : 0; ?>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between small mb-1">
-                                    <span><span class="badge text-bg-<?php echo ClaseEstadoPedido($e['EstadoPedido']); ?>"><?php echo $e['EstadoPedido']; ?></span> <?php echo $e['Cantidad']; ?> pedido<?php echo $e['Cantidad'] == 1 ? '' : 's'; ?></span>
-                                    <span class="text-secondary"><?php echo Dinero($e['Monto']); ?></span>
+                                    <span><span class="badge text-bg-<?php echo ClaseEstadoPedido($estadoPedido['EstadoPedido']); ?>"><?php echo $estadoPedido['EstadoPedido']; ?></span> <?php echo $estadoPedido['Cantidad']; ?> pedido<?php echo $estadoPedido['Cantidad'] == 1 ? '' : 's'; ?></span>
+                                    <span class="text-secondary"><?php echo Dinero($estadoPedido['Monto']); ?></span>
                                 </div>
                                 <div class="bar-track"><div class="bar-fill" style="width: <?php echo $porcentaje; ?>%"></div></div>
                             </div>
@@ -59,11 +59,11 @@ $totalPedidos = array_sum(array_column($porEstado, 'Cantidad'));
                             <table class="table l-table tabla-apilada tabla-datos" id="tablaStockBajo" data-pagina="8">
                                 <thead><tr><th data-orden="texto">Producto</th><th data-orden="texto">SKU</th><th data-orden="numero" class="text-end">Stock</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($stockBajo as $s) { ?>
+                                <?php foreach ($stockBajo as $producto) { ?>
                                     <tr>
-                                        <td><?php echo Texto($s['NombreProducto']); ?> <span class="text-secondary small">&middot; <?php echo Texto($s['Presentacion']); ?></span></td>
-                                        <td><code><?php echo Texto($s['Sku']); ?></code></td>
-                                        <td class="text-end" data-valor="<?php echo (int) $s['Stock']; ?>"><span class="badge text-bg-<?php echo $s['Stock'] == 0 ? 'danger' : 'warning'; ?>"><?php echo $s['Stock']; ?></span></td>
+                                        <td><?php echo Texto($producto['NombreProducto']); ?> <span class="text-secondary small">&middot; <?php echo Texto($producto['Presentacion']); ?></span></td>
+                                        <td><code><?php echo Texto($producto['Sku']); ?></code></td>
+                                        <td class="text-end" data-valor="<?php echo (int) $producto['Stock']; ?>"><span class="badge text-bg-<?php echo $producto['Stock'] == 0 ? 'danger' : 'warning'; ?>"><?php echo $producto['Stock']; ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <?php if (count($stockBajo) == 0) { ?>

@@ -40,11 +40,11 @@ $todasMarcas = ConsultarMarcas();
                 <input type="search" class="form-control ft ft-buscar" data-tabla="#tablaProductos" placeholder="Buscar producto, categoría o marca..." aria-label="Buscar">
                 <select class="form-select ft" data-tabla="#tablaProductos" data-col="1" aria-label="Categoría">
                     <option value="">Todas las categorías</option>
-                    <?php foreach ($todasCategorias as $c) { ?><option value="<?php echo Texto($c['Nombre']); ?>"><?php echo Texto($c['Nombre']); ?></option><?php } ?>
+                    <?php foreach ($todasCategorias as $categoria) { ?><option value="<?php echo Texto($categoria['Nombre']); ?>"><?php echo Texto($categoria['Nombre']); ?></option><?php } ?>
                 </select>
                 <select class="form-select ft" data-tabla="#tablaProductos" data-col="2" aria-label="Marca">
                     <option value="">Todas las marcas</option>
-                    <?php foreach ($todasMarcas as $m) { ?><option value="<?php echo Texto($m['Nombre']); ?>"><?php echo Texto($m['Nombre']); ?></option><?php } ?>
+                    <?php foreach ($todasMarcas as $marca) { ?><option value="<?php echo Texto($marca['Nombre']); ?>"><?php echo Texto($marca['Nombre']); ?></option><?php } ?>
                 </select>
                 <div class="btn-group pestanas-estado" role="group" aria-label="Estado" data-tabla="#tablaProductos" data-col="6">
                     <button type="button" class="btn btn-outline-secondary active" data-estado="activo">Activos <span class="badge text-bg-light border"></span></button>
@@ -69,30 +69,30 @@ $todasMarcas = ConsultarMarcas();
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($productos as $p) {
-                            $datos = ['txtConsecutivo' => $p['Consecutivo'], 'txtNombre' => $p['Nombre'], 'txtDescripcion' => $p['Descripcion'],
-                                      'txtImagen' => $p['Imagen'], 'txtCategoria' => $p['ConsecutivoCategoria'], 'txtMarca' => $p['ConsecutivoMarca'],
-                                      'txtEstado' => $p['Estado'], 'txtDestacado' => $p['Destacado']]; ?>
+                        <?php foreach ($productos as $producto) {
+                            $datos = ['txtConsecutivo' => $producto['Consecutivo'], 'txtNombre' => $producto['Nombre'], 'txtDescripcion' => $producto['Descripcion'],
+                                      'txtImagen' => $producto['Imagen'], 'txtCategoria' => $producto['ConsecutivoCategoria'], 'txtMarca' => $producto['ConsecutivoMarca'],
+                                      'txtEstado' => $producto['Estado'], 'txtDestacado' => $producto['Destacado']]; ?>
                             <tr>
-                                <td data-valor="<?php echo Texto($p['Nombre']); ?>">
+                                <td data-valor="<?php echo Texto($producto['Nombre']); ?>">
                                     <div class="d-flex align-items-center gap-3">
                                         <span class="cart-thumb">
-                                            <?php if ($p['Imagen'] != '') { ?><img src="<?php echo Texto(ImagenUrl($p['Imagen'])); ?>" alt=""><?php } else { ?><?php echo Texto(mb_strtoupper(mb_substr($p['Nombre'], 0, 1))); ?><?php } ?>
+                                            <?php if ($producto['Imagen'] != '') { ?><img src="<?php echo Texto(ImagenUrl($producto['Imagen'])); ?>" alt=""><?php } else { ?><?php echo Texto(mb_strtoupper(mb_substr($producto['Nombre'], 0, 1))); ?><?php } ?>
                                         </span>
                                         <div>
-                                            <a href="variants.php?id=<?php echo $p['Consecutivo']; ?>" class="fw-semibold text-decoration-none"><?php echo Texto($p['Nombre']); ?></a>
-                                            <?php if ($p['Destacado'] == 1) { ?><span class="badge text-bg-dark ms-1"><i class="ti ti-star-filled"></i> Portada</span><?php } ?>
+                                            <a href="variants.php?id=<?php echo $producto['Consecutivo']; ?>" class="fw-semibold text-decoration-none"><?php echo Texto($producto['Nombre']); ?></a>
+                                            <?php if ($producto['Destacado'] == 1) { ?><span class="badge text-bg-dark ms-1"><i class="ti ti-star-filled"></i> Portada</span><?php } ?>
                                         </div>
                                     </div>
                                 </td>
-                                <td><?php echo Texto($p['NombreCategoria']); ?></td>
-                                <td><?php echo Texto($p['NombreMarca']); ?></td>
-                                <td class="text-center"><?php echo $p['Variantes']; ?></td>
-                                <td class="text-end" data-valor="<?php echo (float) $p['PrecioDesde']; ?>"><?php echo $p['PrecioDesde'] !== null ? Dinero($p['PrecioDesde']) : '-'; ?></td>
-                                <td class="text-center" data-valor="<?php echo (int) $p['StockTotal']; ?>"><span class="badge text-bg-<?php echo $p['StockTotal'] == 0 ? 'danger' : ($p['StockTotal'] <= 10 ? 'warning' : 'light border'); ?>"><?php echo $p['StockTotal']; ?></span></td>
-                                <td data-valor="<?php echo $p['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?>"><span class="badge text-bg-<?php echo $p['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $p['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
+                                <td><?php echo Texto($producto['NombreCategoria']); ?></td>
+                                <td><?php echo Texto($producto['NombreMarca']); ?></td>
+                                <td class="text-center"><?php echo $producto['Variantes']; ?></td>
+                                <td class="text-end" data-valor="<?php echo (float) $producto['PrecioDesde']; ?>"><?php echo $producto['PrecioDesde'] !== null ? Dinero($producto['PrecioDesde']) : '-'; ?></td>
+                                <td class="text-center" data-valor="<?php echo (int) $producto['StockTotal']; ?>"><span class="badge text-bg-<?php echo $producto['StockTotal'] == 0 ? 'danger' : ($producto['StockTotal'] <= 10 ? 'warning' : 'light border'); ?>"><?php echo $producto['StockTotal']; ?></span></td>
+                                <td data-valor="<?php echo $producto['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?>"><span class="badge text-bg-<?php echo $producto['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $producto['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
                                 <td class="text-end text-nowrap">
-                                    <a href="variants.php?id=<?php echo $p['Consecutivo']; ?>" class="btn btn-outline-secondary btn-sm"><i class="ti ti-stack-2"></i> Presentaciones</a>
+                                    <a href="variants.php?id=<?php echo $producto['Consecutivo']; ?>" class="btn btn-outline-secondary btn-sm"><i class="ti ti-stack-2"></i> Presentaciones</a>
                                     <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalProducto"
                                             data-fill="<?php echo Texto(json_encode($datos)); ?>"><i class="ti ti-edit"></i> Editar</button>
                                 </td>
@@ -127,14 +127,14 @@ $todasMarcas = ConsultarMarcas();
                             <label class="form-label" for="txtCategoria">Categoría</label>
                             <select id="txtCategoria" name="txtCategoria" class="form-select" required>
                                 <option value="">Seleccione...</option>
-                                <?php foreach ($categorias as $c) { ?><option value="<?php echo $c['Consecutivo']; ?>"><?php echo Texto($c['Nombre']); ?></option><?php } ?>
+                                <?php foreach ($categorias as $categoria) { ?><option value="<?php echo $categoria['Consecutivo']; ?>"><?php echo Texto($categoria['Nombre']); ?></option><?php } ?>
                             </select>
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="txtMarca">Marca</label>
                             <select id="txtMarca" name="txtMarca" class="form-select" required>
                                 <option value="">Seleccione...</option>
-                                <?php foreach ($marcas as $m) { ?><option value="<?php echo $m['Consecutivo']; ?>"><?php echo Texto($m['Nombre']); ?></option><?php } ?>
+                                <?php foreach ($marcas as $marca) { ?><option value="<?php echo $marca['Consecutivo']; ?>"><?php echo Texto($marca['Nombre']); ?></option><?php } ?>
                             </select>
                         </div>
                         <div class="col-12">

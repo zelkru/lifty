@@ -43,32 +43,32 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
             <div class="carrito-grid">
 
                 <div>
-                    <?php foreach ($carrito['Lineas'] as $l) { ?>
+                    <?php foreach ($carrito['Lineas'] as $linea) { ?>
                         <div class="item-carrito">
-                            <div class="foto"><?php echo ArteProducto($l['Imagen'], '', '', $l['NombreProducto']); ?></div>
+                            <div class="foto"><?php echo ArteProducto($linea['Imagen'], '', '', $linea['NombreProducto']); ?></div>
                             <div>
-                                <a href="../Catalogo/product.php?id=<?php echo $l['ConsecutivoProducto']; ?>" class="nombre"><?php echo Texto($l['NombreProducto']); ?></a>
-                                <div class="pres"><?php echo Texto($l['Presentacion']); ?> &middot; <?php echo Dinero($l['Precio']); ?> c/u</div>
+                                <a href="../Catalogo/product.php?id=<?php echo $linea['ConsecutivoProducto']; ?>" class="nombre"><?php echo Texto($linea['NombreProducto']); ?></a>
+                                <div class="pres"><?php echo Texto($linea['Presentacion']); ?> &middot; <?php echo Dinero($linea['Precio']); ?> c/u</div>
 
                                 <form action="" method="POST" class="m-0 form-cantidad">
                                     <?php CampoCsrf(); ?>
-                                    <input type="hidden" name="txtVariante" value="<?php echo $l['Consecutivo']; ?>">
+                                    <input type="hidden" name="txtVariante" value="<?php echo $linea['Consecutivo']; ?>">
                                     <input type="hidden" name="btnActualizarCarrito" value="1">
                                     <div class="paso">
                                         <button type="button" class="menos" aria-label="Menos"><i class="ti ti-minus"></i></button>
-                                        <input type="number" name="txtCantidad" value="<?php echo $l['Cantidad']; ?>" min="1" max="<?php echo $l['Stock']; ?>" aria-label="Cantidad">
+                                        <input type="number" name="txtCantidad" value="<?php echo $linea['Cantidad']; ?>" min="1" max="<?php echo $linea['Stock']; ?>" aria-label="Cantidad">
                                         <button type="button" class="mas" aria-label="Más"><i class="ti ti-plus"></i></button>
                                     </div>
-                                    <?php if ($l['Cantidad'] != $_SESSION['Carrito'][$l['Consecutivo']]) { ?>
-                                        <div class="small text-danger mt-1">Solo hay <?php echo $l['Stock']; ?> disponibles</div>
+                                    <?php if ($linea['Cantidad'] != $_SESSION['Carrito'][$linea['Consecutivo']]) { ?>
+                                        <div class="small text-danger mt-1">Solo hay <?php echo $linea['Stock']; ?> disponibles</div>
                                     <?php } ?>
                                 </form>
                             </div>
                             <div class="derecha">
-                                <div class="importe"><?php echo Dinero($l['Importe']); ?></div>
+                                <div class="importe"><?php echo Dinero($linea['Importe']); ?></div>
                                 <form action="" method="POST" class="m-0">
                                     <?php CampoCsrf(); ?>
-                                    <input type="hidden" name="txtVariante" value="<?php echo $l['Consecutivo']; ?>">
+                                    <input type="hidden" name="txtVariante" value="<?php echo $linea['Consecutivo']; ?>">
                                     <button type="submit" name="btnQuitarCarrito" class="quitar"><i class="ti ti-trash"></i> Quitar</button>
                                 </form>
                             </div>
@@ -94,8 +94,8 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
                             <div class="alert alert-warning mb-0">Necesitas una dirección para comprar. <a href="../Personal/account.php" class="alert-link">Agregar dirección</a></div>
                         <?php } else { ?>
                             <select name="txtDireccion" class="form-select" required aria-label="Dirección de entrega">
-                                <?php foreach ($direcciones as $d) { ?>
-                                    <option value="<?php echo $d['Consecutivo']; ?>"><?php echo Texto($d['Detalle'] . ', ' . $d['Distrito'] . ', ' . $d['Canton']); ?></option>
+                                <?php foreach ($direcciones as $direccion) { ?>
+                                    <option value="<?php echo $direccion['Consecutivo']; ?>"><?php echo Texto($direccion['Detalle'] . ', ' . $direccion['Distrito'] . ', ' . $direccion['Canton']); ?></option>
                                 <?php } ?>
                             </select>
                         <?php } ?>
@@ -104,11 +104,11 @@ $unidades = array_sum(array_column($carrito['Lineas'], 'Cantidad'));
                     <div class="l-card l-card-body mb-3">
                         <h2 class="l-card-title"><i class="ti ti-credit-card"></i> Pago <span class="badge text-bg-light border fw-normal">Simulado</span></h2>
                         <div class="pago-tabs">
-                            <?php foreach ($metodos as $i => $m) { $esSinpe = EsMetodoSinpe($m['Nombre']); ?>
+                            <?php foreach ($metodos as $posicion => $metodoPago) { $esSinpe = EsMetodoSinpe($metodoPago['Nombre']); ?>
                                 <div>
-                                    <input class="btn-check metodo-pago" type="radio" name="txtMetodoPago" id="metodo<?php echo $m['Consecutivo']; ?>"
-                                           value="<?php echo $m['Consecutivo']; ?>" data-tipo="<?php echo $esSinpe ? 'sinpe' : 'tarjeta'; ?>" <?php echo $i == 0 ? 'checked' : ''; ?> required>
-                                    <label for="metodo<?php echo $m['Consecutivo']; ?>"><i class="ti <?php echo $esSinpe ? 'ti-device-mobile' : 'ti-credit-card'; ?>"></i> <?php echo Texto($m['Nombre']); ?></label>
+                                    <input class="btn-check metodo-pago" type="radio" name="txtMetodoPago" id="metodo<?php echo $metodoPago['Consecutivo']; ?>"
+                                           value="<?php echo $metodoPago['Consecutivo']; ?>" data-tipo="<?php echo $esSinpe ? 'sinpe' : 'tarjeta'; ?>" <?php echo $posicion == 0 ? 'checked' : ''; ?> required>
+                                    <label for="metodo<?php echo $metodoPago['Consecutivo']; ?>"><i class="ti <?php echo $esSinpe ? 'ti-device-mobile' : 'ti-credit-card'; ?>"></i> <?php echo Texto($metodoPago['Nombre']); ?></label>
                                 </div>
                             <?php } ?>
                         </div>

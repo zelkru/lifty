@@ -57,12 +57,12 @@ $maestros = [
                             <table class="table l-table table-hover tabla-apilada tabla-datos" id="tabla-<?php echo $clave; ?>" data-pagina="8">
                                 <thead><tr><th data-orden="texto">Nombre</th><th data-orden="texto">Descripción</th><th data-orden="texto">Estado</th><th class="text-end">Acción</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($maestro[1] as $m) {
-                                    $datos = ['txtConsecutivo' => $m['Consecutivo'], 'txtNombre' => $m['Nombre'], 'txtDescripcion' => $m['Descripcion'], 'txtEstado' => $m['Estado']]; ?>
+                                <?php foreach ($maestro[1] as $registro) {
+                                    $datos = ['txtConsecutivo' => $registro['Consecutivo'], 'txtNombre' => $registro['Nombre'], 'txtDescripcion' => $registro['Descripcion'], 'txtEstado' => $registro['Estado']]; ?>
                                     <tr>
-                                        <td class="fw-semibold"><?php echo Texto($m['Nombre']); ?></td>
-                                        <td class="text-secondary small"><?php echo Texto($m['Descripcion']); ?></td>
-                                        <td data-valor="<?php echo $m['Estado'] == 1 ? 'Activa' : 'Inactiva'; ?>"><span class="badge text-bg-<?php echo $m['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $m['Estado'] == 1 ? 'Activa' : 'Inactiva'; ?></span></td>
+                                        <td class="fw-semibold"><?php echo Texto($registro['Nombre']); ?></td>
+                                        <td class="text-secondary small"><?php echo Texto($registro['Descripcion']); ?></td>
+                                        <td data-valor="<?php echo $registro['Estado'] == 1 ? 'Activa' : 'Inactiva'; ?>"><span class="badge text-bg-<?php echo $registro['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $registro['Estado'] == 1 ? 'Activa' : 'Inactiva'; ?></span></td>
                                         <td class="text-end">
                                             <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMaestro"
                                                     data-boton="<?php echo $maestro[2]; ?>" data-titulo="Editar <?php echo $clave == 'marca' ? 'marca' : 'categoría'; ?>"
@@ -87,18 +87,18 @@ $maestros = [
                             <table class="table l-table tabla-apilada tabla-datos" id="tabla-metodos" data-pagina="10">
                                 <thead><tr><th data-orden="texto">Método</th><th data-orden="texto">Descripción</th><th data-orden="texto">Estado</th><th class="text-end">Acción</th></tr></thead>
                                 <tbody>
-                                <?php foreach ($metodos as $mp) { ?>
+                                <?php foreach ($metodos as $metodoPago) { ?>
                                     <tr>
-                                        <td class="fw-semibold"><?php echo Texto($mp['Nombre']); ?></td>
-                                        <td class="text-secondary small"><?php echo Texto($mp['Descripcion']); ?></td>
-                                        <td><span class="badge text-bg-<?php echo $mp['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $mp['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
+                                        <td class="fw-semibold"><?php echo Texto($metodoPago['Nombre']); ?></td>
+                                        <td class="text-secondary small"><?php echo Texto($metodoPago['Descripcion']); ?></td>
+                                        <td><span class="badge text-bg-<?php echo $metodoPago['Estado'] == 1 ? 'success' : 'secondary'; ?>"><?php echo $metodoPago['Estado'] == 1 ? 'Activo' : 'Inactivo'; ?></span></td>
                                         <td class="text-end">
                                             <form action="" method="POST" class="m-0">
                                                 <?php CampoCsrf(); ?>
-                                                <input type="hidden" name="txtConsecutivo" value="<?php echo $mp['Consecutivo']; ?>">
-                                                <input type="hidden" name="txtEstado" value="<?php echo $mp['Estado'] == 1 ? 0 : 1; ?>">
-                                                <button type="submit" name="btnCambiarEstadoMetodoPago" class="btn btn-sm btn-outline-<?php echo $mp['Estado'] == 1 ? 'danger' : 'success'; ?>">
-                                                    <i class="ti <?php echo $mp['Estado'] == 1 ? 'ti-player-pause' : 'ti-player-play'; ?>"></i> <?php echo $mp['Estado'] == 1 ? 'Inactivar' : 'Activar'; ?>
+                                                <input type="hidden" name="txtConsecutivo" value="<?php echo $metodoPago['Consecutivo']; ?>">
+                                                <input type="hidden" name="txtEstado" value="<?php echo $metodoPago['Estado'] == 1 ? 0 : 1; ?>">
+                                                <button type="submit" name="btnCambiarEstadoMetodoPago" class="btn btn-sm btn-outline-<?php echo $metodoPago['Estado'] == 1 ? 'danger' : 'success'; ?>">
+                                                    <i class="ti <?php echo $metodoPago['Estado'] == 1 ? 'ti-player-pause' : 'ti-player-play'; ?>"></i> <?php echo $metodoPago['Estado'] == 1 ? 'Inactivar' : 'Activar'; ?>
                                                 </button>
                                             </form>
                                         </td>

@@ -182,8 +182,8 @@ if (isset($_POST['btnConfirmarCompra'])) {
     $metodo = ConsultarMetodoPagoActivo(LeerEntero('txtMetodoPago'));
     $direccionValida = false;
 
-    foreach (ConsultarDireccionesCliente() as $d) {
-        if ($d['Consecutivo'] == $direccion) {
+    foreach (ConsultarDireccionesCliente() as $direccionCliente) {
+        if ($direccionCliente['Consecutivo'] == $direccion) {
             $direccionValida = true;
         }
     }
@@ -272,7 +272,7 @@ function ConsultarPedidosPorEstado($estado)
     if (EsAdministrador() || $estado == '') {
         return $pedidos;
     }
-    return array_filter($pedidos, function ($p) use ($estado) { return $p['EstadoPedido'] == $estado; });
+    return array_filter($pedidos, function ($pedidoActual) use ($estado) { return $pedidoActual['EstadoPedido'] == $estado; });
 }
 
 function ConsultarPedido($consecutivo)

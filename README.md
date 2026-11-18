@@ -4,7 +4,7 @@ Lifty es un ecommerce de productos para entrenar: suplementos, bebidas, ropa y
 accesorios. El sistema permite administrar el catálogo, el inventario, los pedidos y los
 usuarios de la tienda.
 
-Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Avance 2.
+Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502).
 
 ## Integrantes
 
@@ -41,13 +41,12 @@ XAMPP usa el puerto 3306, defina `DB_PORT=3306` en el archivo `.env` (ver Config
 
 ## Configuración (.env)
 
-Copiar `.env.example` como `.env` dentro de la carpeta `lifty` y completar los valores. El
-archivo es opcional: sin él se usa la conexión de XAMPP (`127.0.0.1:3307`, usuario `root`, sin
-contraseña) y los correos se simulan (quedan en el log de errores de PHP).
+El archivo `.env` es opcional. Si no existe, se usan los valores de XAMPP (`127.0.0.1:3307`,
+usuario `root`, sin contraseña) y los correos se simulan: solo quedan en el log de errores de PHP.
 
-Para enviar correos de verdad, completar `MAIL_USER`, `MAIL_PASS` (contraseña de aplicación de
-Gmail), `MAIL_FROM` y dejar `MAIL_HOST=smtp.gmail.com`. Se usan en el registro, la recuperación
-de contraseña y el pago confirmado.
+Para cambiar algún valor se copia `.env.example` como `.env` dentro de la carpeta `lifty`. Para
+enviar correos reales se llenan `MAIL_USER`, `MAIL_PASS` (contraseña de aplicación de Gmail) y
+`MAIL_FROM`. Se usan en el registro, la recuperación de contraseña y la confirmación de pago.
 
 ## Estructura
 
@@ -80,7 +79,7 @@ lifty/
 - Código autoexplicativo con nombres descriptivos en español; solo se comenta lo que no se
   entiende leyéndolo (reglas de negocio y seguridad).
 
-## Funcionalidades de esta entrega
+## Funcionalidades
 
 - Registro, inicio y cierre de sesión, recuperación (contraseña temporal por correo) y cambio
   de contraseña; correo de bienvenida y de pago confirmado.
@@ -96,12 +95,12 @@ lifty/
 
 13 tablas normalizadas (prefijo `t`, llave `Consecutivo`) y 46 procedimientos almacenados
 (prefijo `sp`). El estado lógico vive en `testado` y las provincias en `tprovincia`. El
-diagrama entidad-relación se entrega aparte, en draw.io.
+diagrama entidad-relación se entrega en un documento aparte.
 
 ## Flujo de trabajo
 
 Ramas de trabajo (`feat/...`, `fix/...`) hacia `develop` con Pull Request, y de `develop`
-hacia `main` para cada entrega. Nunca se hace commit directo a `main`. Commits con el
+hacia `main`. Nunca se hace commit directo a `main`. Commits con el
 formato `tipo(alcance): mensaje` en inglés (`feat`, `fix`, `docs`, `style`, `refactor`,
 `chore`).
 

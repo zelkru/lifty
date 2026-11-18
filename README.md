@@ -4,7 +4,7 @@ Lifty es un ecommerce de productos para entrenar: suplementos, bebidas, ropa y
 accesorios. El sistema permite administrar el catálogo, el inventario, los pedidos y los
 usuarios de la tienda.
 
-Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Entrega 2 (S02).
+Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Avance 2.
 
 ## Integrantes
 
@@ -29,8 +29,8 @@ Proyecto del curso **Ambiente Web Cliente Servidor** (SC-502). Entrega 2 (S02).
    las tablas, los procedimientos y los datos de ejemplo.
 4. Abrir <http://localhost/lifty>.
 
-La conexión (`Model/ConfigModel.php`) usa por defecto `127.0.0.1:3307`, usuario `root` y sin
-contraseña. Si su MySQL de XAMPP usa el puerto 3306, cambie `3307` por `3306` en ese archivo.
+La conexión usa por defecto `127.0.0.1:3307`, usuario `root` y sin contraseña. Si su MySQL de
+XAMPP usa el puerto 3306, defina `DB_PORT=3306` en el archivo `.env` (ver Configuración).
 
 ## Usuarios de ejemplo
 
@@ -39,20 +39,15 @@ contraseña. Si su MySQL de XAMPP usa el puerto 3306, cambie `3307` por `3306` e
 | Administrador | admin@lifty.com | Admin123* |
 | Cliente | cliente@lifty.com | Cliente123* |
 
-## Correo
+## Configuración (.env)
 
-Sin configurar, los correos se simulan (quedan en el log de errores de PHP). Para enviarlos
-de verdad defina estas variables de entorno con los datos de su servidor SMTP:
+Copiar `.env.example` como `.env` dentro de la carpeta `lifty` y completar los valores. El
+archivo es opcional: sin él se usa la conexión de XAMPP (`127.0.0.1:3307`, usuario `root`, sin
+contraseña) y los correos se simulan (quedan en el log de errores de PHP).
 
-| Variable | Descripción | Ejemplo |
-|---|---|---|
-| `MAIL_HOST` | Servidor SMTP (si falta, el envío se simula) | `mail.midominio.com` |
-| `MAIL_PORT` | Puerto (587 por defecto) | `587` |
-| `MAIL_SECURE` | `tls` (por defecto), `ssl` o `none` | `tls` |
-| `MAIL_USER` | Usuario SMTP | `no-reply@midominio.com` |
-| `MAIL_PASS` | Contraseña SMTP | |
-| `MAIL_FROM` | Remitente (por defecto `MAIL_USER`) | `no-reply@midominio.com` |
-| `MAIL_FROM_NAME` | Nombre del remitente (por defecto `Lifty`) | `Lifty` |
+Para enviar correos de verdad, completar `MAIL_USER`, `MAIL_PASS` (contraseña de aplicación de
+Gmail), `MAIL_FROM` y dejar `MAIL_HOST=smtp.gmail.com`. Se usan en el registro, la recuperación
+de contraseña y el pago confirmado.
 
 ## Estructura
 
@@ -102,18 +97,6 @@ lifty/
 13 tablas normalizadas (prefijo `t`, llave `Consecutivo`) y 46 procedimientos almacenados
 (prefijo `sp`). El estado lógico vive en `testado` y las provincias en `tprovincia`. El
 diagrama entidad-relación se entrega aparte, en draw.io.
-
-## Despliegue con Docker
-
-`docker-compose.yml` y `.env.example` están una carpeta arriba de `lifty` y no forman parte
-de este repositorio. En XAMPP no hacen falta. Con Docker:
-
-```bash
-cp .env.example .env     # ajustar DB_PASS
-docker compose up -d
-```
-
-La aplicación queda en <http://localhost:8080/lifty>.
 
 ## Flujo de trabajo
 

@@ -1,5 +1,31 @@
 <?php
 
+function CargarEntorno()
+{
+    $archivo = __DIR__ . '/../.env';
+
+    if (!is_readable($archivo)) {
+        return;
+    }
+
+    foreach (file($archivo, FILE_IGNORE_NEW_LINES) as $linea) {
+        $linea = trim($linea);
+
+        if ($linea == '' || $linea[0] == '#' || strpos($linea, '=') === false) {
+            continue;
+        }
+
+        list($clave, $valor) = explode('=', $linea, 2);
+        $clave = trim($clave);
+
+        if (getenv($clave) === false) {
+            putenv($clave . '=' . trim($valor, " 	\"'"));
+        }
+    }
+}
+
+CargarEntorno();
+
 function Conectar()
 {
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

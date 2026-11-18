@@ -12,6 +12,8 @@ $(function () {
         var porPagina = parseInt($tabla.data('pagina'), 10) || 12;
         var filas = $cuerpo.children('tr').filter(function () { return $(this).children('td[colspan]').length === 0; }).toArray();
         var orden = { col: -1, dir: 1 };
+        var $pestanas = $('.pestanas-estado[data-tabla="' + id + '"]');
+        var estado = 'activo';
         var pagina = 1;
 
         $tabla.find('thead th[data-orden]').each(function () {
@@ -22,6 +24,14 @@ $(function () {
         $tabla.closest('.l-card').append($pie);
 
         function controles() { return $('.ft[data-tabla="' + id + '"]'); }
+
+        function inactiva(fila) {
+            return /^inactiv/i.test(valorCelda($(fila).children('td').eq($pestanas.data('col'))));
+        }
+
+        function enEstado(fila) {
+            return $pestanas.length === 0 || inactiva(fila) === (estado === 'inactivo');
+        }
 
         function pasaFiltros(fila) {
             var $fila = $(fila), pasa = true;
@@ -60,7 +70,13 @@ $(function () {
                 $cuerpo.append(filas);
             }
 
-            var visibles = filas.filter(pasaFiltros);
+            var base = filas.filter(enEstado);
+            var visibles = base.filter(pasaFiltros);
+            if ($pestanas.length) {
+                var inactivos = filas.filter(inactiva).length;
+                $pestanas.find('button[data-estado="activo"] .badge').text(filas.length - inactivos);
+                $pestanas.find('button[data-estado="inactivo"] .badge').text(inactivos);
+            }
             var paginas = Math.max(1, Math.ceil(visibles.length / porPagina));
             if (pagina > paginas) { pagina = paginas; }
             var desde = (pagina - 1) * porPagina, hasta = desde + porPagina;
@@ -85,7 +101,7 @@ $(function () {
             $pie.toggle(filas.length > 0);
             $pie.find('.tabla-info').text(visibles.length === 0 ? '0 resultados' :
                 'Mostrando ' + (desde + 1) + ' a ' + Math.min(hasta, visibles.length) + ' de ' + visibles.length +
-                (visibles.length !== filas.length ? ' (filtrado de ' + filas.length + ')' : ''));
+                (visibles.length !== base.length ? ' (filtrado de ' + base.length + ')' : ''));
             var $pag = $pie.find('.tabla-paginas').empty();
             if (paginas > 1) {
                 var boton = function (html, destino, activo, deshabilitado) {
@@ -116,9 +132,18 @@ $(function () {
             dibujar();
         });
 
+        $pestanas.on('click', 'button', function () {
+            $pestanas.find('button').removeClass('active');
+            $(this).addClass('active');
+            estado = $(this).data('estado');
+            pagina = 1;
+            dibujar();
+        });
         $(document).on('input change', '.ft[data-tabla="' + id + '"]', function () { pagina = 1; dibujar(); });
         $(document).on('click', '.limpiar-filtros[data-tabla="' + id + '"]', function () {
             controles().val('');
+            $pestanas.find('button').removeClass('active').filter('[data-estado="activo"]').addClass('active');
+            estado = 'activo';
             pagina = 1;
             dibujar();
         });

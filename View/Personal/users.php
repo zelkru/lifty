@@ -39,11 +39,10 @@ $roles = ConsultarRoles();
                     <option value="">Todos los roles</option>
                     <?php foreach ($roles as $r) { ?><option value="<?php echo Texto($r['NombreRol']); ?>"><?php echo Texto($r['NombreRol']); ?></option><?php } ?>
                 </select>
-                <select class="form-select ft" data-tabla="#tablaUsuarios" data-col="6" aria-label="Estado">
-                    <option value="">Todos los estados</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                </select>
+                <div class="btn-group pestanas-estado" role="group" aria-label="Estado" data-tabla="#tablaUsuarios" data-col="6">
+                    <button type="button" class="btn btn-outline-secondary active" data-estado="activo">Activos <span class="badge text-bg-light border"></span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-estado="inactivo">Inactivos <span class="badge text-bg-light border"></span></button>
+                </div>
                 <label class="fecha">Registro desde <input type="date" class="form-control ft" data-tabla="#tablaUsuarios" data-col="5" data-rango="desde"></label>
                 <label class="fecha">hasta <input type="date" class="form-control ft" data-tabla="#tablaUsuarios" data-col="5" data-rango="hasta"></label>
                 <button type="button" class="btn btn-outline-secondary limpiar-filtros" data-tabla="#tablaUsuarios"><i class="ti ti-filter-off"></i> Limpiar</button>

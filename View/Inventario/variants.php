@@ -60,11 +60,10 @@ $datosProducto = ['txtConsecutivo' => $producto['Consecutivo'], 'txtNombre' => $
 
             <div class="barra-filtros">
                 <input type="search" class="form-control ft ft-buscar" data-tabla="#tablaVariantes" placeholder="Buscar por SKU o presentación..." aria-label="Buscar">
-                <select class="form-select ft" data-tabla="#tablaVariantes" data-col="4" aria-label="Estado">
-                    <option value="">Todos los estados</option>
-                    <option value="Activa">Activa</option>
-                    <option value="Inactiva">Inactiva</option>
-                </select>
+                <div class="btn-group pestanas-estado" role="group" aria-label="Estado" data-tabla="#tablaVariantes" data-col="4">
+                    <button type="button" class="btn btn-outline-secondary active" data-estado="activo">Activas <span class="badge text-bg-light border"></span></button>
+                    <button type="button" class="btn btn-outline-secondary" data-estado="inactivo">Inactivas <span class="badge text-bg-light border"></span></button>
+                </div>
                 <button type="button" class="btn btn-outline-secondary limpiar-filtros" data-tabla="#tablaVariantes"><i class="ti ti-filter-off"></i> Limpiar</button>
             </div>
 

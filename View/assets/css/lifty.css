@@ -1,4 +1,5 @@
 
+/* Variables */
 :root {
   --lifty-ink: #1f2430;
   --lifty-muted: #6b7280;
@@ -7,8 +8,10 @@
   --lifty-radius: 14px;
 }
 
+/* Base */
 body { background: #f7f7f9; color: var(--lifty-ink); }
 
+/* Marca */
 .lifty-brand { color: var(--lifty-ink); }
 .lifty-brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
@@ -16,10 +19,12 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
   background: var(--bs-primary); color: #fff; font-size: 1.15rem;
 }
 
+/* Menú lateral */
 .sidebar .nav-link { border-radius: 10px; margin: 2px 12px; transition: background .15s, color .15s; }
 .sidebar .nav-link:hover { background: var(--lifty-soft); color: var(--bs-primary); }
 .sidebar .nav-link.active { background: var(--lifty-soft); color: var(--bs-primary); font-weight: 600; }
 
+/* Acceso: tarjeta de inicio de sesión */
 .auth-wrap {
   min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem;
   background:
@@ -34,10 +39,12 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .auth-card .form-control { padding: .65rem .85rem; border-radius: 10px; }
 .auth-card .btn-primary { padding: .7rem; border-radius: 10px; font-weight: 600; }
 
+/* Encabezado de página */
 .page-head { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
 .page-head h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 .page-head p { margin: .15rem 0 0; color: var(--lifty-muted); }
 
+/* Tarjetas e indicadores */
 .l-card { background: #fff; border: 1px solid var(--lifty-line); border-radius: var(--lifty-radius); }
 .l-card-body { padding: 1.25rem; }
 .l-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
@@ -50,6 +57,7 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1.1; }
 .stat-label { color: var(--lifty-muted); font-size: .85rem; }
 
+/* Portada */
 .hero {
   border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; color: #fff;
   background: linear-gradient(120deg, #1f2430 0%, #3a2d2a 55%, var(--bs-primary) 140%);
@@ -57,6 +65,7 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: .35rem; }
 .hero p { color: rgba(255, 255, 255, .8); margin: 0; max-width: 520px; }
 
+/* Productos y presentaciones */
 .product-card { transition: transform .15s, box-shadow .15s; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
 .product-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(31, 36, 48, .1); }
 .product-thumb {
@@ -72,6 +81,7 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .variant-option.disabled { opacity: .5; cursor: not-allowed; }
 .form-check-input:checked + .variant-option, .variant-radio:checked + .variant-option { border-color: var(--bs-primary); background: var(--lifty-soft); }
 
+/* Tablas y carrito */
 .l-table { margin: 0; }
 .l-table th { font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; color: var(--lifty-muted); font-weight: 600; background: #fafafc; white-space: nowrap; }
 .l-table td { vertical-align: middle; }
@@ -79,6 +89,7 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .cart-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .qty-input { width: 76px; }
 
+/* Estados vacíos, barras y pasos del pedido */
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--lifty-muted); }
 .empty-state i { font-size: 2.6rem; color: #c9ccd3; display: block; margin-bottom: .5rem; }
 .bar-track { background: #f0f0f4; border-radius: 99px; height: 10px; overflow: hidden; }
@@ -88,19 +99,24 @@ body { background: #f7f7f9; color: var(--lifty-ink); }
 .order-step.done { background: var(--lifty-soft); color: var(--bs-primary); }
 .order-step.current { background: var(--bs-primary); color: #fff; }
 
+/* Formularios y pago */
 .invalid-feedback.d-block { font-size: .82rem; }
 .pay-box { display: none; }
 .pay-box.active { display: block; }
 
+/* Adaptación a móvil */
 @media (max-width: 575.98px) {
   .hero { padding: 1.4rem; }
   .hero h1 { font-size: 1.5rem; }
   .page-head h1 { font-size: 1.35rem; }
 }
 
+/* Tipografía del tema */
 body { font-family: 'Manrope', system-ui, sans-serif; }
 .display { font-family: 'Big Shoulders Display', 'Impact', sans-serif; text-transform: uppercase; font-weight: 900; line-height: .9; }
 .page-head h1 { font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase; font-weight: 800; letter-spacing: 0; }
+
+/* Acceso: fondo y tarjeta del tema */
 .auth-wrap {
   background:
     radial-gradient(640px 520px at 82% 8%, rgba(255, 90, 44, .55), transparent 65%),
@@ -116,6 +132,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 .auth-card .input-group .form-control { border-radius: 14px 0 0 14px; }
 .auth-card .link-primary { color: #e04a1f !important; }
 
+/* Acceso: formulario y panel dividido */
 .auth-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; background: #fff; }
 .auth-form { position: relative; display: flex; align-items: center; justify-content: center; padding: 5rem clamp(1.5rem, 5vw, 5rem) 3rem; }
 .auth-form-in { width: 100%; max-width: 440px; }
@@ -137,6 +154,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 .auth-enlace:hover { text-decoration: underline; }
 .auth-pie { margin: 1.6rem 0 0; text-align: center; color: #6b6256; font-size: .92rem; }
 
+/* Acceso: panel animado */
 .auth-art { position: relative; overflow: hidden; background: #0b0b0e; }
 .auth-filas { position: absolute; inset: -35% -30%; display: flex; flex-direction: column; justify-content: center; gap: .5rem; transform: rotate(-14deg); }
 .auth-fila { overflow: hidden; white-space: nowrap; }
@@ -155,6 +173,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 }
 @media (prefers-reduced-motion: reduce) { .auth-fila .pista { animation: none; } }
 
+/* Etiquetas de estado */
 .badge { font-weight: 700; font-size: .74rem; letter-spacing: 0; padding: .38em .8em; border-radius: 999px; }
 .badge.text-bg-success { background-color: #e5f2e9 !important; color: #2f6b45 !important; }
 .badge.text-bg-secondary { background-color: #ecebe8 !important; color: #6b6558 !important; }
@@ -166,6 +185,7 @@ body { font-family: 'Manrope', system-ui, sans-serif; }
 .badge.text-bg-light { background-color: #f3f0ea !important; color: #4a443a !important; border-color: transparent !important; }
 .badge.text-bg-light.border { border: 0 !important; }
 
+/* Acceso: variante invertida */
 .auth-split.invertido .auth-form { order: 2; }
 .auth-split.invertido .auth-art { order: 1; }
 .auth-split.invertido .auth-volver { left: clamp(1.5rem, 5vw, 3rem); }

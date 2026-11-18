@@ -26,7 +26,7 @@ function RegistrarPedidoModel($consecutivoUsuario, $consecutivoDireccion, $conse
     }
     catch (Exception $exc) {
         if ($context) {
-            try { $context -> rollback(); Cerrar($context); } catch (Exception $e) { }
+            try { $context -> rollback(); Cerrar($context); } catch (Exception $excepcion) { }
         }
         RegistrarError($exc, 'RegistrarPedidoModel');
         return 0;

@@ -128,7 +128,7 @@ function GenerarContrasennaTemporal()
     $longitud = 8;
     $resultado = '';
 
-    for ($i = 0; $i < $longitud; $i++) {
+    for ($posicion = 0; $posicion < $longitud; $posicion++) {
         $resultado .= $caracteres[random_int(0, strlen($caracteres) - 1)];
     }
 

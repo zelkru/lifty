@@ -82,18 +82,18 @@ function LeerDireccion()
     return [LeerEntero('txtProvincia'), LeerTexto('txtCanton'), LeerTexto('txtDistrito'), LeerTexto('txtDetalle'), LeerTexto('txtCodigoPostal')];
 }
 
-function DireccionValida($d)
+function DireccionValida($direccion)
 {
-    return in_array($d[0], array_column(ConsultarProvinciasModel(), 'Consecutivo')) && $d[1] != '' && $d[2] != '' && $d[3] != '' && ($d[4] == '' || preg_match('/^[0-9]{4,10}$/', $d[4]));
+    return in_array($direccion[0], array_column(ConsultarProvinciasModel(), 'Consecutivo')) && $direccion[1] != '' && $direccion[2] != '' && $direccion[3] != '' && ($direccion[4] == '' || preg_match('/^[0-9]{4,10}$/', $direccion[4]));
 }
 
 if (isset($_POST['btnRegistrarDireccion'])) {
-    $d = LeerDireccion();
+    $direccion = LeerDireccion();
 
-    if (!DireccionValida($d)) {
+    if (!DireccionValida($direccion)) {
         AsignarMensaje('Complete provincia, cantón, distrito y señas. El código postal solo lleva números.', 'danger');
     }
-    else if (RegistrarDireccionModel($_SESSION['ConsecutivoUsuario'], $d[0], $d[1], $d[2], $d[3], $d[4])) {
+    else if (RegistrarDireccionModel($_SESSION['ConsecutivoUsuario'], $direccion[0], $direccion[1], $direccion[2], $direccion[3], $direccion[4])) {
         AsignarMensaje('La dirección se ha registrado correctamente.');
     }
     else {
@@ -104,12 +104,12 @@ if (isset($_POST['btnRegistrarDireccion'])) {
 }
 
 if (isset($_POST['btnActualizarDireccion'])) {
-    $d = LeerDireccion();
+    $direccion = LeerDireccion();
 
-    if (!DireccionValida($d)) {
+    if (!DireccionValida($direccion)) {
         AsignarMensaje('Complete provincia, cantón, distrito y señas. El código postal solo lleva números.', 'danger');
     }
-    else if (ActualizarDireccionModel(LeerEntero('txtConsecutivo'), $_SESSION['ConsecutivoUsuario'], $d[0], $d[1], $d[2], $d[3], $d[4])) {
+    else if (ActualizarDireccionModel(LeerEntero('txtConsecutivo'), $_SESSION['ConsecutivoUsuario'], $direccion[0], $direccion[1], $direccion[2], $direccion[3], $direccion[4])) {
         AsignarMensaje('La dirección se ha actualizado correctamente.');
     }
     else {

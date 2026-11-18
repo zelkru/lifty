@@ -24,18 +24,18 @@ function ImagenUrl($imagen)
     return '../assets/img/productos/' . rawurlencode($imagen);
 }
 
-function TarjetaProducto($p)
+function TarjetaProducto($producto)
 {
-    $agotado = $p['StockTotal'] <= 0 ? '<span class="agotado">Agotado</span>' : '';
+    $agotado = $producto['StockTotal'] <= 0 ? '<span class="agotado">Agotado</span>' : '';
     return '
-        <a href="product.php?id=' . $p['Consecutivo'] . '" class="pcard rv">
-            <span class="etiqueta">' . Texto($p['NombreCategoria']) . '</span>' . $agotado . '
-            <div class="escena">' . ArteProducto($p['Imagen'], $p['NombreCategoria'], $p['NombreMarca'], $p['Nombre']) . '</div>
+        <a href="product.php?id=' . $producto['Consecutivo'] . '" class="pcard rv">
+            <span class="etiqueta">' . Texto($producto['NombreCategoria']) . '</span>' . $agotado . '
+            <div class="escena">' . ArteProducto($producto['Imagen'], $producto['NombreCategoria'], $producto['NombreMarca'], $producto['Nombre']) . '</div>
             <div class="cuerpo">
-                <div class="marca">' . Texto($p['NombreMarca']) . '</div>
-                <div class="nombre">' . Texto($p['Nombre']) . '</div>
+                <div class="marca">' . Texto($producto['NombreMarca']) . '</div>
+                <div class="nombre">' . Texto($producto['Nombre']) . '</div>
                 <div class="pie">
-                    <div class="precio"><small>Desde</small>' . Dinero($p['PrecioDesde']) . '</div>
+                    <div class="precio"><small>Desde</small>' . Dinero($producto['PrecioDesde']) . '</div>
                     <span class="agregar"><i class="ti ti-plus"></i> Agregar</span>
                 </div>
             </div>
@@ -79,9 +79,9 @@ function Palabras($texto, $claseUltima = '', $clasePrimera = '')
 {
     $palabras = preg_split('/\s+/', trim($texto));
     $html = '';
-    foreach ($palabras as $i => $palabra) {
-        $clase = ($i == count($palabras) - 1 ? $claseUltima : '') . ($i == 0 ? ' ' . $clasePrimera : '');
-        $html .= '<span class="pal ' . $clase . '"><span style="--d:' . (150 + $i * 110) . 'ms">' . Texto($palabra) . '</span></span> ';
+    foreach ($palabras as $posicion => $palabra) {
+        $clase = ($posicion == count($palabras) - 1 ? $claseUltima : '') . ($posicion == 0 ? ' ' . $clasePrimera : '');
+        $html .= '<span class="pal ' . $clase . '"><span style="--d:' . (150 + $posicion * 110) . 'ms">' . Texto($palabra) . '</span></span> ';
     }
     return $html;
 }
@@ -89,9 +89,9 @@ function Palabras($texto, $claseUltima = '', $clasePrimera = '')
 function IconoCategoria($nombre)
 {
     $iconos = ['suplement' => 'ti-pill', 'ropa' => 'ti-shirt', 'snack' => 'ti-cookie', 'bebida' => 'ti-bottle', 'accesorio' => 'ti-barbell'];
-    foreach ($iconos as $clave => $ti) {
+    foreach ($iconos as $clave => $iconoClase) {
         if (stripos($nombre, $clave) !== false) {
-            return $ti;
+            return $iconoClase;
         }
     }
     return 'ti-tag';
@@ -104,10 +104,10 @@ function MostrarHeaderTienda()
     $categoriaActual = (int) ($_GET['categoria'] ?? 0);
 
     $enlaces = '';
-    foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $c) {
-        $icono = IconoCategoria($c['Nombre']);
-        $activo = ($enCatalogo && $categoriaActual == $c['Consecutivo']) ? ' active' : '';
-        $enlaces .= '<li class="nav-item"><a class="nav-link' . $activo . '" href="../Catalogo/catalog.php?categoria=' . $c['Consecutivo'] . '"><i class="ti ' . $icono . '"></i>' . Texto($c['Nombre']) . '</a></li>';
+    foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $categoriaMenu) {
+        $icono = IconoCategoria($categoriaMenu['Nombre']);
+        $activo = ($enCatalogo && $categoriaActual == $categoriaMenu['Consecutivo']) ? ' active' : '';
+        $enlaces .= '<li class="nav-item"><a class="nav-link' . $activo . '" href="../Catalogo/catalog.php?categoria=' . $categoriaMenu['Consecutivo'] . '"><i class="ti ' . $icono . '"></i>' . Texto($categoriaMenu['Nombre']) . '</a></li>';
     }
 
     echo '
@@ -297,8 +297,8 @@ function MostrarFooter()
 {
     if (UsaTienda()) {
         $categorias = '';
-        foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $c) {
-            $categorias .= '<a href="../Catalogo/catalog.php?categoria=' . $c['Consecutivo'] . '">' . Texto($c['Nombre']) . '</a>';
+        foreach (array_slice(ConsultarFiltrosCategorias(), 0, 5) as $categoriaMenu) {
+            $categorias .= '<a href="../Catalogo/catalog.php?categoria=' . $categoriaMenu['Consecutivo'] . '">' . Texto($categoriaMenu['Nombre']) . '</a>';
         }
 
         echo '

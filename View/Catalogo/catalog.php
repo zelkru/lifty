@@ -32,8 +32,8 @@ $datos = ConsultarPaginaCatalogo();
                 <input name="q" type="search" class="form-control" placeholder="Buscar producto" aria-label="Buscar producto" value="<?php echo Texto($datos['Busqueda']); ?>">
                 <select name="marca" class="form-select" aria-label="Marca" data-autoenvio>
                     <option value="0">Todas las marcas</option>
-                    <?php foreach ($datos['Marcas'] as $m) { ?>
-                        <option value="<?php echo $m['Consecutivo']; ?>" <?php echo $datos['Marca'] == $m['Consecutivo'] ? 'selected' : ''; ?>><?php echo Texto($m['Nombre']); ?></option>
+                    <?php foreach ($datos['Marcas'] as $marca) { ?>
+                        <option value="<?php echo $marca['Consecutivo']; ?>" <?php echo $datos['Marca'] == $marca['Consecutivo'] ? 'selected' : ''; ?>><?php echo Texto($marca['Nombre']); ?></option>
                     <?php } ?>
                 </select>
                 <button class="btn btn-primary" type="submit"><i class="ti ti-search"></i> Buscar</button>
@@ -42,8 +42,8 @@ $datos = ConsultarPaginaCatalogo();
 
             <div class="tabs-cat">
                 <a href="<?php echo UrlCatalogo(['categoria' => 0]); ?>" class="tab-cat <?php echo $datos['Categoria'] == 0 ? 'activo' : ''; ?>">Todo</a>
-                <?php foreach ($datos['Categorias'] as $c) { ?>
-                    <a href="<?php echo UrlCatalogo(['categoria' => $c['Consecutivo']]); ?>" class="tab-cat <?php echo $datos['Categoria'] == $c['Consecutivo'] ? 'activo' : ''; ?>"><i class="ti <?php echo IconoCategoria($c['Nombre']); ?>"></i> <?php echo Texto($c['Nombre']); ?></a>
+                <?php foreach ($datos['Categorias'] as $categoria) { ?>
+                    <a href="<?php echo UrlCatalogo(['categoria' => $categoria['Consecutivo']]); ?>" class="tab-cat <?php echo $datos['Categoria'] == $categoria['Consecutivo'] ? 'activo' : ''; ?>"><i class="ti <?php echo IconoCategoria($categoria['Nombre']); ?>"></i> <?php echo Texto($categoria['Nombre']); ?></a>
                 <?php } ?>
             </div>
 
@@ -55,17 +55,17 @@ $datos = ConsultarPaginaCatalogo();
                 </div>
             <?php } else { ?>
                 <div class="rejilla" id="productos">
-                    <?php foreach ($datos['Productos'] as $p) { echo TarjetaProducto($p); } ?>
+                    <?php foreach ($datos['Productos'] as $producto) { echo TarjetaProducto($producto); } ?>
                 </div>
 
                 <?php if ($datos['Paginas'] > 1) { ?>
                     <nav class="paginador" aria-label="Páginas del catálogo">
                         <a href="<?php echo UrlCatalogo(['pagina' => $datos['Pagina'] - 1]); ?>" class="<?php echo $datos['Pagina'] == 1 ? 'inactivo' : ''; ?>" aria-label="Anterior"><i class="ti ti-chevron-left"></i></a>
-                        <?php for ($n = 1; $n <= $datos['Paginas']; $n++) { ?>
-                            <?php if ($n == $datos['Pagina']) { ?>
-                                <span class="actual" aria-current="page"><?php echo $n; ?></span>
+                        <?php for ($numeroPagina = 1; $numeroPagina <= $datos['Paginas']; $numeroPagina++) { ?>
+                            <?php if ($numeroPagina == $datos['Pagina']) { ?>
+                                <span class="actual" aria-current="page"><?php echo $numeroPagina; ?></span>
                             <?php } else { ?>
-                                <a href="<?php echo UrlCatalogo(['pagina' => $n]); ?>"><?php echo $n; ?></a>
+                                <a href="<?php echo UrlCatalogo(['pagina' => $numeroPagina]); ?>"><?php echo $numeroPagina; ?></a>
                             <?php } ?>
                         <?php } ?>
                         <a href="<?php echo UrlCatalogo(['pagina' => $datos['Pagina'] + 1]); ?>" class="<?php echo $datos['Pagina'] == $datos['Paginas'] ? 'inactivo' : ''; ?>" aria-label="Siguiente"><i class="ti ti-chevron-right"></i></a>

@@ -48,9 +48,9 @@ function ConsultarPaginaCatalogo()
     $pagina = min(max(1, (int) ($_GET['pagina'] ?? 1)), $paginas);
 
     $nombreCategoria = '';
-    foreach ($categorias as $c) {
-        if ($c['Consecutivo'] == $categoria) {
-            $nombreCategoria = $c['Nombre'];
+    foreach ($categorias as $categoriaDisponible) {
+        if ($categoriaDisponible['Consecutivo'] == $categoria) {
+            $nombreCategoria = $categoriaDisponible['Nombre'];
         }
     }
 
@@ -74,7 +74,7 @@ function ConsultarPaginaCatalogo()
 function UrlCatalogo($cambios)
 {
     $parametros = array_merge(['q' => $_GET['q'] ?? '', 'categoria' => $_GET['categoria'] ?? 0, 'marca' => $_GET['marca'] ?? 0, 'pagina' => 1], $cambios);
-    $parametros = array_filter($parametros, function ($v) { return $v !== '' && $v !== 0 && $v !== '0'; });
+    $parametros = array_filter($parametros, function ($valor) { return $valor !== '' && $valor !== 0 && $valor !== '0'; });
     if (isset($parametros['pagina']) && $parametros['pagina'] == 1) {
         unset($parametros['pagina']);
     }
@@ -84,11 +84,11 @@ function UrlCatalogo($cambios)
 function ConsultarSeccionesInicio()
 {
     $secciones = [];
-    foreach (ConsultarFiltrosCategorias() as $c) {
+    foreach (ConsultarFiltrosCategorias() as $categoriaDisponible) {
         $secciones[] = [
-            'Categoria' => $c,
-            'Total' => ContarCatalogo($c['Consecutivo'], 0, ''),
-            'Productos' => ConsultarCatalogo($c['Consecutivo'], 0, '', PRODUCTOS_POR_CATEGORIA, 0)
+            'Categoria' => $categoriaDisponible,
+            'Total' => ContarCatalogo($categoriaDisponible['Consecutivo'], 0, ''),
+            'Productos' => ConsultarCatalogo($categoriaDisponible['Consecutivo'], 0, '', PRODUCTOS_POR_CATEGORIA, 0)
         ];
     }
     return $secciones;
